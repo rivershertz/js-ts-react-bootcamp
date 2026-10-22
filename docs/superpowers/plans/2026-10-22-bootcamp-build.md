@@ -4,9 +4,9 @@
 
 **Goal:** Produce the `bootcamp/` and `mentor/` folders described in the spec: lessons, self-checking exercise ladders, three phase projects, the final project, the Python API, and the tooling that checks and tracks a junior's progress.
 
-**Architecture:** One root `package.json` inside `bootcamp/`. All checks are Vitest files kept in `bootcamp/scripts/checks/`, run through a small Node CLI that prints pass / fail plus a hint per step. Every exercise has a worked solution in `mentor/solutions/` mirroring the `bootcamp/` paths; an authoring tool at the repo root (`tools/verify.mjs`, not shipped) proves that every solution passes and every starter fails. The final project is built correct-first in TypeScript, then degraded into the buggy JS starter.
+**Architecture:** One root `package.json` inside `bootcamp/`. All checks are Vitest files kept in `bootcamp/scripts/checks/`, run through a small Node CLI that prints pass / fail plus a hint per step. Every exercise has a worked solution in `mentor/solutions/` mirroring the `bootcamp/` paths; an authoring tool at the repo root (`tools/verify.mjs`, not shipped) proves that every solution passes and every starter fails. The final project is built correct-first in TypeScript, then degraded into the buggy JS starter. Lessons are interactive HTML slide decks (React + TS, one shared design system) served offline by `yarn lessons`; exercise instructions stay in Markdown next to the code.
 
-**Tech Stack:** Node 24, Yarn 1.22, TypeScript 5.9, Vite 5 (matches the team's apps) with @vitejs/plugin-react 4, Vitest 3 pinned to resolve against Vite 5 (+ jsdom, Testing Library), React 18.3, antd 5, axios, @tanstack/react-query 5, react-router-dom 6, ESLint 9 (flat config, typescript-eslint, eslint-plugin-react-hooks), Prettier 3. Python 3 standard library for the API.
+**Tech Stack:** Node 24, Yarn 1.22, TypeScript 5.9, Vite 5 (matches the team's apps) with @vitejs/plugin-react 4, Vitest 3 pinned to resolve against Vite 5 (+ jsdom, Testing Library), React 18.3, antd 5, axios, @tanstack/react-query 5, react-router-dom 6, ESLint 9 (flat config, typescript-eslint, eslint-plugin-react-hooks), Prettier 3, prism-react-renderer (code highlighting in slides), @fontsource fonts (bundled, no CDN). Python 3 standard library for the API.
 
 **Spec:** `docs/superpowers/specs/2026-10-22-bootcamp-design.md`
 
@@ -14,7 +14,7 @@
 
 - Juniors run Windows (PowerShell / cmd). Every script is a Node script; no bash, no `rm -rf`, no `&&` chains in `package.json` scripts that break in cmd.
 - Closed network. No `http(s)://` links in any file under `bootcamp/` except `localhost`. React docs are referenced as "search the React docs for …".
-- Lessons are Markdown readable in VS Code's built-in preview. Diagrams are local `.svg` files with their own white background (readable in dark themes).
+- Lessons are HTML slide decks, one per module, built on a shared lesson kit and served by `yarn lessons` (Vite, fully offline: no CDN fonts, scripts or images). Exercise instructions, project Definitions of Done, `START-HERE.md` and the mentor guide are Markdown readable in VS Code's built-in preview.
 - No registry config shipped. `yarn.lock` is shipped (Yarn 1 rewrites the default registry host to the one in the junior's `.npmrc`).
 - Few, mainstream dependencies only; nothing that downloads binaries on install (so no Playwright, no Cypress, no CRA / `react-scripts`).
 - Python API: standard library only, one command (`python server/server.py`), port `8000`.
@@ -45,17 +45,18 @@ tools/verify.mjs                  authoring only, not shipped
 bootcamp/
   START-HERE.md
   package.json  yarn.lock  tsconfig.json  eslint.config.js  .prettierrc  vitest.config.ts  .gitignore
-  00-setup/README.md  00-setup/python-to-js.md  00-setup/img/*.svg
-  01-js/01-values-references/   README.md  exercises.js  img/*.svg
+  lessons/         the lesson kit: index.html (deck list), kit/{Deck,Slide,layouts,tokens.css}, widgets/*
+  00-setup/README.md  00-setup/lesson.tsx  00-setup/python-to-js.md
+  01-js/01-values-references/   lesson.tsx  README.md  exercises.js
   01-js/02-array-object-methods/ …  03-scope-closures/  04-async/  05-modules/
   01-js/project/   README.md  src/{constants,api,filters,stats,validation,index}.js
-  02-ts/01-why-ts/ … 08-migration/   README.md  exercises.ts
+  02-ts/01-why-ts/ … 08-migration/   lesson.tsx  README.md  exercises.ts
   02-ts/project/   README.md  (src/ is created by `yarn copy-project`)
-  03-react/01-fundamentals/ … 09-versions/   README.md  exercises/*.tsx  main.tsx  index.html
+  03-react/01-fundamentals/ … 09-versions/   lesson.tsx  README.md  exercises/*.tsx  main.tsx  index.html
   final-project/   README.md  index.html  vite.config.ts  .env  src/**  (JS + JSX, buggy)
   server/server.py  server/seed.json  server/README.md
   scripts/
-    verify.mjs  progress.mjs  tickets.mjs  dev.mjs  copy-project.mjs
+    verify.mjs  progress.mjs  tickets.mjs  dev.mjs  lessons.mjs  copy-project.mjs
     lib/{resolve-target,reporter,step,load,progress-store}.mjs
     catalog.json                       every module, its steps, core|stretch
     checks/01-js/01.check.ts …  checks/02-ts/… checks/03-react/… checks/final/*.check.tsx
@@ -96,9 +97,10 @@ Phase 1 ships `constants.js` and `index.js` filled in, and the other four files 
 
 ## Module template (every lesson module follows it)
 
-- `README.md`: time guide, "Coming from Python" box, mental-model walkthrough (for Phase 1, Will Sentance style: step through execution context, call stack, memory, with an SVG per key moment), worked examples, then the ladder: a numbered list, each step marked **core** or **stretch**, with the task and the command `yarn verify <id>/<n>`.
+- `lesson.tsx`: the slide deck. Time guide on the title slide, "Coming from Python" comparison slides, the mental-model walkthrough as step-through widgets (for Phase 1, Will Sentance style: click through execution context, call stack, memory, the closure backpack, the event loop), worked examples with "predict the output, then reveal" slides, and a closing slide that points to the exercises.
+- `README.md`: short. Time guide, "open the lesson with `yarn lessons`, deck <id>", a one-paragraph recap to refer back to while coding, then the ladder: a numbered list, each step marked **core** or **stretch**, with the task and the command `yarn verify <id>/<n>`.
 - Starter (`exercises.js` / `.ts` / `exercises/*.tsx`): one export per step, stubbed to throw `TODO`.
-- Check (`scripts/checks/<phase>/<nn>.check.ts[x]`): one `step()` per ladder step, with a hint that points back to the README section, never the answer.
+- Check (`scripts/checks/<phase>/<nn>.check.ts[x]`): one `step()` per ladder step, with a hint that points back to the lesson slide or README section, never the answer.
 - Solution in `mentor/solutions/<same path>`.
 - Ladder: 6 to 10 steps, harder each step, the last core step touches the ticket domain so it feeds the phase project.
 - Phase 3 modules add `main.tsx` + `index.html`, so `yarn dev 03-react/03` shows the exercises in the browser.
@@ -117,7 +119,7 @@ Phase 1 ships `constants.js` and `index.js` filled in, and the other four files 
 
 ### Task 2: Check runner, progress, fixtures, verify tool
 
-**Files:** `bootcamp/scripts/{verify,progress,dev,tickets,copy-project}.mjs`, `scripts/lib/*`, `scripts/catalog.json`, `scripts/fixtures/*`, `tools/verify.mjs`, `.github/workflows/verify.yml`, plus one sample exercise used to prove the pipeline (becomes `01-js/01` in Task 4).
+**Files:** `bootcamp/scripts/{verify,progress,dev,tickets,copy-project}.mjs`, `scripts/lib/*`, `scripts/catalog.json`, `scripts/fixtures/*`, `tools/verify.mjs`, `.github/workflows/verify.yml`, plus one sample exercise used to prove the pipeline (becomes `01-js/01` in Task 5).
 
 **Interfaces (produces):**
 - `step({ n, level: 'core' | 'stretch', title, hint }, fn)` in `scripts/lib/step.mjs`; wraps Vitest `test` and stores `n`, `level`, `hint` in `task.meta`.
@@ -127,48 +129,65 @@ Phase 1 ships `constants.js` and `index.js` filled in, and the other four files 
 - `scripts/.progress.json` (gitignored): `{ "<module id>": { "<step n>": "pass" | "fail" } }`, written by every `yarn verify` run. `yarn progress` prints all modules from `catalog.json` with ✓ / ✗ / · per step, core and stretch counts, and the next core step to do.
 
 - [ ] Runner tests (authoring-side, under `tools/tests/`): target resolution for `01-js/03`, `01-js\03`, `01-js/03/`, `01-js/03/4`, `final-project`, unknown id (prints the list of valid ids); `load()` finds `.ts` after a `.js` file was renamed; catalog and check files agree (every `step` n exists in `catalog.json` and vice versa).
-- [ ] `tools/verify.mjs`: runs every check with `BOOTCAMP_SOLUTIONS=mentor/solutions` (must be all green), then against starters (every core step must fail), then scans `bootcamp/**/*.md` for non-localhost `http` links and for relative links / images that do not resolve. Prints a table and exits non-zero on any problem.
+- [ ] `tools/verify.mjs`: runs every check with `BOOTCAMP_SOLUTIONS=mentor/solutions` (must be all green), then against starters (every core step must fail), then scans `bootcamp/**/*.md` and `**/lesson.tsx` for non-localhost `http` links and for relative links / images that do not resolve. Prints a table and exits non-zero on any problem.
 - [ ] `yarn dev <id>`: starts Vite via its JS API with the exercise folder as root, React plugin, and `/api` proxied to `http://localhost:8000`; on proxy `ECONNREFUSED` prints the start-the-server hint. `final-project` uses its own `vite.config.ts`.
 - [ ] GitHub Actions workflow runs `tools/verify.mjs` on `windows-latest` and `ubuntu-latest` with Node 24 and Python 3. (Authoring only; outside both ZIP folders.)
 - [ ] Commit.
 
 ### Task 3: Python API and Phase 0 setup
 
-**Files:** `bootcamp/server/{server.py,seed.json,README.md}`, `bootcamp/00-setup/{README.md,python-to-js.md,img/vite-proxy.svg}`, `scripts/fixtures/*.json` (generated from `seed.json`), `tools/tests/test_server.py` (stdlib `unittest`).
+**Files:** `bootcamp/server/{server.py,seed.json,README.md}`, `bootcamp/00-setup/{README.md,python-to-js.md}`, `scripts/fixtures/*.json` (generated from `seed.json`), `tools/tests/test_server.py` (stdlib `unittest`).
 
 - [ ] Server tests: each route, 404 on unknown id, 400 with the per-field `errors` list on an invalid POST, each flag (`--delay`, `--fail`, `--bad-data`, `--many 2000`), CORS not needed (Vite proxies). Runs with `python -m unittest`.
 - [ ] Implement `server.py` with `http.server.ThreadingHTTPServer`; prints `Ticket API on http://localhost:8000` on start.
-- [ ] Setup README: add `.npmrc` (what to put in it, explained in words, no URL), `yarn install`, `yarn verify 00-setup` (a smoke check: Node 24, Yarn 1, deps installed, server reachable), starting the server, how the Vite dev server and proxy work (diagram). Also: ESLint and Prettier in VS Code (format on save, reading a hooks-rule error), and browser DevTools basics (Console, Sources breakpoints, Network tab watching the proxied `/api` calls). `python-to-js.md`: one page, side-by-side table.
-- [ ] Commit; open the **Foundation PR** (Tasks 1 to 3).
+- [ ] Setup lesson deck is written in Task 4; the setup README covers: add `.npmrc` (what to put in it, explained in words, no URL), `yarn install`, `yarn verify 00-setup` (a smoke check: Node 24, Yarn 1, deps installed, server reachable), starting the server, and points to the deck for how the Vite dev server and proxy work. Also: ESLint and Prettier in VS Code (format on save, reading a hooks-rule error), and browser DevTools basics (Console, Sources breakpoints, Network tab watching the proxied `/api` calls). `python-to-js.md`: one page, side-by-side table.
+- [ ] Commit.
 
-### Tasks 4 to 8: Phase 1 modules (one task each)
+### Task 4: Lesson kit (slide engine, design system, widgets)
+
+**Files:** `bootcamp/lessons/**`, `bootcamp/scripts/lessons.mjs`, `00-setup/lesson.tsx` (first real deck, proves the kit).
+
+**Interfaces (produces):**
+- `<Deck title timeGuide>` / `<Slide layout>` with layouts `title`, `concept`, `code`, `compare` (Python left, JS / TS right), `diagram`, `predict` (question, then reveal), `recap`.
+- Navigation: arrow keys and click, `#/n` in the URL per slide, in-slide build steps, progress bar, `?` shows keyboard help.
+- `<Code lang highlight={[lines]}>` (prism-react-renderer, line focus per build step) and `<RunCode>` (runs a JS snippet in the page and shows its console output; JS phase only).
+- Walkthrough widgets driven by a list of steps: `<CallStackStepper>`, `<MemoryDiagram>` (stack / heap, references as arrows), `<ClosureBackpack>`, `<EventLoop>` (call stack, task queue, microtask queue), `<RenderTimeline>` (renders, commits, effects for Phase 3).
+- `tokens.css`: one design system (colour, type scale, spacing, code theme), light and dark, readable on a projector. Fonts from `@fontsource`.
+- `yarn lessons`: serves `lessons/index.html` plus every `**/lesson.tsx` with Vite, prints `Lessons on http://localhost:5174`; the index lists decks in course order with their time guides.
+
+- [ ] Kit tests (Vitest + Testing Library): keyboard navigation and URL hash, build steps advance before slides, each widget renders its step N state from a step list.
+- [ ] Authoring screenshot pass (`tools/screenshot-decks.mjs`, uses the pre-installed Chromium through Playwright in `tools/` only, never in `bootcamp/package.json`): every slide of every deck at 1280×720 in light and dark, reviewed for overflow and contrast.
+- [ ] `tools/verify.mjs` also builds every deck (`vite build`) and fails on any non-local URL in deck source.
+- [ ] Commit; open the **Foundation PR** (Tasks 1 to 4).
+
+### Tasks 5 to 9: Phase 1 modules (one task each)
 
 01 values and references, 02 array and object methods, 03 scope and closures, 04 async, 05 modules. Each follows the module template. Module 04's ladder uses `startFixtureServer()` and ends with axios against it; it also has a `setTimeout` / Promise ordering step ("predict the log order") checked by capturing output. Module 05 covers ESM vs Python packages and ends with splitting a file into modules.
 
-- [ ] Per module: README, SVGs, starter, check, solution; `node tools/verify.mjs` green for that module; commit.
+- [ ] Per module: lesson deck, README, starter, check, solution; `node tools/verify.mjs` green for that module; commit.
 
-### Task 9: Phase 1 project
+### Task 10: Phase 1 project
 
 **Files:** `01-js/project/{README.md,src/*}`, `scripts/checks/01-js/project.check.ts`, `scripts/tickets.mjs`, `mentor/solutions/01-js/project/src/*`.
 
 - [ ] Check steps map one-to-one to the Phase 1 Definition of Done: loading with server down returns a warning rather than throwing; each filter and combined filters; each sort in both directions plus "input array unchanged" (deep-frozen input); `groupByStatus` includes empty groups; `computeStats` with a fixed `now`; `validateTicket` returns all three errors at once; `loadAll` with `--fail assignees` still returns tickets plus a warning; no `console.` in `src/` (static scan); no mutation of inputs (frozen fixtures across all functions).
 - [ ] `yarn tickets`: prints table, groups, stats, a validation demo, and the allSettled demo; on `ECONNREFUSED` prints the start-the-server hint.
-- [ ] Commit; open the **Phase 1 PR** (Tasks 4 to 9).
+- [ ] Commit; open the **Phase 1 PR** (Tasks 5 to 10).
 
-### Tasks 10 to 17: Phase 2 modules (one task each)
+### Tasks 11 to 18: Phase 2 modules (one task each)
 
 01 why TS and how it runs (type stripping demo with `node file.ts`, `tsc --noEmit`, mypy comparison), 02 basics, 03 unions and narrowing, 04 type guards (validating `unknown` API data), 05 discriminated unions (ticket states, `never` check), 06 generics and utility types, 07 deriving types from values, 08 migration workflow (works on a small provided JS file, raising strictness in steps).
 
 - [ ] Type-level steps are checked by running `tsc --noEmit` on the module plus a check-owned `.types.ts` file using `@ts-expect-error` and an `Expect<Equal<A, B>>` helper; runtime steps use Vitest as in Phase 1. The runner reports which step a type error belongs to by mapping the error's line to the step's marked region in the starter.
-- [ ] Per module: README, starter, check, solution, verify green, commit.
+- [ ] Per module: lesson deck, README, starter, check, solution, verify green, commit.
 
-### Task 18: Phase 2 project
+### Task 19: Phase 2 project
 
 - [ ] `yarn copy-project`; README with the Phase 2 Definition of Done and a suggested migration order (constants → validation/`isTicket` → filters → stats → api).
 - [ ] Check steps: no `.js` left in `02-ts/project/src`; `tsc --noEmit` strict clean; static scan for `any`, `@ts-ignore`, `@ts-expect-error`, non-null `!`; `Status` / `Priority` types equal `(typeof STATUSES)[number]` etc. (type test); the `Ticket` union rejects `closedAt` on an open ticket and requires `assignee` on assigned (type tests); removing a status from a `switch` fails compilation (the check compiles a mutated copy); `fetchTickets` with `--bad-data` reports the malformed ticket in `warnings` and excludes it; all Phase 1 behaviour checks re-run against the TS code.
-- [ ] Commit; open the **Phase 2 PR** (Tasks 10 to 18).
+- [ ] Commit; open the **Phase 2 PR** (Tasks 11 to 19).
 
-### Task 19: Final project, correct reference app (TypeScript)
+### Task 20: Final project, correct reference app (TypeScript)
 
 Built before the Phase 3 lessons, so the lessons teach exactly what the app uses.
 
@@ -181,7 +200,7 @@ Built before the Phase 3 lessons, so the lessons teach exactly what the app uses
 - [ ] Runs against the real server with `yarn dev final-project`; manual pass of every browser item in the final Definition of Done, including `--delay 1500`, `--fail tickets` and `--many 2000`.
 - [ ] Commit.
 
-### Task 20: Final project, buggy JS starter and its checks
+### Task 21: Final project, buggy JS starter and its checks
 
 **Files:** `bootcamp/final-project/**` (`.js` / `.jsx`, same file names), `scripts/checks/final/*.check.tsx`, `mentor/guide.md` (final-project section).
 
@@ -204,20 +223,20 @@ Feature check: rendering `/tickets?assignee=a2` shows only a2's tickets; picking
 
 Global checks: no `.js` / `.jsx` under `final-project/src`; `tsc --noEmit -p final-project` strict clean; ESLint with `--no-inline-config` and `--max-warnings 0`.
 
-- [ ] Derive the starter from Task 19 (convert to JS, remove `useDebouncedValue`, remove the assignee filter, plant the 9 problems). Each planted problem is marked in the mentor guide with file, symptom, and how to unblock, never in the starter.
+- [ ] Derive the starter from Task 20 (convert to JS, remove `useDebouncedValue`, remove the assignee filter, plant the 9 problems). Each planted problem is marked in the mentor guide with file, symptom, and how to unblock, never in the starter.
 - [ ] `tools/verify.mjs`: solution passes everything; starter fails each of the 9 problem checks and the feature check individually.
-- [ ] Commit; open the **Final project PR** (Tasks 19 to 20).
+- [ ] Commit; open the **Final project PR** (Tasks 20 to 21).
 
-### Tasks 21 to 29: Phase 3 modules (one task each)
+### Tasks 22 to 30: Phase 3 modules (one task each)
 
-01 fundamentals in TS, 02 Rules of React, 03 rendering dynamics, 04 custom hooks (ends by writing `useDebouncedValue`), 05 server data, 06 antd (Table, Form, theming, telling versions apart), 07 performance (Performance tab walkthrough, render counts), 08 routing, 09 version differences and tooling (React 16 / 18 / 19, CRA vs Vite, `yarn build` output, `VITE_` / `REACT_APP_` env variables and the dev proxy in each, taught by reading small code samples; no CRA install). Ladders use components in `exercises/*.tsx`, checked with Testing Library + `user-event`. Each module's README names which final-project bug or feature it prepares for, without giving the fix away. Stretch: `useReducer` in module 03.
+01 fundamentals in TS, 02 Rules of React, 03 rendering dynamics, 04 custom hooks (ends by writing `useDebouncedValue`), 05 server data, 06 antd (Table, Form, theming, telling versions apart), 07 performance (Performance tab walkthrough, render counts), 08 routing, 09 version differences and tooling (React 16 / 18 / 19, CRA vs Vite, `yarn build` output, `VITE_` / `REACT_APP_` env variables and the dev proxy in each, taught by reading small code samples; no CRA install). Ladders use components in `exercises/*.tsx`, checked with Testing Library + `user-event`. Each module's lesson names which final-project bug or feature it prepares for, without giving the fix away. Stretch: `useReducer` in module 03.
 
-- [ ] Per module: README, SVGs, starter, check, solution, `main.tsx` playground, verify green, commit.
-- [ ] Open the **Phase 3 PR** (Tasks 21 to 29).
+- [ ] Per module: lesson deck, README, starter, check, solution, `main.tsx` playground, verify green, commit.
+- [ ] Open the **Phase 3 PR** (Tasks 22 to 30).
 
-### Task 30: START-HERE, mentor guide, time guides, dry run
+### Task 31: START-HERE, mentor guide, time guides, dry run
 
-- [ ] `START-HERE.md`: the path (Phase 0 → 1 → 2 → 3 → final), time guide per section summing to two days of core work, how `yarn verify` / `yarn progress` work, how to ask for help, what "done" means (spec section 3).
+- [ ] `START-HERE.md`: the path (Phase 0 → 1 → 2 → 3 → final), time guide per section summing to two days of core work, how `yarn lessons` / `yarn verify` / `yarn progress` work, how to ask for help, what "done" means (spec section 3).
 - [ ] `mentor/guide.md`: per module, known sticking points and unblocking questions; the 9 planted problems; the Phase 2 hand-over fallback; how to read `yarn progress` output.
 - [ ] Dry run: a fresh agent, given only `bootcamp/` and the instructions in `START-HERE.md`, works the core path from a clean `yarn install` and logs every place it got stuck, guessed, or found the time guide wrong. Fix what it finds.
 - [ ] `tools/verify.mjs` green on both CI runners. Open the **Polish PR**.

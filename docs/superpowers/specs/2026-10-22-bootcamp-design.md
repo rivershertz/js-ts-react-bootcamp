@@ -224,7 +224,7 @@ mentor/            → given to mentors only
 
 ### Exercises
 
-- Each exercise is a folder with a `README.md` (concept, walkthrough, task), a starter file, and a hidden check.
+- Each module has an interactive HTML slide deck (`lesson.tsx`) for the concepts and walkthroughs, and a `README.md` with a short recap and the exercise ladder, next to a starter file and a hidden check.
 - Each project `README.md` opens with its Definition of Done (section 7): first what the user can do in the app, then the technical checks, as a checklist the junior ticks off.
 - `yarn verify 01-js/03` runs that exercise's check and prints pass or fail plus a hint.
 - `yarn progress` prints a checklist of core and stretch exercises completed.
@@ -236,7 +236,7 @@ Runs `tsc --noEmit`, ESLint with the React Hooks rules, and one check per plante
 
 ### Offline and Windows constraints
 
-- All explanations live in the repo. Lessons are Markdown read in VS Code's preview. Diagrams are embedded SVG images, so no extensions or internet are needed.
+- All explanations live in the repo. Lessons are HTML slide decks with one shared design system and interactive step-through diagrams, served locally by `yarn lessons` with no internet needed. Exercise instructions and other docs are Markdown read in VS Code's preview.
 - No external links. Where the React docs help, lessons say what to search for in them (for example: search the React docs for "You Might Not Need an Effect").
 - Dependencies are kept few and mainstream so they resolve through Artifactory.
 - All scripts are Node scripts (no bash), so they run in PowerShell and cmd. The repo pins line endings with `.gitattributes`.
