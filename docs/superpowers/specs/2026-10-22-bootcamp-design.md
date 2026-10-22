@@ -30,7 +30,7 @@ It exists because the team is actively migrating its (mostly JavaScript) React a
 
 A junior is done when they have:
 
-1. Passed every **core** exercise (`yarn check` green).
+1. Passed every **core** exercise (`yarn verify` green).
 2. Finished the **final project**: migrated the provided ticket UI to TypeScript, fixed the planted bugs and performance problems, and added the new feature, with the final-project check green.
 
 **Stretch** exercises are optional and never block the next step.
@@ -87,7 +87,7 @@ The **Python API** is provided and ready-made. Juniors only call it from the fro
 ### Phase 0: Setup (about 30 min)
 
 - Juniors add their own `.npmrc` (pointing at Artifactory) and run `yarn install` themselves. The repo ships no registry config.
-- `yarn check` as a smoke test.
+- `yarn verify` as a smoke test.
 - Start the Python server.
 - How a Vite dev server works and how it proxies API calls to the Python backend.
 - One-page "Python to JS" cheat sheet.
@@ -118,7 +118,7 @@ Running `yarn tickets` lets the user:
 
 Technical:
 
-- [ ] `yarn check 01-js/project` passes.
+- [ ] `yarn verify 01-js/project` passes.
 - [ ] Logic is split into ES modules (`api`, `filters`, `stats`, `validation`) with no UI or `console.log` inside them.
 - [ ] No input array or object is mutated.
 
@@ -149,7 +149,7 @@ Technical:
 - [ ] A ticket is a discriminated union on `status` (for example, only a `closed` ticket has `closedAt`, only an `assigned` ticket has `assignee`).
 - [ ] Every `switch` on status is exhaustive, enforced by a `never` check.
 - [ ] API responses arrive as `unknown` and pass through a type guard before use; a malformed ticket is reported, not trusted.
-- [ ] `yarn check 02-ts/project` passes.
+- [ ] `yarn verify 02-ts/project` passes.
 
 **Stretch:** template literal types, mapped types, generic constraints with `extends`.
 
@@ -198,7 +198,7 @@ Technical:
 - [ ] All planted Rules of React bugs are fixed (each has its own check).
 - [ ] All planted performance problems are fixed (each has its own check).
 - [ ] The debounced search uses the `useDebouncedValue` custom hook.
-- [ ] `yarn check final-project` passes.
+- [ ] `yarn verify final-project` passes.
 
 ## 8. Repo and delivery mechanics
 
@@ -216,7 +216,7 @@ bootcamp/          → given to juniors
   03-react/
   final-project/
   server/           standard-library Python API
-  scripts/          Node scripts behind `yarn check` and `yarn progress`
+  scripts/          Node scripts behind `yarn verify` and `yarn progress`
 mentor/            → given to mentors only
   solutions/        worked solutions for every exercise and project
   guide.md          known sticking points and how to unblock someone
@@ -226,7 +226,7 @@ mentor/            → given to mentors only
 
 - Each exercise is a folder with a `README.md` (concept, walkthrough, task), a starter file, and a hidden check.
 - Each project `README.md` opens with its Definition of Done (section 7): first what the user can do in the app, then the technical checks, as a checklist the junior ticks off.
-- `yarn check 01-js/03` runs that exercise's check and prints pass or fail plus a hint.
+- `yarn verify 01-js/03` runs that exercise's check and prints pass or fail plus a hint.
 - `yarn progress` prints a checklist of core and stretch exercises completed.
 - Checks are written by the bootcamp author. Juniors never write tests.
 
