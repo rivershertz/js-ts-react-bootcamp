@@ -6,7 +6,7 @@
 
 **Architecture:** One root `package.json` inside `bootcamp/`. All checks are Vitest files kept in `bootcamp/scripts/checks/`, run through a small Node CLI that prints pass / fail plus a hint per step. Every exercise has a worked solution in `mentor/solutions/` mirroring the `bootcamp/` paths; an authoring tool at the repo root (`tools/verify.mjs`, not shipped) proves that every solution passes and every starter fails. The final project is built correct-first in TypeScript, then degraded into the buggy JS starter.
 
-**Tech Stack:** Node 24, Yarn 1.22, TypeScript 5.9, Vite 7, Vitest 3 (+ jsdom, Testing Library), React 18.3, antd 5, axios, @tanstack/react-query 5, react-router-dom 6, ESLint 9 (flat config, typescript-eslint, eslint-plugin-react-hooks), Prettier 3. Python 3 standard library for the API.
+**Tech Stack:** Node 24, Yarn 1.22, TypeScript 5.9, Vite 5 (matches the team's apps) with @vitejs/plugin-react 4, Vitest 3 pinned to resolve against Vite 5 (+ jsdom, Testing Library), React 18.3, antd 5, axios, @tanstack/react-query 5, react-router-dom 6, ESLint 9 (flat config, typescript-eslint, eslint-plugin-react-hooks), Prettier 3. Python 3 standard library for the API.
 
 **Spec:** `docs/superpowers/specs/2026-10-22-bootcamp-design.md`
 
