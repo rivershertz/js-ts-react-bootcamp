@@ -26,7 +26,7 @@
 | Phase 1 project | `yarn tickets` | Your ticket logic running against the Python API ("not done yet" for the parts you have not written). |
 | Your progress | `yarn progress` | Every module, every step, and the next thing to do. |
 | Final project | `yarn dev final-project` | The ticket table, running against the Python API. |
-| Final project checks | `yarn verify final-project` | Six checks: TS migration, tsc, ESLint, a planted bug, a performance problem, a new feature. |
+| Final project checks | `yarn verify final-project` | Thirteen checks: TS migration, tsc, ESLint, six planted bugs, three performance problems, a new feature. It needs your Phase 2 project. |
 
 Solve a step in `01-js/03-scope-closures/exercises.js`, run `yarn verify 01-js/03` again, and watch it turn green.
 

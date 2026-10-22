@@ -1,21 +1,30 @@
-import { Alert, Button, Flex, Input, Radio } from 'antd';
+import { Alert, Button, Flex, Typography } from 'antd';
+import { computeStats, filterTickets, sortTickets } from '@tickets/logic';
 import { useEffect, useState } from 'react';
-import { useTickets } from '../api/tickets';
+import { Link } from 'react-router-dom';
+import { useAssignees, useTickets } from '../api/tickets';
+import StatsPanel from '../components/StatsPanel';
+import TicketFilters from '../components/TicketFilters';
 import TicketTable from '../components/TicketTable';
-import { compareTickets, filterTickets } from '../logic';
+
+const newestFirst = (a, b) => b.createdAt.localeCompare(a.createdAt);
 
 export default function TicketListPage() {
   const { data, isPending, isError, refetch } = useTickets();
+  const { data: assignees = [] } = useAssignees();
+  const [filters, setFilters] = useState({});
   const [search, setSearch] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [sort, setSort] = useState(null);
 
   const tickets = data ?? [];
-  const sorted = tickets.sort(compareTickets(sortBy));
-  const rows = filterTickets(sorted, { search });
+  // Newest first until a column is picked.
+  const ordered = sort ? sortTickets(tickets, sort) : tickets.sort(newestFirst);
+  const rows = filterTickets(ordered, { ...filters, search });
 
+  const count = tickets.length;
   useEffect(() => {
-    document.title = `${tickets.length} tickets`;
-  }, []);
+    document.title = `${count} tickets`;
+  }, [count]);
 
   if (isError) {
     return (
@@ -29,21 +38,17 @@ export default function TicketListPage() {
 
   return (
     <Flex vertical gap={16}>
-      <Flex gap={16} wrap>
-        <Input
-          aria-label="Search"
-          placeholder="Search titles"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ maxWidth: 320 }}
-          allowClear
-        />
-        <Radio.Group value={sortBy} onChange={(e) => setSortBy(e.target.value)} optionType="button">
-          <Radio.Button value="newest">Newest</Radio.Button>
-          <Radio.Button value="priority">Priority</Radio.Button>
-        </Radio.Group>
+      <Flex justify="space-between" align="center">
+        <Typography.Title level={2} style={{ margin: 0 }}>
+          Tickets
+        </Typography.Title>
+        <Link to="/tickets/new">
+          <Button type="primary">New ticket</Button>
+        </Link>
       </Flex>
-      <TicketTable tickets={rows} loading={isPending} />
+      <StatsPanel stats={computeStats(tickets)} onRefresh={() => refetch()} />
+      <TicketFilters filters={filters} onFiltersChange={setFilters} search={search} onSearchChange={setSearch} />
+      <TicketTable tickets={rows} assignees={assignees} loading={isPending} sort={sort} onSortChange={setSort} />
     </Flex>
   );
 }
