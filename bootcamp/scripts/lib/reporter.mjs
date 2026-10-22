@@ -27,7 +27,6 @@ function* walk(task) {
 }
 
 function clean(message = '') {
-  // eslint-disable-next-line no-control-regex
   return message
     .replace(/\u001b\[[0-9;]*m/g, '')
     .split(/\n\s*Ignored nodes:/)[0]

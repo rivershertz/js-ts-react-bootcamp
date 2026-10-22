@@ -1,0 +1,38 @@
+# Authoring check only. Juniors never see this: it lives outside bootcamp/ and mentor/.
+# Proves on a real Windows machine (and on Linux) that starters fail, solutions pass,
+# the Python API works, and the content is offline-safe.
+name: verify
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install (Yarn 1, as juniors do)
+        working-directory: bootcamp
+        run: |
+          npm install -g yarn@1.22.22
+          yarn install --frozen-lockfile
+      - name: Python API tests
+        run: python -m unittest discover tools/tests
+      - name: Starters fail, solutions pass, content is clean
+        run: node tools/verify.mjs
+      - name: Junior commands run
+        working-directory: bootcamp
+        run: |
+          node scripts/verify.mjs 01-js/03 || echo "expected to fail on the starter"
+          node scripts/progress.mjs

@@ -19,6 +19,8 @@ export default tseslint.config(
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
+      // Exercise starters have parameters you have not used yet; that is fine.
+      '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
     },
   },
 );

@@ -7,7 +7,9 @@
 //    (a check that passes on the starter teaches nothing).
 // 2. Solutions: mentor/solutions/ is copied over a scratch copy of bootcamp/
 //    and every step, core and stretch, must PASS.
-// 3. Content: no internet links under bootcamp/, and relative links resolve.
+// 3. Content: no internet links under bootcamp/, relative links resolve, and the lessons,
+//    scripts and starters type-check and lint cleanly (the final project is meant to fail both).
+import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, symlinkSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -86,6 +88,13 @@ function removeStarterFilesReplacedBySolutions() {
 }
 
 function checkContent() {
+  for (const [label, bin, args] of [
+    ['tsc', 'typescript/bin/tsc', ['-p', 'tsconfig.json', '--pretty', 'false']],
+    ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--max-warnings', '0']],
+  ]) {
+    const res = spawnSync(process.execPath, [path.join(bootcamp, 'node_modules', bin), ...args], { cwd: bootcamp, encoding: 'utf8' });
+    if (res.status !== 0) problems.push(`${label} fails on bootcamp/:\n      ${`${res.stdout}${res.stderr}`.trim().split('\n').slice(0, 10).join('\n      ')}`);
+  }
   const files = walk(bootcamp).filter((f) => /\.(md|tsx?|jsx?|html|css)$/.test(f) && !f.includes('node_modules'));
   for (const file of files) {
     const text = readFileSync(file, 'utf8');
