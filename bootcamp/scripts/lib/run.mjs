@@ -10,7 +10,7 @@ const reporter = fileURLToPath(new URL('./reporter.mjs', import.meta.url));
  * Run one module's checks (optionally one step) in the given bootcamp folder.
  * Returns [{ n, state: 'pass' | 'fail' | 'skip', message? }].
  */
-export function runChecks({ root, module, step }) {
+export function runChecks({ root, module, step, env = {} }) {
   const dir = mkdtempSync(path.join(os.tmpdir(), 'bootcamp-verify-'));
   const out = path.join(dir, 'results.json');
   const args = [
@@ -24,7 +24,7 @@ export function runChecks({ root, module, step }) {
   if (step !== undefined) args.push('-t', `^step ${step}$`);
   const child = spawnSync(process.execPath, args, {
     cwd: root,
-    env: { ...process.env, VERIFY_OUT: out, FORCE_COLOR: '0' },
+    env: { ...process.env, ...env, VERIFY_OUT: out, FORCE_COLOR: '0' },
     encoding: 'utf8',
   });
   try {

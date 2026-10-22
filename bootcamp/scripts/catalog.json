@@ -1,6 +1,39 @@
 {
   "modules": [
     {
+      "id": "00-setup",
+      "dir": "00-setup",
+      "title": "Setup check",
+      "kind": "smoke",
+      "check": "scripts/checks/00-setup/smoke.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Node 24 is installed",
+          "hint": "Run `node -v` in a terminal. If it is older than v24, ask your mentor to update Node."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "Yarn 1 runs this command",
+          "hint": "Run `yarn -v`. It should print 1.22.something. Run the check with `yarn verify 00-setup`, not with npm."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "Dependencies are installed",
+          "hint": "Run `yarn install` in the bootcamp folder. If it cannot download packages, check your .npmrc (see 00-setup/README.md)."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "The ticket API answers on port 8000",
+          "hint": "Start it in a second terminal with `python server/server.py` (or `py server/server.py`) and leave it running."
+        }
+      ]
+    },
+    {
       "id": "01-js/03",
       "dir": "01-js/03-scope-closures",
       "title": "Scope and closures",

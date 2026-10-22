@@ -30,6 +30,8 @@ jobs:
           yarn install --frozen-lockfile
       - name: Python API tests
         run: python -m unittest discover tools/tests
+      - name: Runner tests
+        run: node --test "tools/tests/*.test.mjs"
       - name: Starters fail, solutions pass, content is clean
         run: node tools/verify.mjs
       - name: Junior commands run

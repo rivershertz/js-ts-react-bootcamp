@@ -16,7 +16,7 @@ export function resolveTarget(input, catalog = loadCatalog()) {
   const parts = String(input ?? '')
     .replaceAll('\\', '/')
     .split('/')
-    .filter(Boolean);
+    .filter((part) => part && part !== '.');
   const find = (p) => catalog.modules.find((m) => m.id === p.join('/') || m.dir === p.join('/'));
   let module = find(parts);
   let step;

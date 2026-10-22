@@ -9,7 +9,7 @@
 //    and every step, core and stretch, must PASS.
 // 3. Content: no internet links under bootcamp/, relative links resolve, and the lessons,
 //    scripts and starters type-check and lint cleanly (the final project is meant to fail both).
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, symlinkSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -40,24 +40,29 @@ symlinkSync(path.join(bootcamp, 'node_modules'), path.join(scratch, 'node_module
 cpSync(solutions, scratch, { recursive: true });
 removeStarterFilesReplacedBySolutions();
 
+// The setup check (and any check that needs the real API) talks to a running server.
+const api = startApi();
+
 for (const module of modules) {
   process.stdout.write(`${module.id.padEnd(16)} `);
   const starter = runChecks({ root: bootcamp, module });
-  const solved = runChecks({ root: scratch, module });
+  // The setup check insists on being started by Yarn 1, as juniors do; this tool is started by node.
+  const solved = runChecks({ root: scratch, module, env: { npm_config_user_agent: 'yarn/1.22.22 tools/verify' } });
   const row = [];
   for (const s of module.steps) {
     const onStarter = starter.find((r) => r.n === s.n)?.state ?? 'fail';
     const onSolution = solved.find((r) => r.n === s.n);
-    if (s.level === 'core' && onStarter === 'pass') problems.push(`${module.id} step ${s.n} passes on the untouched starter`);
+    if (s.level === 'core' && onStarter === 'pass' && module.kind !== 'smoke') problems.push(`${module.id} step ${s.n} passes on the untouched starter`);
     if (onSolution?.state !== 'pass') {
       const why = onSolution?.message ?? solved.find((r) => r.n === 0)?.message ?? 'no result';
       problems.push(`${module.id} step ${s.n} fails on the solution:\n      ${why.split('\n').join('\n      ')}`);
     }
-    row.push(onSolution?.state === 'pass' && (s.level === 'stretch' || onStarter !== 'pass') ? styleText('green', '✓') : styleText('red', '✗'));
+    row.push(onSolution?.state === 'pass' && (s.level === 'stretch' || module.kind === 'smoke' || onStarter !== 'pass') ? styleText('green', '✓') : styleText('red', '✗'));
   }
   console.log(row.join(' '));
 }
 
+api.kill();
 if (!only) checkContent();
 
 console.log('');
@@ -67,6 +72,14 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(styleText('green', 'All good: starters fail, solutions pass, content is offline-safe.'));
+
+function startApi() {
+  const python = process.platform === 'win32' ? 'python' : 'python3';
+  const child = spawn(python, [path.join(bootcamp, 'server', 'server.py')], { stdio: 'ignore' });
+  child.on('error', () => problems.push(`Could not start the Python API with "${python}"`));
+  spawnSync(process.execPath, ['-e', 'setTimeout(() => {}, 1500)']);
+  return child;
+}
 
 function removeStarterFilesReplacedBySolutions() {
   // A solution .ts/.tsx replaces a starter .js/.jsx of the same name (the migration exercises).
