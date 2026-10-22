@@ -86,7 +86,8 @@ The **Python API** is provided and ready-made. Juniors only call it from the fro
 
 ### Phase 0: Setup (about 30 min)
 
-- Point Yarn at the Artifactory registry, `yarn install`, `yarn check` (smoke test).
+- Juniors add their own `.npmrc` (pointing at Artifactory) and run `yarn install` themselves. The repo ships no registry config.
+- `yarn check` as a smoke test.
 - Start the Python server.
 - How a Vite dev server works and how it proxies API calls to the Python backend.
 - One-page "Python to JS" cheat sheet.
@@ -181,11 +182,6 @@ Runs `tsc --noEmit`, ESLint with the React Hooks rules, and one check per plante
 ### Offline and Windows constraints
 
 - All explanations live in the repo. Lessons are Markdown read in VS Code's preview. Diagrams are embedded SVG images, so no extensions or internet are needed.
-- External links point only to React docs pages.
+- No external links. Where the React docs help, lessons say what to search for in them (for example: search the React docs for "You Might Not Need an Effect").
 - Dependencies are kept few and mainstream so they resolve through Artifactory.
 - All scripts are Node scripts (no bash), so they run in PowerShell and cmd. The repo pins line endings with `.gitattributes`.
-
-## 9. Open items
-
-- The exact Artifactory registry URL, to fill into the setup instructions.
-- Which React docs pages are reachable on the closed network, so links only point there.
