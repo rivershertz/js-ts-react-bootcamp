@@ -1,6 +1,6 @@
 # JS / TS / React Bootcamp: Design Spec
 
-Status: draft for review · Date: 2026-10-22 · Owner: Nahar
+Status: approved · Date: 2026-10-22 · Owner: Nahar
 
 ## 1. Purpose
 
