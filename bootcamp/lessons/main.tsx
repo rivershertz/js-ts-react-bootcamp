@@ -2,6 +2,7 @@
 import { StrictMode, useEffect, useState, type ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { DeckMeta } from './kit';
+import * as galleryModule from './kit/Gallery';
 import './kit/tokens.css';
 import './kit/kit.css';
 
@@ -11,6 +12,8 @@ type DeckModule = { meta: DeckMeta; default: ComponentType<{ initialSlide?: numb
 const decks = Object.values(import.meta.glob<DeckModule>('../0*/**/lesson.tsx', { eager: true })).sort((a, b) =>
   a.meta.id.localeCompare(b.meta.id),
 );
+
+const gallery: DeckModule = galleryModule;
 
 const PHASES: Record<string, string> = {
   '00': 'Phase 0 · Setup',
@@ -27,9 +30,13 @@ try {
 }
 
 function parseHash() {
+  // #/01-js/03 opens a deck; #/01-js/03/5 opens it at slide 5. Same for single-part ids like #/00-setup/5.
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  const slide = parts.length === 3 ? Number(parts.pop()) - 1 : 0;
-  return { id: parts.join('/'), slide: Number.isFinite(slide) ? slide : 0 };
+  const last = parts.at(-1) ?? '';
+  if (/^\d+$/.test(last) && ![...decks, gallery].some((d) => d.meta.id === parts.join('/'))) {
+    return { id: parts.slice(0, -1).join('/'), slide: Number(last) - 1 };
+  }
+  return { id: parts.join('/'), slide: 0 };
 }
 
 function App() {
@@ -40,7 +47,7 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  const deck = decks.find((d) => d.meta.id === route.id);
+  const deck = [...decks, gallery].find((d) => d.meta.id === route.id);
   if (!deck) return <Index />;
   const Lesson = deck.default;
   return (

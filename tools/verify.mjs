@@ -103,6 +103,7 @@ function removeStarterFilesReplacedBySolutions() {
 function checkContent() {
   for (const [label, bin, args] of [
     ['tsc', 'typescript/bin/tsc', ['-p', 'tsconfig.json', '--pretty', 'false']],
+    ['lesson kit tests', 'vitest/vitest.mjs', ['run', 'lessons', '--config', 'vitest.config.ts']],
     ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--max-warnings', '0']],
   ]) {
     const res = spawnSync(process.execPath, [path.join(bootcamp, 'node_modules', bin), ...args], { cwd: bootcamp, encoding: 'utf8' });

@@ -49,8 +49,7 @@ export function Deck({ meta, children, initialSlide = 0, onSlideChange }: Props)
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      const target = e.target as HTMLElement;
-      if (target.closest('textarea, input')) return;
+      if (e.target instanceof Element && e.target.closest('textarea, input')) return;
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') next();
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
       else if (e.key === 'Home') go(0);
