@@ -102,7 +102,25 @@ Each module: a mental-model walkthrough, then a 6 to 10 step exercise ladder.
 4. **Async:** the event loop, callbacks, Promises, `async` / `await`, `Promise.all`, `Promise.allSettled`, error handling, calling the real API with axios.
 5. **Modules:** `import` / `export`, and how JS modules differ from Python packages.
 
-**Phase project:** the plain-JS ticket logic (see section 6).
+**Phase project:** the plain-JS ticket logic (see section 6). There is no UI yet; a small demo script, `yarn tickets`, runs the logic against the live API and prints the results, so the work is visible.
+
+**Definition of Done (Phase 1 project):**
+
+Running `yarn tickets` lets the user:
+
+- [ ] See all tickets loaded from the Python API, with a clear error message (not a crash) if the server is down.
+- [ ] Filter tickets by status, priority, assignee, and a free-text search on the title.
+- [ ] Sort tickets by created date, priority, or title, ascending or descending, without mutating the original list.
+- [ ] See tickets grouped by status, with a count per group.
+- [ ] See summary stats: total, open, overdue, and average age in days.
+- [ ] Validate a new ticket and get a list of every field error (missing title, unknown priority, due date in the past), not just the first one.
+- [ ] Load tickets and assignees in parallel; if one request fails, still see the other with a warning (`Promise.allSettled`).
+
+Technical:
+
+- [ ] `yarn check 01-js/project` passes.
+- [ ] Logic is split into ES modules (`api`, `filters`, `stats`, `validation`) with no UI or `console.log` inside them.
+- [ ] No input array or object is mutated.
 
 **Stretch:** arrow functions in depth, debounce, harder `reduce` challenges.
 
@@ -118,6 +136,20 @@ Each module: a mental-model walkthrough, then a 6 to 10 step exercise ladder.
 8. **Migration workflow:** renaming `.js` to `.ts`, `allowJs` and `checkJs`, raising strictness step by step, eliminating `any`, typing axios responses.
 
 **Phase project:** migrate their own Phase 1 ticket logic to strict TS, with zero `any` and zero `tsc` errors.
+
+**Definition of Done (Phase 2 project):**
+
+For the user, `yarn tickets` behaves exactly as before. Nothing visible changes; the code is now safe to build on.
+
+Technical:
+
+- [ ] Every Phase 1 file is `.ts`, and `tsc --noEmit` passes with `strict: true`.
+- [ ] No `any`, no `@ts-ignore`, no non-null `!` assertions.
+- [ ] Ticket statuses and priorities are defined once as `as const` arrays, and their types are derived from them.
+- [ ] A ticket is a discriminated union on `status` (for example, only a `closed` ticket has `closedAt`, only an `assigned` ticket has `assignee`).
+- [ ] Every `switch` on status is exhaustive, enforced by a `never` check.
+- [ ] API responses arrive as `unknown` and pass through a type guard before use; a malformed ticket is reported, not trusted.
+- [ ] `yarn check 02-ts/project` passes.
 
 **Stretch:** template literal types, mapped types, generic constraints with `extends`.
 
@@ -146,6 +178,28 @@ The provided JS ticket UI (antd table + form) built on the junior's own logic. T
 3. Fixes 3 planted performance problems.
 4. Adds a feature: filter by assignee, kept in the URL.
 
+**Definition of Done (final project):**
+
+In the browser, the user can:
+
+- [ ] Open the ticket list and see an antd Table of tickets from the Python API, with a loading state while it fetches and an error state with a retry button if the server is down.
+- [ ] Sort the table by any column and page through results.
+- [ ] Filter by status and priority, and type in a search box that only filters after they stop typing (debounced).
+- [ ] Filter by assignee, and have that filter kept in the URL: refreshing the page or sharing the link keeps the same filter (the new feature).
+- [ ] Click "New ticket" and fill in an antd Form that validates required fields and shows field errors inline.
+- [ ] Click a ticket to edit it in the same form, pre-filled; saving updates the table without a manual refresh (React Query invalidation).
+- [ ] Use the browser back and forward buttons between the list and the form pages.
+- [ ] Type in the search box without the whole table visibly lagging (the planted performance problems are fixed).
+
+Technical:
+
+- [ ] Every file in the app is `.ts` or `.tsx`; `tsc --noEmit` passes with `strict: true` and no `any`.
+- [ ] ESLint passes with the React Hooks rules turned on, with no disabled rules.
+- [ ] All planted Rules of React bugs are fixed (each has its own check).
+- [ ] All planted performance problems are fixed (each has its own check).
+- [ ] The debounced search uses the `useDebouncedValue` custom hook.
+- [ ] `yarn check final-project` passes.
+
 ## 8. Repo and delivery mechanics
 
 ### Two folders, two ZIPs
@@ -171,6 +225,7 @@ mentor/            → given to mentors only
 ### Exercises
 
 - Each exercise is a folder with a `README.md` (concept, walkthrough, task), a starter file, and a hidden check.
+- Each project `README.md` opens with its Definition of Done (section 7): first what the user can do in the app, then the technical checks, as a checklist the junior ticks off.
 - `yarn check 01-js/03` runs that exercise's check and prints pass or fail plus a hint.
 - `yarn progress` prints a checklist of core and stretch exercises completed.
 - Checks are written by the bootcamp author. Juniors never write tests.
