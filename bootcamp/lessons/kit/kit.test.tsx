@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 // Tests for the lesson kit itself (authoring). Juniors never run these.
+import '@testing-library/jest-dom/vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Deck, PredictSlide, Reveal, Slide, WalkthroughSlide } from './index';
