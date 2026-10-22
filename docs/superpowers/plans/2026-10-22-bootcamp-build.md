@@ -107,6 +107,22 @@ Phase 1 ships `constants.js` and `index.js` filled in, and the other four files 
 
 ---
 
+### Task 0: Proof of concept (gate before everything else)
+
+A thin, working slice of every moving part, built in the real repo locations so the good parts carry forward. Nahar tries it and says whether it feels right before Tasks 1 to 31 start. Anything that does not feel right changes the plan, not just the POC.
+
+The slice:
+- Scaffold (Task 1 in miniature): `bootcamp/package.json` with the pinned stack, `tsconfig.json`, `eslint.config.js`, `vitest.config.ts`, `.gitattributes`.
+- Python API: the full route set and flags (it is small enough to build whole).
+- Check runner: `yarn verify`, `yarn progress`, `catalog.json`, `tools/verify.mjs` (solutions pass, starters fail).
+- Lesson kit: deck engine, design tokens (light and dark), layouts `title`, `concept`, `compare`, `code`, `predict`, the `<MemoryStepper>` walkthrough widget and `<RunCode>`; `yarn lessons`.
+- One deck: `01-js/03-scope-closures` (short version).
+- Three sample ladders, 2 to 3 steps each: `01-js/03` closures (runtime checks), `02-ts/07` deriving types (type-level checks through `tsc`), `03-react/04` custom hooks (`useDebouncedValue`, Testing Library check, `yarn dev` playground).
+- Final-project slice: antd Table of tickets via React Query from the Python API, as a JS starter with one planted Rules of React bug (sorting mutates the query cache) and one performance problem (no debounce on search), each with its own check, plus the `tsc` and ESLint global checks.
+- GitHub Actions job running `tools/verify.mjs` on Windows and Linux.
+
+What Nahar tries: `yarn install`, `yarn lessons` (click through the closures deck), `yarn verify 01-js/03` on the starter (fails with hints), `yarn progress`, `yarn dev final-project` against the server.
+
 ### Task 1: Scaffold, configs, spec wording fix
 
 **Files:** Create `.gitattributes`, `bootcamp/{package.json,tsconfig.json,eslint.config.js,.prettierrc,.gitignore,vitest.config.ts}`, `mentor/guide.md` (skeleton).
@@ -243,4 +259,4 @@ Global checks: no `.js` / `.jsx` under `final-project/src`; `tsc --noEmit -p fin
 
 ## Delivery
 
-Six PRs into `main`, each reviewable on its own: Foundation, Phase 1, Phase 2, Final project, Phase 3, Polish. Each PR description lists what to try by hand (for example `yarn verify 01-js/03` on the starter and on the solution). Nahar zips `bootcamp/` and `mentor/` from `main` when the Polish PR merges.
+First the POC (Task 0) for a hands-on review. Then six PRs into `main`, each reviewable on its own: Foundation, Phase 1, Phase 2, Final project, Phase 3, Polish. Each PR description lists what to try by hand (for example `yarn verify 01-js/03` on the starter and on the solution). Nahar zips `bootcamp/` and `mentor/` from `main` when the Polish PR merges.
