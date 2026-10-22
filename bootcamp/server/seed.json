@@ -1,0 +1,431 @@
+{
+  "assignees": [
+    {
+      "id": "a1",
+      "name": "Dana Levi"
+    },
+    {
+      "id": "a2",
+      "name": "Omar Haddad"
+    },
+    {
+      "id": "a3",
+      "name": "Noa Cohen"
+    },
+    {
+      "id": "a4",
+      "name": "Yossi Mizrahi"
+    },
+    {
+      "id": "a5",
+      "name": "Lior Ben-David"
+    },
+    {
+      "id": "a6",
+      "name": "Maya Katz"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "t1",
+      "title": "Login page shows blank screen",
+      "description": "Reported by a customer: login page shows blank screen.",
+      "priority": "low",
+      "status": "open",
+      "createdAt": "2026-09-05T14:00:00Z",
+      "dueDate": null
+    },
+    {
+      "id": "t2",
+      "title": "Export to CSV drops last row",
+      "description": "Reported by a customer: export to csv drops last row.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-07-12T17:00:00Z",
+      "dueDate": "2026-10-02",
+      "assignee": "a1"
+    },
+    {
+      "id": "t3",
+      "title": "Search ignores Hebrew characters",
+      "description": "Reported by a customer: search ignores hebrew characters.",
+      "priority": "high",
+      "status": "blocked",
+      "createdAt": "2026-10-14T09:15:00Z",
+      "dueDate": null,
+      "assignee": "a4",
+      "blockedReason": "Waiting for design"
+    },
+    {
+      "id": "t4",
+      "title": "Dashboard loads slowly",
+      "description": "Reported by a customer: dashboard loads slowly.",
+      "priority": "urgent",
+      "status": "closed",
+      "createdAt": "2026-07-08T17:00:00Z",
+      "dueDate": "2026-12-02",
+      "closedAt": "2026-07-28T12:00:00Z"
+    },
+    {
+      "id": "t5",
+      "title": "Wrong timezone on due dates",
+      "description": "Reported by a customer: wrong timezone on due dates.",
+      "priority": "low",
+      "status": "open",
+      "createdAt": "2026-07-18T10:30:00Z",
+      "dueDate": "2026-09-19"
+    },
+    {
+      "id": "t6",
+      "title": "Password reset email not sent",
+      "description": "Reported by a customer: password reset email not sent.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-09-18T10:00:00Z",
+      "dueDate": "2026-10-12",
+      "assignee": "a1"
+    },
+    {
+      "id": "t7",
+      "title": "Table pagination resets on edit",
+      "description": "Reported by a customer: table pagination resets on edit.",
+      "priority": "high",
+      "status": "blocked",
+      "createdAt": "2026-07-19T08:15:00Z",
+      "dueDate": "2026-12-25",
+      "assignee": "a3",
+      "blockedReason": "Needs backend change"
+    },
+    {
+      "id": "t8",
+      "title": "Dark mode colours unreadable",
+      "description": "Reported by a customer: dark mode colours unreadable.",
+      "priority": "urgent",
+      "status": "closed",
+      "createdAt": "2026-10-12T12:15:00Z",
+      "dueDate": "2026-10-03",
+      "closedAt": "2026-10-28T12:00:00Z",
+      "assignee": "a5"
+    },
+    {
+      "id": "t9",
+      "title": "Duplicate tickets after double click",
+      "description": "Reported by a customer: duplicate tickets after double click.",
+      "priority": "high",
+      "status": "closed",
+      "createdAt": "2026-10-10T17:00:00Z",
+      "dueDate": null,
+      "closedAt": "2026-10-28T12:00:00Z",
+      "assignee": "a3"
+    },
+    {
+      "id": "t10",
+      "title": "Avatar upload fails over 2MB",
+      "description": "Reported by a customer: avatar upload fails over 2mb.",
+      "priority": "urgent",
+      "status": "assigned",
+      "createdAt": "2026-10-02T09:30:00Z",
+      "dueDate": "2026-11-20",
+      "assignee": "a4"
+    },
+    {
+      "id": "t11",
+      "title": "Notifications badge never clears",
+      "description": "Reported by a customer: notifications badge never clears.",
+      "priority": "low",
+      "status": "closed",
+      "createdAt": "2026-07-09T15:00:00Z",
+      "dueDate": null,
+      "closedAt": "2026-07-28T12:00:00Z"
+    },
+    {
+      "id": "t12",
+      "title": "Sorting by priority is reversed",
+      "description": "Reported by a customer: sorting by priority is reversed.",
+      "priority": "high",
+      "status": "closed",
+      "createdAt": "2026-10-12T08:45:00Z",
+      "dueDate": "2026-09-16",
+      "closedAt": "2026-10-28T12:00:00Z",
+      "assignee": "a3"
+    },
+    {
+      "id": "t13",
+      "title": "Form loses data on back button",
+      "description": "Reported by a customer: form loses data on back button.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-10-13T15:00:00Z",
+      "dueDate": null,
+      "assignee": "a4"
+    },
+    {
+      "id": "t14",
+      "title": "API returns 500 for empty filter",
+      "description": "Reported by a customer: api returns 500 for empty filter.",
+      "priority": "medium",
+      "status": "blocked",
+      "createdAt": "2026-10-18T12:45:00Z",
+      "dueDate": "2026-12-08",
+      "assignee": "a2",
+      "blockedReason": "Waiting for design"
+    },
+    {
+      "id": "t15",
+      "title": "Typo in onboarding banner",
+      "description": "Reported by a customer: typo in onboarding banner.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-08-08T08:45:00Z",
+      "dueDate": "2026-10-09",
+      "assignee": "a3"
+    },
+    {
+      "id": "t16",
+      "title": "Session expires too early",
+      "description": "Reported by a customer: session expires too early.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-10-18T13:30:00Z",
+      "dueDate": "2026-09-15"
+    },
+    {
+      "id": "t17",
+      "title": "Print view cuts off columns",
+      "description": "Reported by a customer: print view cuts off columns.",
+      "priority": "urgent",
+      "status": "closed",
+      "createdAt": "2026-10-13T09:45:00Z",
+      "dueDate": "2026-09-07",
+      "closedAt": "2026-10-28T12:00:00Z",
+      "assignee": "a2"
+    },
+    {
+      "id": "t18",
+      "title": "Assignee dropdown is empty",
+      "description": "Reported by a customer: assignee dropdown is empty.",
+      "priority": "medium",
+      "status": "closed",
+      "createdAt": "2026-07-11T17:00:00Z",
+      "dueDate": null,
+      "closedAt": "2026-07-28T12:00:00Z",
+      "assignee": "a5"
+    },
+    {
+      "id": "t19",
+      "title": "Date picker opens off screen",
+      "description": "Reported by a customer: date picker opens off screen.",
+      "priority": "high",
+      "status": "open",
+      "createdAt": "2026-07-03T11:45:00Z",
+      "dueDate": null
+    },
+    {
+      "id": "t20",
+      "title": "Report totals do not add up",
+      "description": "Reported by a customer: report totals do not add up.",
+      "priority": "high",
+      "status": "blocked",
+      "createdAt": "2026-09-16T09:00:00Z",
+      "dueDate": "2026-12-16",
+      "assignee": "a4",
+      "blockedReason": "Needs backend change"
+    },
+    {
+      "id": "t21",
+      "title": "Slow query on ticket history",
+      "description": "Reported by a customer: slow query on ticket history.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-07-11T12:45:00Z",
+      "dueDate": "2026-10-17"
+    },
+    {
+      "id": "t22",
+      "title": "Broken link in footer",
+      "description": "Reported by a customer: broken link in footer.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-09-05T16:00:00Z",
+      "dueDate": "2026-11-21"
+    },
+    {
+      "id": "t23",
+      "title": "Status chip has wrong colour",
+      "description": "Reported by a customer: status chip has wrong colour.",
+      "priority": "high",
+      "status": "open",
+      "createdAt": "2026-09-06T13:15:00Z",
+      "dueDate": "2026-11-21"
+    },
+    {
+      "id": "t24",
+      "title": "Bulk close skips first ticket",
+      "description": "Reported by a customer: bulk close skips first ticket.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-08-13T11:15:00Z",
+      "dueDate": "2026-11-24",
+      "assignee": "a1"
+    },
+    {
+      "id": "t25",
+      "title": "Settings page crashes on save",
+      "description": "Reported by a customer: settings page crashes on save.",
+      "priority": "high",
+      "status": "open",
+      "createdAt": "2026-10-09T11:30:00Z",
+      "dueDate": "2026-11-12"
+    },
+    {
+      "id": "t26",
+      "title": "Attachment preview is blurry",
+      "description": "Reported by a customer: attachment preview is blurry.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-07-08T15:15:00Z",
+      "dueDate": "2026-12-20"
+    },
+    {
+      "id": "t27",
+      "title": "Filter chips overlap on mobile",
+      "description": "Reported by a customer: filter chips overlap on mobile.",
+      "priority": "urgent",
+      "status": "open",
+      "createdAt": "2026-09-03T09:45:00Z",
+      "dueDate": "2026-10-16"
+    },
+    {
+      "id": "t28",
+      "title": "Keyboard shortcut conflicts with browser",
+      "description": "Reported by a customer: keyboard shortcut conflicts with browser.",
+      "priority": "urgent",
+      "status": "assigned",
+      "createdAt": "2026-09-03T14:45:00Z",
+      "dueDate": "2026-09-24",
+      "assignee": "a2"
+    },
+    {
+      "id": "t29",
+      "title": "Audit log missing user name",
+      "description": "Reported by a customer: audit log missing user name.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-07-05T17:45:00Z",
+      "dueDate": "2026-10-20",
+      "assignee": "a5"
+    },
+    {
+      "id": "t30",
+      "title": "Language switch reloads page",
+      "description": "Reported by a customer: language switch reloads page.",
+      "priority": "high",
+      "status": "closed",
+      "createdAt": "2026-08-18T16:15:00Z",
+      "dueDate": null,
+      "closedAt": "2026-08-28T12:00:00Z"
+    },
+    {
+      "id": "t31",
+      "title": "Charts render twice",
+      "description": "Reported by a customer: charts render twice.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-10-07T11:00:00Z",
+      "dueDate": "2026-11-17"
+    },
+    {
+      "id": "t32",
+      "title": "Tooltip hides the submit button",
+      "description": "Reported by a customer: tooltip hides the submit button.",
+      "priority": "high",
+      "status": "assigned",
+      "createdAt": "2026-09-18T14:15:00Z",
+      "dueDate": null,
+      "assignee": "a6"
+    },
+    {
+      "id": "t33",
+      "title": "CSV import accepts bad dates",
+      "description": "Reported by a customer: csv import accepts bad dates.",
+      "priority": "urgent",
+      "status": "blocked",
+      "createdAt": "2026-10-17T10:15:00Z",
+      "dueDate": "2026-09-28",
+      "assignee": "a4",
+      "blockedReason": "Waiting for design"
+    },
+    {
+      "id": "t34",
+      "title": "Inactive users still assignable",
+      "description": "Reported by a customer: inactive users still assignable.",
+      "priority": "medium",
+      "status": "open",
+      "createdAt": "2026-08-05T15:00:00Z",
+      "dueDate": "2026-11-22"
+    },
+    {
+      "id": "t35",
+      "title": "Search box loses focus on refresh",
+      "description": "Reported by a customer: search box loses focus on refresh.",
+      "priority": "low",
+      "status": "closed",
+      "createdAt": "2026-07-08T11:30:00Z",
+      "dueDate": null,
+      "closedAt": "2026-07-28T12:00:00Z",
+      "assignee": "a4"
+    },
+    {
+      "id": "t36",
+      "title": "Long titles break the layout",
+      "description": "Reported by a customer: long titles break the layout.",
+      "priority": "low",
+      "status": "open",
+      "createdAt": "2026-10-11T17:15:00Z",
+      "dueDate": "2026-12-17"
+    },
+    {
+      "id": "t37",
+      "title": "Comment count off by one",
+      "description": "Reported by a customer: comment count off by one.",
+      "priority": "medium",
+      "status": "closed",
+      "createdAt": "2026-09-18T11:45:00Z",
+      "dueDate": null,
+      "closedAt": "2026-09-28T12:00:00Z",
+      "assignee": "a4"
+    },
+    {
+      "id": "t38",
+      "title": "Due date can be set in the past",
+      "description": "Reported by a customer: due date can be set in the past.",
+      "priority": "low",
+      "status": "blocked",
+      "createdAt": "2026-08-14T09:15:00Z",
+      "dueDate": "2026-09-25",
+      "assignee": "a2",
+      "blockedReason": "Waiting for customer reply"
+    },
+    {
+      "id": "t39",
+      "title": "Logout does not clear cache",
+      "description": "Reported by a customer: logout does not clear cache.",
+      "priority": "medium",
+      "status": "blocked",
+      "createdAt": "2026-09-05T15:15:00Z",
+      "dueDate": "2026-09-13",
+      "assignee": "a4",
+      "blockedReason": "Waiting for design"
+    },
+    {
+      "id": "t40",
+      "title": "Empty state shows a spinner forever",
+      "description": "Reported by a customer: empty state shows a spinner forever.",
+      "priority": "medium",
+      "status": "assigned",
+      "createdAt": "2026-10-17T14:30:00Z",
+      "dueDate": "2026-11-11",
+      "assignee": "a1"
+    }
+  ]
+}
