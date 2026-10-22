@@ -1,3 +1,4 @@
 node_modules/
 .verify-tmp/
 tools/screenshots/
+tools/node_modules/

@@ -1,0 +1,9 @@
+{
+  "name": "bootcamp-authoring-tools",
+  "private": true,
+  "type": "module",
+  "description": "Authoring-only helpers (screenshots). Never shipped to juniors.",
+  "dependencies": {
+    "playwright-core": "1.56.1"
+  }
+}

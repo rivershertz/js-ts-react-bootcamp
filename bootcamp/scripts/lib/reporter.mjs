@@ -28,5 +28,11 @@ function* walk(task) {
 
 function clean(message = '') {
   // eslint-disable-next-line no-control-regex
-  return message.replace(/\u001b\[[0-9;]*m/g, '').split('\n').slice(0, 6).join('\n');
+  return message
+    .replace(/\u001b\[[0-9;]*m/g, '')
+    .split(/\n\s*Ignored nodes:/)[0]
+    .trim()
+    .split('\n')
+    .slice(0, 8)
+    .join('\n');
 }
