@@ -1,10 +1,12 @@
 # 02-ts/07 Deriving types from values
 
-**Time:** 30 min lesson, 30 min exercises (core).
+**Time:** 25 min lesson, 25 min exercises (core), plus 5 min stretch.
 
-> POC note: this module has exercises but no lesson deck yet. It shows how type-level checks work.
+## 1. Watch the lesson
 
-## Recap
+Run `yarn lessons` and pick **02-ts/07 Deriving types from values**.
+
+## 2. Quick recap
 
 - Write a value once, then let TypeScript work out the type from it, so the two can never drift apart.
 - `as const` keeps the exact strings of an array or object, instead of widening them to `string`.
@@ -12,7 +14,7 @@
 - `satisfies` checks a value against a type without changing the value's own, more exact type.
 - `keyof T` is the union of the keys of a type.
 
-## Exercises
+## 3. Exercises
 
 Open [`exercises.ts`](exercises.ts). Keep the `// @step N` comments: the checker uses them to tell which step an error belongs to.
 

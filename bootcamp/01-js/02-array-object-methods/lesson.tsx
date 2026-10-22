@@ -154,8 +154,8 @@ export default function Lesson(props: LessonProps) {
 
       <CompareSlide
         title="Objects as dictionaries"
-        python={`for key, value in d.items(): ...\n\nlist(d.keys())\nlist(d.values())\n\ndict(pairs)`}
-        js={`for (const [key, value] of Object.entries(d)) {}\n\nObject.keys(d)\nObject.values(d)\n\nObject.fromEntries(pairs)`}
+        python={`for key, value in d.items():\n    ...\nlist(d.keys())\nlist(d.values())\n\ndict(pairs)`}
+        js={`for (const [key, value] of\n     Object.entries(d)) {}\nObject.keys(d)\nObject.values(d)\n\nObject.fromEntries(pairs)`}
         note={
           <>
             <code>Object.entries</code> → change the pairs with <code>map</code> / <code>filter</code> → <code>Object.fromEntries</code>{' '}

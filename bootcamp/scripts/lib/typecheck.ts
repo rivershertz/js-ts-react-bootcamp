@@ -3,19 +3,34 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { root } from './paths';
 
-type TypeError = { file: string; line: number; message: string };
+export type TypeError = { file: string; line: number; message: string };
 
 const cache = new Map<string, TypeError[]>();
 
+type Options = {
+  /** Replace a file's text for this compile only (absolute path → source). Used to try a changed copy. */
+  replace?: Record<string, string>;
+  /** Extra compiler options, for example { allowJs: true, checkJs: true } for a JavaScript file. */
+  compilerOptions?: ts.CompilerOptions;
+};
+
 /** Type-check the given files with the bootcamp tsconfig and return every error. */
-export function typeErrors(files: string[]): TypeError[] {
-  const key = files.join('|');
+export function typeErrors(files: string[], { replace = {}, compilerOptions = {} }: Options = {}): TypeError[] {
+  const key = JSON.stringify([files, replace, compilerOptions]);
   if (cache.has(key)) return cache.get(key)!;
   const config = ts.getParsedCommandLineOfConfigFile(path.join(root, 'tsconfig.json'), {}, {
     ...ts.sys,
     onUnRecoverableConfigFileDiagnostic: () => {},
   })!;
-  const program = ts.createProgram(files, config.options);
+  const options = { ...config.options, ...compilerOptions };
+  const host = ts.createCompilerHost(options);
+  const replaced = new Map(Object.entries(replace).map(([file, text]) => [path.resolve(file), text]));
+  const getSourceFile = host.getSourceFile.bind(host);
+  host.getSourceFile = (fileName, languageVersion, ...rest) => {
+    const text = replaced.get(path.resolve(fileName));
+    return text === undefined ? getSourceFile(fileName, languageVersion, ...rest) : ts.createSourceFile(fileName, text, languageVersion, true);
+  };
+  const program = ts.createProgram(files, options, host);
   const errors = ts.getPreEmitDiagnostics(program).flatMap((d) => {
     if (!d.file || d.start === undefined) return [];
     const { line } = d.file.getLineAndCharacterOfPosition(d.start);
@@ -48,7 +63,8 @@ export function typeErrorsForStep(files: string[], n: number): string[] {
     })
     .map((e) => {
       // A failed Expect<Equal<...>> in a check file: show the explanation written above it.
-      if (/does not satisfy the constraint 'true'/.test(e.message)) {
+      // A @ts-expect-error that found nothing: the junior's types still allow something they should reject.
+      if (/does not satisfy the constraint 'true'|Unused '@ts-expect-error' directive/.test(e.message)) {
         const above = readFileSync(e.file, 'utf8').split(/\r?\n/)[e.line - 2] ?? '';
         if (above.trim().startsWith('//')) return above.trim().replace(/^\/\/\s*/, '');
       }

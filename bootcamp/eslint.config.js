@@ -23,4 +23,12 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
     },
   },
+  {
+    // Type-level checks: each @ts-expect-error and test value is the check, and the comment above it is the message juniors see.
+    files: ['scripts/checks/**/*.types.ts'],
+    rules: {
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
 );

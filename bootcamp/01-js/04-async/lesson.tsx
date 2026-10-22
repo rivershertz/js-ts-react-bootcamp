@@ -72,7 +72,7 @@ export default function Lesson(props: LessonProps) {
       <CompareSlide
         title="async / await reads like normal code"
         python={`async def first_title():\n    tickets = await fetch_tickets()\n    return tickets[0]["title"]`}
-        js={`async function firstTitle() {\n  const response = await axios.get('/api/tickets');\n  return response.data[0].title;\n}`}
+        js={`async function firstTitle() {\n  const res = await axios.get('/api/tickets');\n  return res.data[0].title;\n}`}
         note={
           <>
             <code>await</code> pauses only this function, and only until the promise settles. An <code>async</code> function always

@@ -39,7 +39,7 @@ for (const s of shown) {
   console.log(`  ${mark} ${label}${s.title}${notStarted ? styleText('dim', '   (not started)') : ''}`);
   if (state !== 'pass' && !notStarted && !crashed) {
     console.log(styleText('cyan', `${' '.repeat(16)}Hint: ${s.hint}`));
-    if (r?.message) console.log(styleText('dim', indent(r.message, 16)));
+    if (r?.message) console.log(styleText('dim', indent(tidy(r.message), 16)));
   }
 }
 
@@ -63,4 +63,16 @@ function indent(text, n) {
     .split('\n')
     .map((line) => ' '.repeat(n) + line)
     .join('\n');
+}
+
+/**
+ * When a check wrote its own explanation, Vitest appends a technical tail like
+ * ": expected false to be true // Object.is equality". For yes/no and missing-value checks that tail adds nothing.
+ */
+function tidy(message) {
+  return message
+    .replace(/: expected (true|false) to be (true|false)( \/\/ Object\.is equality)?$/gm, '')
+    .replace(/: expected undefined to be defined$/gm, '')
+    .replace(/: expected undefined to be type of '\w+'$/gm, '')
+    .replace(/: expected 'undefined' to be 'function'( \/\/ Object\.is equality)?$/gm, '');
 }
