@@ -66,9 +66,15 @@
   margin: 0 0 18px;
 }
 
-.k-body ul {
+.k-body ul,
+.k-body ol {
   margin: 0;
   padding-left: 1.1em;
+}
+
+.k-body .k-code + ul,
+.k-body .k-code + ol {
+  margin-top: 22px;
 }
 
 .k-body li {
@@ -203,7 +209,7 @@
 
 /* ---------- Code ---------- */
 .k-code {
-  white-space: nowrap;
+  white-space: pre;
   font-family: var(--font-mono);
   font-size: 21px;
   line-height: 1.6;
@@ -443,7 +449,7 @@
 /* ---------- Run code ---------- */
 .k-run {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1.6fr 1fr;
   gap: 24px;
   height: 100%;
   min-height: 0;
@@ -463,6 +469,10 @@
   border-radius: var(--radius);
   outline: none;
   tab-size: 2;
+  /* Code never soft-wraps: a wrapped line reads like two statements. */
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
 }
 
 .k-run textarea:focus {
@@ -830,4 +840,13 @@
   font-family: var(--font-mono);
   font-size: 20px;
   white-space: nowrap;
+}
+
+/* Juniors type what they read: show `=>` and `===` as typed, not as ligatures. */
+code,
+pre,
+textarea,
+.k-run-output {
+  font-variant-ligatures: none;
+  font-feature-settings: 'calt' 0, 'liga' 0;
 }

@@ -14,7 +14,7 @@ export function junior(relWithoutExt: string): string {
     const candidate = path.join(root, relWithoutExt + ext);
     if (existsSync(candidate) && (ext || path.extname(candidate))) return candidate;
   }
-  throw new Error(`Could not find ${relWithoutExt}(.ts|.tsx|.js|.jsx). Did you rename or move it?`);
+  throw new Error(`Could not find ${relWithoutExt}.js (or .ts, .jsx, .tsx). Create it if this step asks for a new file; otherwise check you did not rename or move it.`);
 }
 
 /** Import a junior's module by path relative to the bootcamp folder. */

@@ -11,6 +11,8 @@
     "progress": "node scripts/progress.mjs",
     "lessons": "node scripts/lessons.mjs",
     "dev": "node scripts/dev.mjs",
+    "tickets": "node scripts/tickets.mjs",
+    "copy-project": "node scripts/copy-project.mjs",
     "server": "node scripts/server-hint.mjs"
   },
   "dependencies": {

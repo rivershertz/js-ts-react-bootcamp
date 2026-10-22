@@ -34,8 +34,19 @@ Filled in per module as the material is written.
 | --- | --- | --- |
 | 00-setup | `.npmrc` missing or with the wrong registry; `yarn install` hangs or 404s | "Open your `.npmrc`. Which address does `registry=` point at?" |
 | 00-setup | `python` not found on Windows | "Try `py server/server.py`." |
-| 01-js/03 | `once` returns `undefined` on the second call | "Where is the first result stored between calls?" |
+| 01-js/01 | `toggleStatus` passes, but `replaceTicket` fails with "changed one of its inputs" | "Which line changes something you were given? What would give you a new array instead?" |
+| 01-js/02 | `newestFirst` uses `.sort()` and fails as a mutation | "Is there a version of sort that returns a new array?" |
+| 01-js/02 | `countByPriority` misses priorities with 0 tickets | "What is your starting value for reduce?" |
+| | 01-js/03 | `once` returns `undefined` on the second call | "Where is the first result stored between calls?" |
 | 01-js/03 | `memoize` calls `fn` again for a cached `undefined` | "How do you tell 'no entry' from 'an entry whose value is undefined'?" |
+| 01-js/04 | `predictOrder` answered as `['A', 'B', 'C', 'D']` | "Replay the event-loop slide. Which queue does a promise callback go to, and which one is emptied first?" |
+| 01-js/04 | `fetchMany` is sequential (`await` inside a `for` loop): the timing check fails | "When does the second request start? Can you start all of them before awaiting?" |
+| 01-js/04 | `fetchTicketOrNull` swallows every error | "What should happen for a 500? Which property tells you the status?" |
+| 01-js/05 | Wrote `from './dates'` and the step asks for the extension | "Node needs the whole file name. Which file does `./dates` mean?" |
+| 01-js/05 | Step 3 still has `isOverdue` in `tickets.js` | "Did you move it or copy it?" |
+| 01-js/project | `loadAll` throws when the server is down | "Which Promise method never rejects?" |
+| 01-js/project | Priority sort comes out alphabetical (`high, low, medium, urgent`) | "Where is the real order of priorities written down?" |
+| 01-js/project | `averageAgeDays` off by a little | "Are you averaging all tickets or only the ones that are not closed? Rounded how?" |
 | 02-ts/07 | `Status` comes out as `string` | "Hover `STATUSES`. What type does TypeScript give it? What does `as const` change?" |
 | 03-react/04 | `useDebouncedValue` updates on every key press | "What does your effect's cleanup do when the value changes again?" |
 

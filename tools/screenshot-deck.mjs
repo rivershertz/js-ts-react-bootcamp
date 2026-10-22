@@ -14,6 +14,10 @@ for (const scheme of ['light', 'dark']) {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(`http://localhost:5174/#/${id}`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
+  if (!(await page.$('.k-slide'))) {
+    console.error(`No deck with id ${id}. Is it new? Restart \`yarn lessons\` so the lesson list picks it up.`);
+    process.exit(1);
+  }
   let previous = '';
   for (let n = 1; n <= 120; n++) {
     await page.waitForTimeout(300);
@@ -27,6 +31,9 @@ for (const scheme of ['light', 'dark']) {
         const r = el.getBoundingClientRect();
         return r.height > 0 && (r.bottom > limit || r.right > right + 1);
       });
+      // Code blocks and editors clip long lines instead of overflowing, so check their scroll width too.
+      const clipped = [...slide.querySelectorAll('.k-code, textarea')].filter((el) => el.scrollWidth > el.clientWidth + 1);
+      bad.push(...clipped);
       return bad.length ? `${document.querySelector('.k-footer span:nth-of-type(2)')?.textContent}: ${bad[0].className || bad[0].tagName}` : null;
     });
     if (overflow) overflows.add(overflow);

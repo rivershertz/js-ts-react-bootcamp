@@ -23,6 +23,7 @@
 | An exercise, one step | `yarn verify 01-js/03/1` | Only step 1, with a hint if it fails. |
 | Type-level exercise | `yarn verify 02-ts/07` | Steps checked by the TypeScript compiler, with plain-English messages. |
 | React exercise in the browser | `yarn dev 03-react/04` | A playground page for the hooks you write. |
+| Phase 1 project | `yarn tickets` | Your ticket logic running against the Python API ("not done yet" for the parts you have not written). |
 | Your progress | `yarn progress` | Every module, every step, and the next thing to do. |
 | Final project | `yarn dev final-project` | The ticket table, running against the Python API. |
 | Final project checks | `yarn verify final-project` | Six checks: TS migration, tsc, ESLint, a planted bug, a performance problem, a new feature. |
