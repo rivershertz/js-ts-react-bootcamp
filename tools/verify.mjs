@@ -131,7 +131,8 @@ function checkContent() {
   for (const [label, bin, args, cwd] of [
     ['tsc', 'typescript/bin/tsc', ['-p', 'tsconfig.json', '--pretty', 'false'], scratch],
     ['lesson kit tests', 'vitest/vitest.mjs', ['run', 'lessons', '--config', 'vitest.config.ts'], bootcamp],
-    ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--max-warnings', '0'], bootcamp],
+    // 03-react/02's starter breaks the hooks rules on purpose: finding that with ESLint is its step 7.
+    ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--ignore-pattern', '03-react/02-rules-of-react/exercises.tsx', '--max-warnings', '0'], bootcamp],
   ]) {
     const res = spawnSync(process.execPath, [path.join(bootcamp, 'node_modules', bin), ...args], { cwd, encoding: 'utf8' });
     const where = cwd === scratch ? 'the solved copy' : 'bootcamp/';

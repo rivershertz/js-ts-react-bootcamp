@@ -796,6 +796,106 @@
       ]
     },
     {
+      "id": "03-react/01",
+      "dir": "03-react/01-fundamentals",
+      "title": "React fundamentals in TypeScript",
+      "check": "scripts/checks/03-react/01.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "PriorityBadge: typed props",
+          "hint": "Destructure in the parameter list and type it: `function PriorityBadge({ priority }: { priority: Priority })`."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketCard: compose components, render conditionally",
+          "hint": "Use <PriorityBadge priority={ticket.priority} /> inside. For the due date: `ticket.dueDate ? <p>...</p> : <p>No due date</p>`."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketList: lists and keys, empty state",
+          "hint": "`tickets.map((t) => <li key={t.id}>...</li>)`. Return early with <p>No tickets</p> when the array is empty."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "EstimateCounter: state and events",
+          "hint": "`const [hours, setHours] = useState(0)`, then onClick={() => setHours(...)}. Math.max(0, ...) keeps it at 0 or more."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "NewTicketForm: a controlled input",
+          "hint": "value={title} plus onChange={(e) => setTitle(e.target.value)}. Put the logic in the form's onSubmit, not the button's onClick, so Enter works too."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "SearchableTicketList: filter while typing",
+          "hint": "Keep only the search text in state. Compute the filtered tickets during render; do not store them in state."
+        }
+      ]
+    },
+    {
+      "id": "03-react/02",
+      "dir": "03-react/02-rules-of-react",
+      "title": "Rules of React",
+      "check": "scripts/checks/03-react/02.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TagEditor: never mutate state (arrays)",
+          "hint": "React compares the old and new state with Object.is. push changes the same array, so React sees no change. Pass a new array: [...tags, draft]."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "AssigneePicker: never mutate state (objects)",
+          "hint": "Same rule for objects: build a new one with a spread, { ...ticket, assignee: id }."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "SortedTitles: props are read-only",
+          "hint": "sort() changes the array it is called on, and that array belongs to the parent. toSorted() returns a sorted copy."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "NumberedTitles: rendering is pure",
+          "hint": "A render must not change anything outside itself. The row number is already in map's second argument: (t, i)."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "TicketDetails: hooks before any early return",
+          "hint": "Rules of Hooks: call every hook on every render, in the same order. Move useState above the if."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "DocumentTitle: list every dependency",
+          "hint": "An effect with [] runs once. Put every value the effect reads in its dependency array."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "ESLint's React Hooks rules report nothing",
+          "hint": "Run `yarn eslint 03-react/02-rules-of-react` and read each message. Steps 5 and 6 are what it finds."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "Checklist: new objects for nested changes",
+          "hint": "[...items] copies the array, but the items inside are still the same objects. map, and spread only the item that changes."
+        }
+      ]
+    },
+    {
       "id": "03-react/04",
       "dir": "03-react/04-custom-hooks",
       "title": "Custom hooks",
