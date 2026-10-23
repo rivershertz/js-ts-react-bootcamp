@@ -972,6 +972,44 @@
       ]
     },
     {
+      "id": "03-react/05",
+      "dir": "03-react/05-server-data",
+      "title": "Server data with React Query",
+      "check": "scripts/checks/03-react/05.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "useTickets: useQuery instead of useEffect",
+          "hint": "useQuery({ queryKey: ['tickets'], queryFn: () => client.get<Ticket[]>('/tickets').then((r) => r.data) }). Return the whole result, not just data."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketsView: loading and error states",
+          "hint": "Take isPending, isError and refetch from useTickets(). Return early for each state, in that order. Needs step 1."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "useTicket: wait for an id",
+          "hint": "useQuery has an option that says whether the query may run: enabled: id !== undefined."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "useCloseTicket: refresh the list after a save",
+          "hint": "const queryClient = useQueryClient(), then onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tickets'] }). Needs step 1."
+        },
+        {
+          "n": 5,
+          "level": "stretch",
+          "title": "useTicket: start from the list cache",
+          "hint": "initialData: () => queryClient.getQueryData<Ticket[]>(['tickets'])?.find((t) => t.id === id)."
+        }
+      ]
+    },
+    {
       "id": "final-project",
       "dir": "final-project",
       "title": "Final project: migrate, fix, extend the ticket app",

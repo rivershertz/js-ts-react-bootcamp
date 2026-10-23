@@ -58,7 +58,15 @@ Filled in per module as the material is written.
 | 02-ts/project | Hundreds of errors after renaming, and the junior freezes | "Close every file except `constants.ts`. Which file does everything else import?" |
 | 02-ts/project | Step 6 says "everything still compiles" with an extra state | "Is there a `never` check in `statusLabel`'s `default`, and is the `Ticket` union on one line starting `export type Ticket =`?" |
 | 02-ts/project | Step 7: `fetchTickets` still returns the bad ticket | "Where does `isTicket` run: on the response, or on each item of it?" |
+| 03-react/01 | `NewTicketForm` submits on the button's `onClick`; Enter in the input does nothing | "Which element knows the user submitted: the button or the form?" |
+| 03-react/02 | Step 1 "works" in the browser: the tag shows up as soon as they type again | "Does the tag appear because of your click, or because something else re-rendered? What does `Object.is` say about the array?" |
+| 03-react/02 | Step 5 fixed by deleting the early return | "Can you keep the early return and still call every hook on every render?" |
+| 03-react/03 | `TicketBoard` gets its own `useState` but `StatusTabs` keeps one too | "How many places hold the selected status now? Which one does the list read?" |
+| 03-react/03 | `OpenTimer` counts 2 s per second in the playground | "The playground runs in StrictMode. What does it do to effects, and what stops the second interval?" |
 | 03-react/04 | `useDebouncedValue` updates on every key press | "What does your effect's cleanup do when the value changes again?" |
+| 03-react/05 | Step 1 returns `{ data }` from `useQuery`, and step 2 has no `isPending` | "Return the whole result. What else is on it besides `data`?" |
+| 03-react/05 | Step 3 wraps `useQuery` in `if (id)` | "Rules of Hooks: what does `useQuery` take that says whether it may run?" |
+| 03-react/05 | Step 4 calls `refetch` from the board, or reloads the page | "Who knows the save changed the list: the button or the mutation? What can `onSuccess` tell the cache?" |
 
 ## The final project's planted problems
 
