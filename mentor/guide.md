@@ -15,6 +15,31 @@ For the people supporting juniors through the bootcamp. Juniors never get this f
 2. A few times a day: ask them to run `yarn progress` and share the output. It shows every module, which steps pass, and the next step.
 3. If someone is more than 30 minutes behind the time guide on one module, sit with them.
 
+## Reading `yarn progress`
+
+```
+  01-js/02         Array and object methods           ✓ ✓ ✗ (·) · · (·) · (·) (·)   2/6 core
+```
+
+- One mark per step, in order: ✓ passed, ✗ failed the last time they ran it, · not run yet. Marks in brackets are stretch.
+- The count at the end is core steps only. The last line names the next core step to do.
+- It shows the result of each step's last `yarn verify` run, so ask them to run `yarn verify <module>` first if it looks stale.
+- A ✗ followed by several · usually means they are stuck on that step. Ask about it before it costs them 30 minutes.
+
+## Time guide
+
+Each module README gives a lesson time, a core exercise time and a stretch time. Added up, core is about:
+
+| Phase | Core time |
+| --- | --- |
+| Setup | 0.5 h |
+| Phase 1: JavaScript, with its project | 5.5 h |
+| Phase 2: TypeScript, with its project | 5 h |
+| Phase 3: React modules | 6 h |
+| Final project | 3 h |
+
+These are estimates (about 1.25 minutes per slide, and 4 to 6 minutes per core step) until a real cohort has gone through. Note where juniors are much faster or slower, so the guides can be corrected.
+
 ## Unblocking without giving the answer
 
 - Ask them to read the failing step's hint out loud, then show you the slide it points to.

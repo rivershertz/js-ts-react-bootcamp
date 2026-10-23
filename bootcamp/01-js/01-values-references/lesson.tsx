@@ -17,7 +17,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/01',
   title: 'Values and references',
-  time: '40 min lesson · 40 min exercises',
+  time: '15 min lesson · 30 min exercises',
   subtitle: 'What a variable really holds, why === surprises Python developers, and how to update data without changing it.',
 };
 

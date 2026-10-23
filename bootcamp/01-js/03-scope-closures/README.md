@@ -1,6 +1,6 @@
 # 01-js/03 Scope and closures
 
-**Time:** 45 min lesson, 45 min exercises (core), plus 15 min stretch.
+**Time:** 20 min lesson, 20 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -22,7 +22,7 @@ Open [`exercises.js`](exercises.js). Each step is a function that currently thro
 | 1 | core | `makeCounter()`: each counter keeps its own count |
 | 2 | core | `once(fn)`: run `fn` only the first time |
 | 3 | core | `memoize(fn)`: remember results by argument |
-| 4 | core | `createIdGenerator(prefix)`: ticket ids like `T-1`, `T-2` |
+| 4 | stretch | `createIdGenerator(prefix)`: ticket ids like `T-1`, `T-2` |
 | 5 | stretch | `debounce(fn, ms)`: wait until calls stop |
 
 Check all steps:

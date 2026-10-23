@@ -1,6 +1,6 @@
 # 03-react/01 React fundamentals in TypeScript
 
-**Time:** 25 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 25 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -25,7 +25,7 @@ Open [`exercises.tsx`](exercises.tsx). The ticket type and sample tickets come f
 | 1 | core | `PriorityBadge`: typed props |
 | 2 | core | `TicketCard`: compose components, conditional rendering |
 | 3 | core | `TicketList`: lists, keys, an empty state |
-| 4 | core | `EstimateCounter`: state and click events |
+| 4 | stretch | `EstimateCounter`: state and click events |
 | 5 | core | `NewTicketForm`: a controlled input and a form |
 | 6 | stretch | `SearchableTicketList`: filter while typing |
 

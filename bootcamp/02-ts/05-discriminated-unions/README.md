@@ -1,6 +1,6 @@
 # 02-ts/05 Discriminated unions: ticket states
 
-**Time:** 30 min lesson, 35 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 15 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ Open [`exercises.ts`](exercises.ts).
 | 2 | core | `statusLabel`: `switch` on `status` |
 | 3 | core | `statusLabel` is exhaustive (`never` check) |
 | 4 | core | `assign`: open in, assigned out |
-| 5 | core | `close`: any state in, closed out |
+| 5 | stretch | `close`: any state in, closed out |
 | 6 | stretch | `assigneeOf` |
 
 ```

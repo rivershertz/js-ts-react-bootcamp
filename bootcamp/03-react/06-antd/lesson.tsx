@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, Slide, TitleSlide, type DeckMeta,
 export const meta: DeckMeta = {
   id: '03-react/06',
   title: 'Ant Design: Table, Form, theming, versions',
-  time: '30 min lesson · 45 min exercises',
+  time: '15 min lesson · 35 min exercises',
   subtitle: "The team's component library: a typed Table, a validated Form, a theme, and how to tell versions 3, 4 and 5 apart.",
 };
 

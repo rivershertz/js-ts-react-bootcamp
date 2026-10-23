@@ -25,7 +25,7 @@ export function describeResult(result: Ticket | ApiError): string {
   return 'error' in result ? `Error: ${result.error}` : result.title;
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 export function errorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   if (typeof error === 'string') return error;

@@ -41,7 +41,7 @@ export function updateTicket(ticket: Ticket, changes: TicketChanges): Ticket {
   throw new Error('TODO: step 4');
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 // Return only id and title. The result must not contain any other field.
 export function summarize(ticket: Ticket): TicketSummary {
   throw new Error('TODO: step 5');

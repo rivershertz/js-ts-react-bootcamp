@@ -30,7 +30,7 @@ export function updateTicket(ticket: Ticket, changes: TicketChanges): Ticket {
   return { ...ticket, ...changes, id: ticket.id, createdAt: ticket.createdAt };
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 export function summarize(ticket: Ticket): TicketSummary {
   return { id: ticket.id, title: ticket.title };
 }

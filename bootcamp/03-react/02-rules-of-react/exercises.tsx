@@ -33,7 +33,7 @@ export function TagEditor() {
   );
 }
 
-// Step 2 (core)
+// Step 2 (stretch)
 // Click "Assign to Noa": the text should change to "Assigned to a3". It does not.
 export function AssigneePicker({ initial }: { initial: Ticket }) {
   const [ticket, setTicket] = useState(initial);
@@ -64,7 +64,7 @@ export function SortedTitles({ tickets }: { tickets: Ticket[] }) {
   );
 }
 
-// Step 4 (core)
+// Step 4 (stretch)
 // Should show "1. Login page", "2. Export"... The numbers are wrong, and grow every time it renders.
 let rowNumber = 0;
 

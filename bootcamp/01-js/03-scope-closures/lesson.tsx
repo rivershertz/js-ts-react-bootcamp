@@ -17,7 +17,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/03',
   title: 'Scope and closures',
-  time: '45 min lesson · 45 min exercises',
+  time: '20 min lesson · 20 min exercises',
   subtitle: 'How JavaScript decides where a variable lives, and how a function can carry variables with it.',
 };
 

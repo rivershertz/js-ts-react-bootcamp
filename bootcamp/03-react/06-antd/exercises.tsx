@@ -20,7 +20,7 @@ export function PriorityTag({ priority }: { priority: Priority }): ReactNode {
 // Right now the Priority column is missing, and the console warns about keys:
 // tell the Table which field of a ticket is the row's key.
 //
-// Step 3 (core)
+// Step 3 (stretch)
 // A click on the Priority header should sort the tickets from low to urgent: the real order
 // of priorities, not alphabetical. Give the Priority column a sorter, a compare function.
 // PRIORITIES (in ../tickets) lists the priorities in order.

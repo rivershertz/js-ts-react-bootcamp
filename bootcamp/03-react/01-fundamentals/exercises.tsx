@@ -31,7 +31,7 @@ export function TicketList({ tickets }: { tickets: Ticket[] }): ReactNode {
   throw new Error('TODO: step 3');
 }
 
-// Step 4 (core)
+// Step 4 (stretch)
 // EstimateCounter shows <p>Estimate: 0 h</p> and two buttons, "-" and "+".
 // "+" adds one hour, "-" removes one, but never below 0. Import useState from 'react'.
 export function EstimateCounter() {

@@ -1,6 +1,6 @@
 # 02-ts/02 Basics: object types and functions
 
-**Time:** 30 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -26,7 +26,7 @@ Open [`exercises.ts`](exercises.ts). Red underlines are part of the exercise: wh
 | 3 | core | `createTicket` with typed parameters and a default |
 | 4 | core | `ClosedTicket` interface that extends `Ticket`, and `closeTicket` |
 | 5 | core | `addTicket` on a readonly array |
-| 6 | core | `TicketFilter` function type and `isOpen` |
+| 6 | stretch | `TicketFilter` function type and `isOpen` |
 | 7 | stretch | `indexById` returning `Record<string, Ticket>` |
 
 ```

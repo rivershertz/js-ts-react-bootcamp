@@ -1,6 +1,6 @@
 # 01-js/02 Array and object methods
 
-**Time:** 35 min lesson, 50 min exercises (core), plus 20 min stretch.
+**Time:** 15 min lesson, 35 min exercises (core), plus 30 min stretch.
 
 ## 1. Watch the lesson
 
@@ -28,10 +28,10 @@ Open [`exercises.js`](exercises.js). All steps use the same 12 tickets from `scr
 | 1 | core | `titles` with `map` |
 | 2 | core | `notClosed` with `filter` |
 | 3 | core | `findById` with `find` |
-| 4 | core | `checkTickets` with `some` and `every` |
+| 4 | stretch | `checkTickets` with `some` and `every` |
 | 5 | core | `countByPriority` with `reduce` |
 | 6 | core | `newestFirst` without changing the input |
-| 7 | core | `indexById` with `Object.fromEntries` |
+| 7 | stretch | `indexById` with `Object.fromEntries` |
 | 8 | core | `hotList`: a chain of four methods |
 | 9 | stretch | `groupBy` with `reduce` |
 | 10 | stretch | `pipe` |

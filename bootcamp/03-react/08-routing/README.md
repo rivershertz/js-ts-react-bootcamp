@@ -1,6 +1,6 @@
 # 03-react/08 Routing with React Router
 
-**Time:** 20 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 25 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -25,7 +25,7 @@ Open [`exercises.tsx`](exercises.tsx).
 | 2 | core | `TicketListPage`: `<Link>` instead of `<a href>` |
 | 3 | core | `TicketPage`: read `:id` from the URL |
 | 4 | core | `useStatusFilter`: keep the status filter in `?status=` |
-| 5 | core | `NewTicketPage`: go to the new ticket after saving |
+| 5 | stretch | `NewTicketPage`: go to the new ticket after saving |
 | 6 | stretch | `BackButton`: back in the history, keeping the filter |
 
 See the app in the browser, then try refresh and the back button:

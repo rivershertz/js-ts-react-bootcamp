@@ -26,7 +26,7 @@ export function memoize(fn) {
   throw new Error('TODO: step 3');
 }
 
-// Step 4 (core)
+// Step 4 (stretch)
 // createIdGenerator(prefix) returns a function that produces ids:
 //   const nextId = createIdGenerator('T');
 //   nextId(); // 'T-1'

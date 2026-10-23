@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/03',
   title: 'Rendering: snapshots, lifting state, keys, effects',
-  time: '35 min lesson · 40 min exercises',
+  time: '15 min lesson · 25 min exercises',
   subtitle: 'When React renders, what a render can see, where state should live, and what effects are for.',
 };
 

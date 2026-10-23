@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, RenderSlide, Slide, TitleSlide, t
 export const meta: DeckMeta = {
   id: '03-react/04',
   title: 'Custom hooks',
-  time: '20 min lesson · 35 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'Move stateful logic out of a component into a function you can reuse. Each caller gets its own state.',
 };
 

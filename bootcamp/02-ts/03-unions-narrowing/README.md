@@ -1,6 +1,6 @@
 # 02-ts/03 Unions and narrowing
 
-**Time:** 30 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ Open [`exercises.ts`](exercises.ts). No `as` and no `any` in this module; the ch
 | 2 | core | `assigneeName`: narrow away `undefined` |
 | 3 | core | `toTicketId`: narrow with `typeof` |
 | 4 | core | `describeResult`: narrow with `in` |
-| 5 | core | `errorMessage`: narrow `unknown` with `instanceof` and `typeof` |
+| 5 | stretch | `errorMessage`: narrow `unknown` with `instanceof` and `typeof` |
 | 6 | core | `priorityRank`: `switch` over a union |
 | 7 | stretch | `parsePriority`: text to `Priority` without `as` |
 

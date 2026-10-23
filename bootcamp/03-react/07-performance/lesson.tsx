@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/07',
   title: 'Performance: memo, useMemo, useCallback',
-  time: '25 min lesson · 35 min exercises',
+  time: '10 min lesson · 25 min exercises',
   subtitle: 'Most renders are cheap. Find the ones that are not, measure them, and only then memoize.',
 };
 

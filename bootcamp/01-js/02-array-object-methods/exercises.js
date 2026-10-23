@@ -27,7 +27,7 @@ export function findById(tickets, id) {
   throw new Error('TODO: step 3');
 }
 
-// Step 4 (core)
+// Step 4 (stretch)
 // Return an object: { anyUrgent, allAssigned }
 //   anyUrgent:   true if at least one ticket has priority 'urgent'
 //   allAssigned: true if every ticket has an assignee
@@ -49,7 +49,7 @@ export function newestFirst(tickets) {
   throw new Error('TODO: step 6');
 }
 
-// Step 7 (core)
+// Step 7 (stretch)
 // Return an object from id to ticket: { t1: {...}, t2: {...} }.
 // Use Object.fromEntries.
 export function indexById(tickets) {

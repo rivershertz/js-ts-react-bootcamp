@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, Slide, TitleSlide, type DeckMeta,
 export const meta: DeckMeta = {
   id: '03-react/09',
   title: 'Versions and tooling: React 16 / 18 / 19, CRA and Vite',
-  time: '20 min lesson · 30 min exercises',
+  time: '10 min lesson · 30 min exercises',
   subtitle: "You learned today's React. The team's older apps differ in a few places. Learn to spot them.",
 };
 

@@ -45,7 +45,7 @@ export function isTicket(value: unknown): boolean {
   throw new Error('TODO: step 4');
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 // An assertion function: return nothing when value is a Ticket, otherwise
 // throw new Error('Not a valid ticket: <id>') (use '?' when there is no string id).
 // Return type: asserts value is Ticket

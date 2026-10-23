@@ -1,6 +1,6 @@
 # 03-react/09 Versions and tooling: React 16 / 18 / 19, CRA and Vite
 
-**Time:** 20 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 30 min exercises (core), plus 5 min stretch.
 
 ## 1. Watch the lesson
 

@@ -1,6 +1,6 @@
 # 03-react/03 Rendering: snapshots, lifting state, keys, effects
 
-**Time:** 35 min lesson, 40 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 25 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -22,7 +22,7 @@ Open [`exercises.tsx`](exercises.tsx).
 
 | Step | Level | Task |
 | --- | --- | --- |
-| 1 | core | `TripleVote`: +3 adds only 1 |
+| 1 | stretch | `TripleVote`: +3 adds only 1 |
 | 2 | core | `TicketBoard`: lift the selected status up |
 | 3 | core | `NotesPanel`: a fresh note for each ticket |
 | 4 | core | `OpenTimer`: clean up the interval |

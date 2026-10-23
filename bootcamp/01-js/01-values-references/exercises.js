@@ -36,7 +36,7 @@ export function toggleStatus(filters, status) {
   throw new Error('TODO: step 4');
 }
 
-// Step 5 (core)
+// Step 5 (stretch)
 // Return a new array where the ticket with the same id as `updated` is replaced by `updated`.
 // Every other ticket must be the very same object as before (not a copy).
 export function replaceTicket(tickets, updated) {

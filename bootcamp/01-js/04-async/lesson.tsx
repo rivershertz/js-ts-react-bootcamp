@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/04',
   title: 'Async',
-  time: '45 min lesson · 50 min exercises',
+  time: '20 min lesson · 35 min exercises',
   subtitle: 'One thread, many things waiting: the event loop, promises, async / await, and calling the API with axios.',
 };
 

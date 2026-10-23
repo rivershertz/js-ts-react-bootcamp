@@ -54,7 +54,7 @@ export function assign(ticket: OpenTicket, assignee: string): AssignedTicket {
   throw new Error('TODO: step 4');
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 // Close any ticket. Keep its assignee if it has one; never keep blockedReason.
 // Build the result from the base fields, so no field of the old status sneaks in.
 export function close(ticket: Ticket, closedAt: string): ClosedTicket {

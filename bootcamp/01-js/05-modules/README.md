@@ -1,6 +1,6 @@
 # 01-js/05 Modules
 
-**Time:** 25 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 30 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ This module is a small folder of files instead of one `exercises.js`. Each step 
 | 2 | core | [`format.js`](format.js) | Import `PRIORITIES`, and make `formatTicket` the default export |
 | 3 | core | [`tickets.js`](tickets.js) | Move `isOverdue` into a new file `dates.js`, then import it back |
 | 4 | core | [`index.js`](index.js) | Re-export all five public names from one place |
-| 5 | core | [`counter.js`](counter.js) | Export a `count` variable and an `increment()` function |
+| 5 | stretch | [`counter.js`](counter.js) | Export a `count` variable and an `increment()` function |
 | 6 | core | [`report.js`](report.js) | `overdueReport()`, importing only from `./index.js` |
 | 7 | stretch | [`report.js`](report.js) | `loadFormatter()`, loading `format.js` on demand with `import()` |
 

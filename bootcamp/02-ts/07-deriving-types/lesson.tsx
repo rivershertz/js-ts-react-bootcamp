@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/07',
   title: 'Deriving types from values',
-  time: '25 min lesson · 25 min exercises',
+  time: '10 min lesson · 10 min exercises',
   subtitle: 'Write the list of statuses once. Get the type, the dropdown options and the labels from it, so they can never drift apart.',
 };
 

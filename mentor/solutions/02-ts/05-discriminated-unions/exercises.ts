@@ -43,7 +43,7 @@ export function assign(ticket: OpenTicket, assignee: string): AssignedTicket {
   return { ...ticket, status: 'assigned', assignee };
 }
 
-// @step 5 (core)
+// @step 5 (stretch)
 export function close(ticket: Ticket, closedAt: string): ClosedTicket {
   const { id, title, priority, createdAt, dueDate } = ticket;
   const base = { id, title, priority, createdAt, dueDate };

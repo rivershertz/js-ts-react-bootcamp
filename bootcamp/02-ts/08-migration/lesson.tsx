@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/08',
   title: 'Migrating JavaScript to TypeScript',
-  time: '20 min lesson · 30 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'From working JavaScript to strict TypeScript in small, safe steps, without ever switching the checker off.',
 };
 

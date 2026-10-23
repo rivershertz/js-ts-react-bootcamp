@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/01',
   title: 'Why TypeScript, and how it runs',
-  time: '20 min lesson · 20 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'JavaScript with type annotations that are checked while you write and deleted before the code runs.',
 };
 

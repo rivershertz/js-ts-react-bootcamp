@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/04',
   title: 'Type guards: checking unknown data',
-  time: '30 min lesson · 35 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'Types vanish at run time. A type guard is the run-time check that earns the type back.',
 };
 

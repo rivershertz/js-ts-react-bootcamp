@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/02',
   title: 'Basics: object types and functions',
-  time: '30 min lesson · 30 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'Describe the shape of your data once, then let the checker hold every function to it.',
 };
 

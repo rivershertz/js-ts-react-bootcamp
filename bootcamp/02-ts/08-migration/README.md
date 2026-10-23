@@ -1,6 +1,6 @@
 # 02-ts/08 Migrating JavaScript to TypeScript
 
-**Time:** 20 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 5 min stretch.
 
 ## 1. Watch the lesson
 

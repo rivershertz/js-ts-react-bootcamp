@@ -1,6 +1,6 @@
 # 02-ts/04 Type guards: checking unknown data
 
-**Time:** 30 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ Open [`exercises.ts`](exercises.ts). No `as` and no `any`: the point is to prove
 | 2 | core | `isRecord`: an object you can read fields from |
 | 3 | core | `isAssignee` |
 | 4 | core | `isTicket`: every field with the right type |
-| 5 | core | `assertTicket`: an assertion function |
+| 5 | stretch | `assertTicket`: an assertion function |
 | 6 | core | `parseTickets`: keep the valid tickets, count the rest |
 | 7 | stretch | `ticketProblems`: say what is wrong with a ticket |
 

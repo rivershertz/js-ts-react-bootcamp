@@ -1,6 +1,6 @@
 # 01-js/04 Async
 
-**Time:** 45 min lesson, 50 min exercises (core), plus 20 min stretch.
+**Time:** 20 min lesson, 35 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
