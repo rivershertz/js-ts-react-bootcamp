@@ -12,14 +12,14 @@ Follow [`00-setup/README.md`](00-setup/README.md). It gets the packages installe
 
 Every phase has the same shape: **lessons, then an exercise ladder, then a project** that uses what the phase taught. You build one app the whole way: a support-ticket tracker. You write its logic in JavaScript, turn that same code into TypeScript, and then a React app runs on it.
 
-| When | Phase | What you do | Core time |
+| Order | Phase | What you do | Core time |
 | --- | --- | --- | --- |
-| Day 1, morning | [Phase 1: JavaScript](01-js/) | Modules 01 to 05, then the [Phase 1 project](01-js/project/README.md): the ticket logic in plain JavaScript | about 5.5 h |
-| Day 1, afternoon | [Phase 2: TypeScript](02-ts/) | Modules 01 to 08, then the [Phase 2 project](02-ts/project/README.md): your Phase 1 code, migrated to strict TypeScript | about 5 h |
-| Day 2 | [Phase 3: React and antd](03-react/) | Modules 01 to 09 | about 6 h |
-| End of day 2 | [Final project](final-project/README.md) | Migrate, fix and extend a ticket app built on your Phase 2 code | about 3 h |
+| 1 | [Phase 1: JavaScript](01-js/) | Modules 01 to 05, then the [Phase 1 project](01-js/project/README.md): the ticket logic in plain JavaScript | about 5.5 h |
+| 2 | [Phase 2: TypeScript](02-ts/) | Modules 01 to 08, then the [Phase 2 project](02-ts/project/README.md): your Phase 1 code, migrated to strict TypeScript | about 6 h |
+| 3 | [Phase 3: React and antd](03-react/) | Modules 01 to 09 | about 6 h |
+| 4 | [Final project](final-project/README.md) | Migrate, fix and extend a ticket app built on your Phase 2 code | about 4.5 h |
 
-Those times are for the **core** steps, as a guide, not a limit. Each module's README gives its own time. If you are behind, keep going with core and leave stretch for later. If you are ahead, do stretch steps.
+Those times are for the **core** steps, as a guide, not a limit. Your mentor tells you how they map onto your calendar. Each module's README gives its own time. If you are behind, keep going with core and leave stretch for later. If you are ahead, do stretch steps.
 
 Do the phases in order. Phase 2 starts from your Phase 1 project, and the final project imports your Phase 2 code.
 
@@ -107,7 +107,7 @@ Being stuck is part of the work, and asking is not cheating. Do not copy a solut
 | --- | --- |
 | `00-setup/` | Setup, and a one-page Python to JavaScript cheat sheet. |
 | `01-js/`, `02-ts/`, `03-react/` | One folder per module: `README.md`, the starter file you edit, and `lesson.tsx` (the slides). |
-| `final-project/` | The ticket app you migrate, fix and extend at the end of day 2. |
+| `final-project/` | The ticket app you migrate, fix and extend at the end. |
 | `server/` | The Python ticket API. Standard library only; you never change it. |
 | `lessons/` | The lesson app. You only open it through `yarn lessons`. |
 | `scripts/`, `playground/` | The tools behind the `yarn` commands. You do not need to read them. |

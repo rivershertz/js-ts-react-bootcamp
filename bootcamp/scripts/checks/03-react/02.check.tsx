@@ -79,19 +79,20 @@ step(3, async () => {
 step(4, async () => {
   const { NumberedTitles } = await ex();
   const tickets = sampleTickets.slice(0, 3);
-  const expected = tickets.map((t, i) => `${i + 1}. ${t.title}`);
+  const expected = tickets.map((t, i) => `${i + 1}. ${t.title}`).join('\n');
+  const rows = () => screen.getAllByRole('listitem').map((li) => li.textContent).join('\n');
   const { rerender } = render(
     <StrictMode>
       <NumberedTitles tickets={tickets} />
     </StrictMode>,
   );
-  expect(screen.getAllByRole('listitem').map((li) => li.textContent), 'the first render should number the rows 1, 2, 3').toEqual(expected);
+  ensure(rows() === expected, `The first render should number the rows 1, 2, 3. It showed:\n${rows()}`);
   rerender(
     <StrictMode>
       <NumberedTitles tickets={tickets} />
     </StrictMode>,
   );
-  expect(screen.getAllByRole('listitem').map((li) => li.textContent), 'rendering again with the same tickets should show the same numbers').toEqual(expected);
+  ensure(rows() === expected, `Rendering again with the same tickets should show the same numbers. It showed:\n${rows()}`);
 });
 
 step(5, async () => {

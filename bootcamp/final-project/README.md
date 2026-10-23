@@ -7,7 +7,7 @@ A teammate wrote this ticket tracker in JavaScript. It mostly works, but users r
 In the browser, the user can:
 
 - [ ] Open the ticket list and see an antd Table of tickets from the Python API, with a loading state while it fetches and an error state with a Retry button if the server is down.
-- [ ] Sort the table by any column and page through results.
+- [ ] Sort the table by title, priority or created date, and page through results.
 - [ ] Filter by status and priority, and type in a search box that only filters after they stop typing (debounced).
 - [ ] Filter by assignee, and have that filter kept in the URL: refreshing the page or sharing the link keeps the same filter. *(the new feature)*
 - [ ] Click "New ticket" and fill in an antd Form that validates required fields and shows field errors inline.
@@ -24,11 +24,11 @@ Technical:
 - [ ] The debounced search uses your `useDebouncedValue` hook, in `src/hooks/useDebouncedValue.ts`.
 - [ ] `yarn verify final-project` passes.
 
-**Time:** about 3 hours.
+**Time:** about 4.5 hours.
 
 ## Before you start
 
-The app's ticket logic is **your own Phase 2 project**. Every file here imports it as `@tickets/logic`, which points at `02-ts/project/src/index.ts`. So `filterTickets`, `sortTickets`, `computeStats`, `statusLabel`, `isTicket` and the `Ticket` type are the ones you wrote yesterday. If your Phase 2 project is not green yet, ask your mentor.
+The app's ticket logic is **your own Phase 2 project**. Every file here imports it as `@tickets/logic`, which points at `02-ts/project/src/index.ts`. So `filterTickets`, `sortTickets`, `computeStats`, `statusLabel`, `isTicket` and the `Ticket` type are the ones you wrote in Phase 2. If your Phase 2 project is not green yet, ask your mentor.
 
 ## Run it
 
@@ -71,6 +71,22 @@ components/                 TicketTable, TicketFilters, StatsPanel, TicketForm
 3. Migrate to TypeScript one file at a time (step 1), starting with `api/`, then `components/`, then `pages/`. The bug steps run on `.js` and `.ts` alike, so you can fix bugs before, during or after the migration.
 4. ESLint (step 3) points at some of the bugs on its own. Read each rule's message before you change anything.
 5. For the performance steps, module 03-react/07 shows how to count renders and read the browser's Performance tab.
+
+## TypeScript with antd
+
+Most of step 2's errors come from antd's props. These are the types you will need, all imported from `antd` (`import { type TableColumnsType } from 'antd'`):
+
+| For | Use |
+| --- | --- |
+| Table columns | `const columns: TableColumnsType<Ticket> = [...]`: then `render: (_, t) => ...` knows `t` is a `Ticket` |
+| Table `onChange` | `const handleChange: TableProps<Ticket>['onChange'] = (pagination, filters, sorter) => ...`. `sorter` can be an array, and `sorter.columnKey` is a `Key`, so check it with a type guard before you use it as a sort field. |
+| A column's `sortOrder` | `'ascend' \| 'descend' \| null`, not `string` |
+| A form | `const [form] = Form.useForm<Values>()`, with `Values` the type of the form's fields |
+| `form.setFields` | each `name` must be one of the form's field names (`keyof Values`), not any `string`. A type guard turns the server's field name into one. |
+| A ref to an antd `Input` | `useRef<InputRef>(null)` |
+| `document.getElementById('root')` | `HTMLElement \| null`: check it with an `if` and throw a clear error |
+
+Step 2 only bans `any` and `@ts-ignore`. Avoid `as` and `!` too, as in Phase 2: each one tells TypeScript to trust you instead of checking. If you keep one, be ready to explain it to your mentor.
 
 ## Steps
 

@@ -36,10 +36,13 @@ for (const s of shown) {
   const mark =
     state === 'pass' ? styleText('green', '✓') : notStarted || s.level === 'stretch' ? styleText('dim', '·') : styleText('red', '✗');
   const label = `${String(s.n).padStart(2)} ${s.level.padEnd(8)}`;
-  console.log(`  ${mark} ${label}${s.title}${notStarted ? styleText('dim', '   (not started)') : ''}`);
-  if (state !== 'pass' && !notStarted && !crashed) {
+  // In a whole-module run, an unfinished stretch step stays quiet: it is optional.
+  const quietStretch = state !== 'pass' && !notStarted && s.level === 'stretch' && step === undefined;
+  const note = notStarted ? '   (not started)' : quietStretch ? `   (not done; yarn verify ${module.id}/${s.n} shows why)` : '';
+  console.log(`  ${mark} ${label}${s.title}${styleText('dim', note)}`);
+  if (state !== 'pass' && !notStarted && !quietStretch && !crashed) {
+    if (r?.message) console.log(indent(tidy(r.message), 16));
     console.log(styleText('cyan', `${' '.repeat(16)}Hint: ${s.hint}`));
-    if (r?.message) console.log(styleText('dim', indent(tidy(r.message), 16)));
   }
 }
 

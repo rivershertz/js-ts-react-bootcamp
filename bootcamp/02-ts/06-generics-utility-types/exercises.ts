@@ -37,6 +37,7 @@ export type TicketSummary = Ticket; // TODO
 
 // @step 4 (core)
 // Apply changes to a ticket and return the updated copy. id and createdAt never change.
+// Types are gone at run time, so changes may still carry an id or createdAt: keep the original ones.
 export function updateTicket(ticket: Ticket, changes: TicketChanges): Ticket {
   throw new Error('TODO: step 4');
 }

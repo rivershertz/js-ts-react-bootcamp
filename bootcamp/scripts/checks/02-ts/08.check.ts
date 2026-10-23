@@ -84,6 +84,6 @@ step(5, async () => {
 
 step(6, () => {
   requireTs();
-  const errors = typeErrorsForStep([path.join(__dirname, '08.types.ts'), junior(`${dir}/report`)], 6);
+  const errors = typeErrorsForStep([path.join(__dirname, '08.weight.types.ts'), junior(`${dir}/report`)], 6);
   if (errors.length) throw new Error(errors.join('\n'));
 });

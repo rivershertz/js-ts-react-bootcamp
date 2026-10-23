@@ -20,6 +20,8 @@ Run `yarn lessons` and pick **03-react/01 React fundamentals in TypeScript**.
 
 Open [`exercises.tsx`](exercises.tsx). The ticket type and sample tickets come from [`../tickets.ts`](../tickets.ts).
 
+From here on, imports leave the file extension off (`from '../tickets'`), as most React apps do: Vite finds the `.ts` or `.tsx` file for you.
+
 | Step | Level | Task |
 | --- | --- | --- |
 | 1 | core | `PriorityBadge`: typed props |

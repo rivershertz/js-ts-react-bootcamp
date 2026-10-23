@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PRIORITY_COLORS: Record<Priority, string> = { low: 'default', medium: 'blue', high: 'orange', urgent: 'red' };
 const STATUS_COLORS: Record<Status, string> = { open: 'blue', assigned: 'purple', blocked: 'red', closed: 'default' };
-const SORT_FIELDS: readonly SortField[] = ['title', 'priority', 'dueDate', 'createdAt'];
+const SORT_FIELDS: readonly SortField[] = ['title', 'priority', 'createdAt'];
 
 function isSortField(value: unknown): value is SortField {
   return SORT_FIELDS.some((field) => field === value);
@@ -43,7 +43,7 @@ export default function TicketTable({ tickets, assignees, loading, sort, onSortC
       render: (_, t) => <Tag color={PRIORITY_COLORS[t.priority]}>{t.priority}</Tag>,
     },
     { title: 'Assignee', key: 'assignee', render: (_, t) => ('assignee' in t && t.assignee ? (names.get(t.assignee) ?? t.assignee) : '') },
-    { title: 'Due', key: 'dueDate', sorter: true, sortOrder: order('dueDate'), render: (_, t) => t.dueDate ?? '' },
+    { title: 'Due', key: 'dueDate', render: (_, t) => t.dueDate ?? '' },
     { title: 'Created', key: 'createdAt', sorter: true, sortOrder: order('createdAt'), render: (_, t) => t.createdAt.slice(0, 10) },
   ];
 

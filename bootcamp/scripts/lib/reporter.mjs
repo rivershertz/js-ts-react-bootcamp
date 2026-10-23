@@ -26,12 +26,16 @@ function* walk(task) {
   }
 }
 
+const MAX_LINES = 10;
+
 function clean(message = '') {
-  return message
+  const lines = message
     .replace(/\u001b\[[0-9;]*m/g, '')
     .split(/\n\s*Ignored nodes:/)[0]
     .trim()
-    .split('\n')
-    .slice(0, 8)
-    .join('\n');
+    .split('\n');
+  if (lines.length <= MAX_LINES) return lines.join('\n');
+  // Say how much was left out, so a long list never looks shorter than it is.
+  const more = lines.length - MAX_LINES;
+  return [...lines.slice(0, MAX_LINES), `... and ${more} more line${more === 1 ? '' : 's'}. Fix these first, then run it again.`].join('\n');
 }

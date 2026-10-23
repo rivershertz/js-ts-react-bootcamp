@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const PRIORITY_COLORS = { low: 'default', medium: 'blue', high: 'orange', urgent: 'red' };
 const STATUS_COLORS = { open: 'blue', assigned: 'purple', blocked: 'red', closed: 'default' };
-const SORT_FIELDS = ['title', 'priority', 'dueDate', 'createdAt'];
+const SORT_FIELDS = ['title', 'priority', 'createdAt'];
 
 // The table shows what it is given. Sorting is done by the page, so the columns
 // tell antd which column is sorted instead of sorting by themselves.
@@ -40,7 +40,7 @@ export default function TicketTable({ tickets, assignees, loading, sort, onSortC
       render: (_, t) => <Tag color={PRIORITY_COLORS[t.priority]}>{t.priority}</Tag>,
     },
     { title: 'Assignee', key: 'assignee', render: (_, t) => (t.assignee ? (names.get(t.assignee) ?? t.assignee) : '') },
-    { title: 'Due', key: 'dueDate', sorter: true, sortOrder: order('dueDate'), render: (_, t) => t.dueDate ?? '' },
+    { title: 'Due', key: 'dueDate', render: (_, t) => t.dueDate ?? '' },
     { title: 'Created', key: 'createdAt', sorter: true, sortOrder: order('createdAt'), render: (_, t) => t.createdAt.slice(0, 10) },
   ];
 

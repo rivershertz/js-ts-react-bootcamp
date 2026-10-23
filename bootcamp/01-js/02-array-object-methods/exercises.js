@@ -58,7 +58,7 @@ export function indexById(tickets) {
 
 // Step 8 (core)
 // The titles of the `n` newest tickets that are urgent or high priority and not closed.
-// Chain the methods: filter, sort, slice, map.
+// Chain the methods: filter, toSorted, slice, map.
 export function hotList(tickets, n) {
   throw new Error('TODO: step 8');
 }

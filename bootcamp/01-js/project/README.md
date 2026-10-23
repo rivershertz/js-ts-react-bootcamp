@@ -24,7 +24,7 @@ Technical:
 
 ## What you are building
 
-The logic behind a ticket tracker, without any UI yet. In Phase 2 you turn this same code into TypeScript, and on day 2 a React app uses it. So the names below matter: keep them exactly as they are.
+The logic behind a ticket tracker, without any UI yet. In Phase 2 you turn this same code into TypeScript, and in the final project a React app uses it. So the names below matter: keep them exactly as they are.
 
 ```
 src/
