@@ -1104,6 +1104,50 @@
       ]
     },
     {
+      "id": "03-react/08",
+      "dir": "03-react/08-routing",
+      "title": "Routing with React Router",
+      "check": "scripts/checks/03-react/08.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "AppRoutes: a route per page",
+          "hint": "One <Route path=\"...\" element={...} /> per page. For everything else: <Route path=\"*\" element={<Navigate to=\"/tickets\" replace />} />."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketListPage: Link, not <a href>",
+          "hint": "<Link to={`/tickets/${ticket.id}`}>. A Link changes the URL without asking the server for a new page."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketPage: read :id from the URL",
+          "hint": "const { id } = useParams(). It is string | undefined: the find handles both."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "useStatusFilter: keep the filter in the URL",
+          "hint": "const [searchParams, setSearchParams] = useSearchParams(). Read with searchParams.get('status') and check it with isStatus. Write with set or delete on the params."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "NewTicketPage: go to the new ticket after saving",
+          "hint": "const navigate = useNavigate(), then navigate(`/tickets/${id}`) after onCreate resolves."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "BackButton: back in the history",
+          "hint": "navigate(-1) goes back one entry, like the browser's back button, with the URL's ?status still on it."
+        }
+      ]
+    },
+    {
       "id": "final-project",
       "dir": "final-project",
       "title": "Final project: migrate, fix, extend the ticket app",

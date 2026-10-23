@@ -74,6 +74,9 @@ Filled in per module as the material is written.
 | 03-react/07 | Step 1 puts `filters` or the whole state in the `useMemo` dependencies | "Which values does the filter read? Is `compact` one of them?" |
 | 03-react/07 | Step 3 still renders 6 rows after adding `useCallback` | "Did step 2 wrap `TicketRow` in `memo`? Who compares the props?" |
 | 03-react/07 | Wants to memoize everything after this module | Point at step 4 and the "When not to memoize" slide: measure first. |
+| 03-react/08 | Step 1: `/tickets/new` shows "No ticket new" | "Which route matched? Is there a route for `/tickets/new` at all?" |
+| 03-react/08 | Step 4 keeps `useState` and also writes the URL | "Where does the filter live now: in two places? Which one survives a refresh?" |
+| 03-react/08 | Step 4 replaces the whole query string, losing other parameters | "What does `setSearchParams({ status })` do to `?sort=...`? Try the function form." |
 
 ## The final project's planted problems
 
