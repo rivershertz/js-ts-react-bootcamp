@@ -1066,6 +1066,44 @@
       ]
     },
     {
+      "id": "03-react/07",
+      "dir": "03-react/07-performance",
+      "title": "Performance: memo, useMemo, useCallback",
+      "check": "scripts/checks/03-react/07.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TicketSearch: do not filter again for nothing",
+          "hint": "const shown = useMemo(() => filterByTitle(tickets, search), [tickets, search]). The dependencies are the inputs of the work."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketRow: skip renders with memo",
+          "hint": "export const TicketRow = memo(function TicketRow(props: RowProps) { ... }). memo compares each prop with Object.is."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketPicker: one onSelect for every render",
+          "hint": "const select = useCallback((id: string) => { ... }, []). State setters never change, so they need no dependency."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "When is memoizing worth it?",
+          "hint": "Worth it when the work is slow and repeats with the same inputs, or when a memo component receives the value. Not for cheap work or plain elements."
+        },
+        {
+          "n": 5,
+          "level": "stretch",
+          "title": "useChangedProps: a debugging hook",
+          "hint": "Keep the last props in a useRef, update it in an effect with no dependency array, and compare with Object.is."
+        }
+      ]
+    },
+    {
       "id": "final-project",
       "dir": "final-project",
       "title": "Final project: migrate, fix, extend the ticket app",
