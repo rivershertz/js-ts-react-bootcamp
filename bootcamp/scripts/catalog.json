@@ -1148,6 +1148,50 @@
       ]
     },
     {
+      "id": "03-react/09",
+      "dir": "03-react/09-versions",
+      "title": "Versions and tooling: React 16 / 18 / 19, CRA and Vite",
+      "check": "scripts/checks/03-react/09.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "mount: start the app the React 18 way",
+          "hint": "import { createRoot } from 'react-dom/client'. const root = createRoot(container); root.render(app); return () => root.unmount()."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "How many renders? Batching in 17 and 18",
+          "hint": "React 17 batched only inside its own event handlers. React 18 with createRoot batches everywhere: that is what \"automatic batching\" means."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "envAccess: env variables in CRA and Vite",
+          "hint": "A template string: `process.env.REACT_APP_${name}` or `import.meta.env.VITE_${name}`."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "Where things are: build folder, proxy, env",
+          "hint": "Use the CRA versus Vite table in the lesson. A built app is static files: no Node process reads .env when a user opens it."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "What breaks in React 19?",
+          "hint": "The lesson's React 19 slide lists what was removed: the old way to start an app, and a class-era feature of function components. Things that were only given a newer alternative still work."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "buildTool: CRA or Vite from package.json",
+          "hint": "Join the script commands into one string and look for react-scripts, then vite."
+        }
+      ]
+    },
+    {
       "id": "final-project",
       "dir": "final-project",
       "title": "Final project: migrate, fix, extend the ticket app",

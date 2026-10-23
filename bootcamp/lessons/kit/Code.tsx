@@ -14,8 +14,8 @@ const theme: PrismTheme = {
   ],
 };
 
-export type Lang = 'js' | 'ts' | 'tsx' | 'jsx' | 'python' | 'json';
-const prismLang: Record<Lang, string> = { js: 'javascript', ts: 'typescript', tsx: 'tsx', jsx: 'jsx', python: 'python', json: 'json' };
+export type Lang = 'js' | 'ts' | 'tsx' | 'jsx' | 'python' | 'json' | 'text';
+const prismLang: Record<Lang, string> = { js: 'javascript', ts: 'typescript', tsx: 'tsx', jsx: 'jsx', python: 'python', json: 'json', text: 'plain' };
 
 type Props = {
   code: string;

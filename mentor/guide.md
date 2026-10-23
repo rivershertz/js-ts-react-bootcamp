@@ -77,6 +77,8 @@ Filled in per module as the material is written.
 | 03-react/08 | Step 1: `/tickets/new` shows "No ticket new" | "Which route matched? Is there a route for `/tickets/new` at all?" |
 | 03-react/08 | Step 4 keeps `useState` and also writes the URL | "Where does the filter live now: in two places? Which one survives a refresh?" |
 | 03-react/08 | Step 4 replaces the whole query string, losing other parameters | "What does `setSearchParams({ status })` do to `?sort=...`? Try the function form." |
+| 03-react/09 | Step 1 passes but the unmount part fails | "What does createRoot give you back, and which of its methods undoes render?" |
+| 03-react/09 | Guesses at steps 2 and 5 until they pass | Ask for the reason behind each answer. The batching demo in the playground shows step 2 live. |
 
 ## The final project's planted problems
 
