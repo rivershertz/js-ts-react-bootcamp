@@ -1010,6 +1010,62 @@
       ]
     },
     {
+      "id": "03-react/06",
+      "dir": "03-react/06-antd",
+      "title": "Ant Design: Table, Form, theming, versions",
+      "check": "scripts/checks/03-react/06.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "PriorityTag: an antd Tag per priority",
+          "hint": "const COLORS: Record<Priority, string> = { low: 'green', ... }, then <Tag color={COLORS[priority]}>."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketTable: typed columns, row keys, 5 per page",
+          "hint": "Add a Priority column with render: (priority: Priority) => <PriorityTag ... />. On <Table>: rowKey=\"id\" and pagination={{ pageSize: 5 }}."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketTable: sort priorities in their real order",
+          "hint": "sorter: (a, b) => PRIORITIES.indexOf(a.priority) - PRIORITIES.indexOf(b.priority)."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "TicketForm: required fields with messages",
+          "hint": "<Form.Item label=\"Priority\" name=\"priority\" rules={[{ required: true, message: '...' }]}> around a <Select options={...} />. The Form's onFinish gets the values."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "TicketForm: edit a ticket",
+          "hint": "<Form initialValues={...}> fills the fields when the form mounts. The button text depends on whether ticket is given."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "ThemedApp: the team's theme",
+          "hint": "<ConfigProvider theme={{ token: { colorPrimary: '#0f766e', borderRadius: 4 } }}>{children}</ConfigProvider>."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "antdMajorVersion: read package.json",
+          "hint": "Take dependencies.antd and find the first number in it: a regular expression like /\\d+/ skips ^ and ~."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "TicketTable: filter by status",
+          "hint": "On the Status column: filters: STATUSES.map((s) => ({ text: s, value: s })) and onFilter: (value, ticket) => ticket.status === value."
+        }
+      ]
+    },
+    {
       "id": "final-project",
       "dir": "final-project",
       "title": "Final project: migrate, fix, extend the ticket app",

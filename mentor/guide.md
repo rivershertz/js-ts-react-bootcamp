@@ -67,6 +67,10 @@ Filled in per module as the material is written.
 | 03-react/05 | Step 1 returns `{ data }` from `useQuery`, and step 2 has no `isPending` | "Return the whole result. What else is on it besides `data`?" |
 | 03-react/05 | Step 3 wraps `useQuery` in `if (id)` | "Rules of Hooks: what does `useQuery` take that says whether it may run?" |
 | 03-react/05 | Step 4 calls `refetch` from the board, or reloads the page | "Who knows the save changed the list: the button or the mutation? What can `onSuccess` tell the cache?" |
+| 03-react/06 | Step 2 still warns about keys after adding `key` to each column | "The warning is about rows, not columns. Which field of a ticket is unique, and which Table prop names it?" |
+| 03-react/06 | Step 3 sorts `high, low, medium, urgent` | "What does `localeCompare` compare? Where is the real order of priorities written down?" |
+| 03-react/06 | Step 5 form stays empty, or shows the first ticket after switching | "When does antd read `initialValues`? What did module 03 say about resetting state with a key?" |
+| 03-react/06 | Copies a version 3 or 4 example (`getFieldDecorator`, `antd/dist/antd.css`) | "Which antd is this project on? Check `package.json` first." |
 
 ## The final project's planted problems
 
