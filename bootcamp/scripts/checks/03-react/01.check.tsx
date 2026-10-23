@@ -4,6 +4,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { ComponentType } from 'react';
 import { expect, vi } from 'vitest';
+import { ensure } from '../../lib/ensure';
 import { defineSteps } from '../../lib/steps';
 import { junior, load } from '../../lib/paths';
 import { typeErrorsForStep } from '../../lib/typecheck';
@@ -38,10 +39,10 @@ step(2, async () => {
   const { container, rerender } = render(<TicketCard ticket={t2} />);
   expect(container.querySelector('article'), 'TicketCard should render an <article>').not.toBeNull();
   expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(t2.title);
-  expect(screen.getByText('MEDIUM'), 'show the priority with PriorityBadge').toBeInTheDocument();
+  ensure(screen.queryByText('MEDIUM') !== null, 'Show the priority with PriorityBadge (MEDIUM)');
   expect(screen.getByText(`Due ${t2.dueDate}`)).toBeInTheDocument();
   rerender(<TicketCard ticket={t1} />);
-  expect(screen.getByText('No due date'), 'a ticket with dueDate null shows "No due date"').toBeInTheDocument();
+  ensure(screen.queryByText('No due date') !== null, 'A ticket with dueDate null shows "No due date"');
 });
 
 step(3, async () => {
@@ -69,11 +70,11 @@ step(4, async () => {
   const minus = screen.getByRole('button', { name: '-' });
   await user.click(plus);
   await user.click(plus);
-  expect(screen.getByText('Estimate: 2 h'), 'two clicks on + should show "Estimate: 2 h"').toBeInTheDocument();
+  ensure(screen.queryByText('Estimate: 2 h') !== null, `Two clicks on + should show "Estimate: 2 h", not "${screen.queryByText(/^Estimate/)?.textContent}"`);
   await user.click(minus);
   await user.click(minus);
   await user.click(minus);
-  expect(screen.getByText('Estimate: 0 h'), '"-" must stop at 0').toBeInTheDocument();
+  ensure(screen.queryByText('Estimate: 0 h') !== null, `"-" must stop at 0, but it shows "${screen.queryByText(/^Estimate/)?.textContent}"`);
 });
 
 step(5, async () => {
@@ -82,15 +83,15 @@ step(5, async () => {
   render(<NewTicketForm onAdd={onAdd} />);
   const input = screen.getByLabelText('Title');
   const add = screen.getByRole('button', { name: 'Add' });
-  expect(add, 'Add is disabled while the title is empty').toBeDisabled();
+  ensure((add as HTMLButtonElement).disabled, 'Add should be disabled while the title is empty');
   await user.type(input, '   ');
-  expect(add, 'Add is disabled while the title is only spaces').toBeDisabled();
+  ensure((add as HTMLButtonElement).disabled, 'Add should be disabled while the title is only spaces');
   await user.clear(input);
   await user.type(input, '  Fix the export  ');
   expect(add).toBeEnabled();
   await user.click(add);
   expect(onAdd, 'onAdd should get the trimmed title').toHaveBeenCalledWith('Fix the export');
-  expect(input, 'the input should be empty after adding').toHaveValue('');
+  ensure((input as HTMLInputElement).value === '', 'The input should be empty after adding');
   await user.type(input, 'Second one{Enter}');
   expect(onAdd, 'Enter submits the form too').toHaveBeenLastCalledWith('Second one');
   expect(onAdd).toHaveBeenCalledTimes(2);

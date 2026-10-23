@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { StrictMode, type ComponentType } from 'react';
 import { expect, vi } from 'vitest';
+import { ensure } from '../../lib/ensure';
 import { defineSteps } from '../../lib/steps';
 import { load, root } from '../../lib/paths';
 import { sampleTickets } from '../../../03-react/tickets';
@@ -63,7 +64,7 @@ step(2, async () => {
   const initial = { ...sampleTickets[0] };
   render(<AssigneePicker initial={initial} />);
   await user.click(screen.getByRole('button', { name: 'Assign to Noa' }));
-  expect(screen.getByText('Assigned to a3'), 'after the click, the text should read "Assigned to a3"').toBeInTheDocument();
+  ensure(screen.queryByText('Assigned to a3') !== null, 'After the click, the text should read "Assigned to a3"');
   expect(initial.assignee, 'AssigneePicker changed the ticket object it was given. Make a new object instead.').toBeUndefined();
 });
 

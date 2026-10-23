@@ -1,12 +1,14 @@
 // 03-react/01 React fundamentals in TypeScript
 // Check your work with:  yarn verify 03-react/01
 // See it in the browser:  yarn dev 03-react/01
-import type { Priority, Ticket } from '../tickets';
+import type { ReactNode } from 'react';
+import type { Ticket } from '../tickets';
 
 // Step 1 (core)
 // PriorityBadge shows the priority in capitals inside a <span>: <span>HIGH</span>.
-// Type its props: it takes one prop, `priority`, of type Priority.
-export function PriorityBadge(props: unknown) {
+// Its prop is typed as any string, so <PriorityBadge priority="critical" /> compiles.
+// Type it as Priority instead (import the type from '../tickets'), and destructure it.
+export function PriorityBadge(props: { priority: string }): ReactNode {
   throw new Error('TODO: step 1');
 }
 
@@ -17,7 +19,7 @@ export function PriorityBadge(props: unknown) {
 //     <PriorityBadge ... />
 //     <p>Due {dueDate}</p>        or <p>No due date</p> when dueDate is null
 //   </article>
-export function TicketCard({ ticket }: { ticket: Ticket }) {
+export function TicketCard({ ticket }: { ticket: Ticket }): ReactNode {
   throw new Error('TODO: step 2');
 }
 
@@ -25,7 +27,7 @@ export function TicketCard({ ticket }: { ticket: Ticket }) {
 // TicketList shows a <ul> with one <li> per ticket, containing a TicketCard.
 // Give every <li> a key that stays the same for the same ticket.
 // With no tickets, show <p>No tickets</p> instead of the list.
-export function TicketList({ tickets }: { tickets: Ticket[] }) {
+export function TicketList({ tickets }: { tickets: Ticket[] }): ReactNode {
   throw new Error('TODO: step 3');
 }
 
@@ -47,13 +49,13 @@ export function EstimateCounter() {
 // - The button is disabled while the title is empty or only spaces.
 // - Submitting (the button or Enter) calls onAdd with the trimmed title, then clears the input.
 // - The page must not reload: call event.preventDefault() in the submit handler.
-export function NewTicketForm({ onAdd }: { onAdd: (title: string) => void }) {
+export function NewTicketForm({ onAdd }: { onAdd: (title: string) => void }): ReactNode {
   throw new Error('TODO: step 5');
 }
 
 // Step 6 (stretch)
 // SearchableTicketList: an input labelled "Search" above a TicketList.
 // Only tickets whose title contains the search text (ignoring case) are shown.
-export function SearchableTicketList({ tickets }: { tickets: Ticket[] }) {
+export function SearchableTicketList({ tickets }: { tickets: Ticket[] }): ReactNode {
   throw new Error('TODO: step 6');
 }

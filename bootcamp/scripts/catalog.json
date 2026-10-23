@@ -896,6 +896,50 @@
       ]
     },
     {
+      "id": "03-react/03",
+      "dir": "03-react/03-rendering",
+      "title": "Rendering: snapshots, lifting state, keys, effects",
+      "check": "scripts/checks/03-react/03.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TripleVote: state is a snapshot",
+          "hint": "`votes` does not change inside one render, so all three calls set the same value. Pass an updater: setVotes((v) => v + 1)."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketBoard: lift state up",
+          "hint": "Move useState into TicketBoard. Pass `selected` and `onSelect` to StatusTabs, and `status` to StatusTicketList."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "NotesPanel: a key resets state",
+          "hint": "React keeps a component's state while the same component sits in the same place. A different key makes it a new one: <NoteEditor key={...} />."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "OpenTimer: clean up the effect",
+          "hint": "Keep the id from setInterval and return () => clearInterval(id). StrictMode runs effects twice in development to show missing cleanups."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "OpenCount: you might not need an effect",
+          "hint": "A value computed from props or state is not state. Compute it while rendering: const count = tickets.filter(...).length."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "ticketReducer and useReducer",
+          "hint": "A switch on action.type that returns a new object per case. Then const [state, dispatch] = useReducer(ticketReducer, initial)."
+        }
+      ]
+    },
+    {
       "id": "03-react/04",
       "dir": "03-react/04-custom-hooks",
       "title": "Custom hooks",
