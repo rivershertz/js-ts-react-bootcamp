@@ -1,16 +1,20 @@
 # 03-react/04 Custom hooks
 
-**Time:** 30 min lesson, 40 min exercises (core).
+**Time:** 20 min lesson, 35 min exercises (core), plus 5 min stretch.
 
-> POC note: this module has exercises but no lesson deck yet. It shows how React exercises are checked and previewed.
+## 1. Watch the lesson
 
-## Recap
+Run `yarn lessons` and pick **03-react/04 Custom hooks**.
+
+## 2. Quick recap
 
 - A custom hook is a function whose name starts with `use` and that calls other hooks. It shares logic, not state: each component that calls it gets its own state.
 - The Rules of Hooks apply inside it too: call hooks at the top level, never in a condition or loop.
+- Type the return value: a tuple like `[boolean, () => void]` for a `useState`-style hook, a generic `<T>` when the hook works for any value.
 - An effect that starts a timer must return a cleanup that clears it.
+- `useDebouncedValue(value, 300)` returns the value only once it has stopped changing for 300 ms. The final project's search needs it.
 
-## Exercises
+## 3. Exercises
 
 Open [`exercises.tsx`](exercises.tsx).
 

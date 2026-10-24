@@ -796,6 +796,150 @@
       ]
     },
     {
+      "id": "03-react/01",
+      "dir": "03-react/01-fundamentals",
+      "title": "React fundamentals in TypeScript",
+      "check": "scripts/checks/03-react/01.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "PriorityBadge: typed props",
+          "hint": "Destructure in the parameter list and type it: `function PriorityBadge({ priority }: { priority: Priority })`."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketCard: compose components, render conditionally",
+          "hint": "Use <PriorityBadge priority={ticket.priority} /> inside. For the due date: `ticket.dueDate ? <p>...</p> : <p>No due date</p>`."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketList: lists and keys, empty state",
+          "hint": "`tickets.map((t) => <li key={t.id}>...</li>)`. Return early with <p>No tickets</p> when the array is empty."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "EstimateCounter: state and events",
+          "hint": "`const [hours, setHours] = useState(0)`, then onClick={() => setHours(...)}. Math.max(0, ...) keeps it at 0 or more."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "NewTicketForm: a controlled input",
+          "hint": "value={title} plus onChange={(e) => setTitle(e.target.value)}. Put the logic in the form's onSubmit, not the button's onClick, so Enter works too."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "SearchableTicketList: filter while typing",
+          "hint": "Keep only the search text in state. Compute the filtered tickets during render; do not store them in state."
+        }
+      ]
+    },
+    {
+      "id": "03-react/02",
+      "dir": "03-react/02-rules-of-react",
+      "title": "Rules of React",
+      "check": "scripts/checks/03-react/02.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TagEditor: never mutate state (arrays)",
+          "hint": "React compares the old and new state with Object.is. push changes the same array, so React sees no change. Pass a new array: [...tags, draft]."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "AssigneePicker: never mutate state (objects)",
+          "hint": "Same rule for objects: build a new one with a spread, { ...ticket, assignee: id }."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "SortedTitles: props are read-only",
+          "hint": "sort() changes the array it is called on, and that array belongs to the parent. toSorted() returns a sorted copy."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "NumberedTitles: rendering is pure",
+          "hint": "A render must not change anything outside itself. The row number is already in map's second argument: (t, i)."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "TicketDetails: hooks before any early return",
+          "hint": "Rules of Hooks: call every hook on every render, in the same order. Move useState above the if."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "DocumentTitle: list every dependency",
+          "hint": "An effect with [] runs once. Put every value the effect reads in its dependency array."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "ESLint's React Hooks rules report nothing",
+          "hint": "Run `yarn eslint 03-react/02-rules-of-react` and read each message. Steps 5 and 6 are what it finds."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "Checklist: new objects for nested changes",
+          "hint": "[...items] copies the array, but the items inside are still the same objects. map, and spread only the item that changes."
+        }
+      ]
+    },
+    {
+      "id": "03-react/03",
+      "dir": "03-react/03-rendering",
+      "title": "Rendering: snapshots, lifting state, keys, effects",
+      "check": "scripts/checks/03-react/03.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TripleVote: state is a snapshot",
+          "hint": "`votes` does not change inside one render, so all three calls set the same value. Pass an updater: setVotes((v) => v + 1)."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketBoard: lift state up",
+          "hint": "Move useState into TicketBoard. Pass `selected` and `onSelect` to StatusTabs, and `status` to StatusTicketList."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "NotesPanel: a key resets state",
+          "hint": "React keeps a component's state while the same component sits in the same place. A different key makes it a new one: <NoteEditor key={...} />."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "OpenTimer: clean up the effect",
+          "hint": "Keep the id from setInterval and return () => clearInterval(id). StrictMode runs effects twice in development to show missing cleanups."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "OpenCount: you might not need an effect",
+          "hint": "A value computed from props or state is not state. Compute it while rendering: const count = tickets.filter(...).length."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "ticketReducer and useReducer",
+          "hint": "A switch on action.type that returns a new object per case. Then const [state, dispatch] = useReducer(ticketReducer, initial)."
+        }
+      ]
+    },
+    {
       "id": "03-react/04",
       "dir": "03-react/04-custom-hooks",
       "title": "Custom hooks",
@@ -824,6 +968,226 @@
           "level": "stretch",
           "title": "usePrevious: the value from the last render",
           "hint": "A ref survives renders without causing one. Update it in an effect."
+        }
+      ]
+    },
+    {
+      "id": "03-react/05",
+      "dir": "03-react/05-server-data",
+      "title": "Server data with React Query",
+      "check": "scripts/checks/03-react/05.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "useTickets: useQuery instead of useEffect",
+          "hint": "useQuery({ queryKey: ['tickets'], queryFn: () => client.get<Ticket[]>('/tickets').then((r) => r.data) }). Return the whole result, not just data."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketsView: loading and error states",
+          "hint": "Take isPending, isError and refetch from useTickets(). Return early for each state, in that order. Needs step 1."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "useTicket: wait for an id",
+          "hint": "useQuery has an option that says whether the query may run: enabled: id !== undefined."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "useCloseTicket: refresh the list after a save",
+          "hint": "const queryClient = useQueryClient(), then onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tickets'] }). Needs step 1."
+        },
+        {
+          "n": 5,
+          "level": "stretch",
+          "title": "useTicket: start from the list cache",
+          "hint": "initialData: () => queryClient.getQueryData<Ticket[]>(['tickets'])?.find((t) => t.id === id)."
+        }
+      ]
+    },
+    {
+      "id": "03-react/06",
+      "dir": "03-react/06-antd",
+      "title": "Ant Design: Table, Form, theming, versions",
+      "check": "scripts/checks/03-react/06.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "PriorityTag: an antd Tag per priority",
+          "hint": "const COLORS: Record<Priority, string> = { low: 'green', ... }, then <Tag color={COLORS[priority]}>."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketTable: typed columns, row keys, 5 per page",
+          "hint": "Add a Priority column with render: (priority: Priority) => <PriorityTag ... />. On <Table>: rowKey=\"id\" and pagination={{ pageSize: 5 }}."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketTable: sort priorities in their real order",
+          "hint": "sorter: (a, b) => PRIORITIES.indexOf(a.priority) - PRIORITIES.indexOf(b.priority)."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "TicketForm: required fields with messages",
+          "hint": "<Form.Item label=\"Priority\" name=\"priority\" rules={[{ required: true, message: '...' }]}> around a <Select options={...} />. The Form's onFinish gets the values."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "TicketForm: edit a ticket",
+          "hint": "<Form initialValues={...}> fills the fields when the form mounts. The button text depends on whether ticket is given."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "ThemedApp: the team's theme",
+          "hint": "<ConfigProvider theme={{ token: { colorPrimary: '#0f766e', borderRadius: 4 } }}>{children}</ConfigProvider>."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "antdMajorVersion: read package.json",
+          "hint": "Take dependencies.antd and find the first number in it: a regular expression like /\\d+/ skips ^ and ~."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "TicketTable: filter by status",
+          "hint": "On the Status column: filters: STATUSES.map((s) => ({ text: s, value: s })) and onFilter: (value, ticket) => ticket.status === value."
+        }
+      ]
+    },
+    {
+      "id": "03-react/07",
+      "dir": "03-react/07-performance",
+      "title": "Performance: memo, useMemo, useCallback",
+      "check": "scripts/checks/03-react/07.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "TicketSearch: do not filter again for nothing",
+          "hint": "const shown = useMemo(() => filterByTitle(tickets, search), [tickets, search]). The dependencies are the inputs of the work."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketRow: skip renders with memo",
+          "hint": "export const TicketRow = memo(function TicketRow(props: RowProps) { ... }). memo compares each prop with Object.is."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketPicker: one onSelect for every render",
+          "hint": "const select = useCallback((id: string) => { ... }, []). State setters never change, so they need no dependency."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "When is memoizing worth it?",
+          "hint": "Worth it when the work is slow and repeats with the same inputs, or when a memo component receives the value. Not for cheap work or plain elements."
+        },
+        {
+          "n": 5,
+          "level": "stretch",
+          "title": "useChangedProps: a debugging hook",
+          "hint": "Keep the last props in a useRef, update it in an effect with no dependency array, and compare with Object.is."
+        }
+      ]
+    },
+    {
+      "id": "03-react/08",
+      "dir": "03-react/08-routing",
+      "title": "Routing with React Router",
+      "check": "scripts/checks/03-react/08.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "AppRoutes: a route per page",
+          "hint": "One <Route path=\"...\" element={...} /> per page. For everything else: <Route path=\"*\" element={<Navigate to=\"/tickets\" replace />} />."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "TicketListPage: Link, not <a href>",
+          "hint": "<Link to={`/tickets/${ticket.id}`}>. A Link changes the URL without asking the server for a new page."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketPage: read :id from the URL",
+          "hint": "const { id } = useParams(). It is string | undefined: the find handles both."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "useStatusFilter: keep the filter in the URL",
+          "hint": "const [searchParams, setSearchParams] = useSearchParams(). Read with searchParams.get('status') and check it with isStatus. Write with set or delete on the params."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "NewTicketPage: go to the new ticket after saving",
+          "hint": "const navigate = useNavigate(), then navigate(`/tickets/${id}`) after onCreate resolves."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "BackButton: back in the history",
+          "hint": "navigate(-1) goes back one entry, like the browser's back button, with the URL's ?status still on it."
+        }
+      ]
+    },
+    {
+      "id": "03-react/09",
+      "dir": "03-react/09-versions",
+      "title": "Versions and tooling: React 16 / 18 / 19, CRA and Vite",
+      "check": "scripts/checks/03-react/09.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "mount: start the app the React 18 way",
+          "hint": "import { createRoot } from 'react-dom/client'. const root = createRoot(container); root.render(app); return () => root.unmount()."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "How many renders? Batching in 17 and 18",
+          "hint": "React 17 batched only inside its own event handlers. React 18 with createRoot batches everywhere: that is what \"automatic batching\" means."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "envAccess: env variables in CRA and Vite",
+          "hint": "A template string: `process.env.REACT_APP_${name}` or `import.meta.env.VITE_${name}`."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "Where things are: build folder, proxy, env",
+          "hint": "Use the CRA versus Vite table in the lesson. A built app is static files: no Node process reads .env when a user opens it."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "What breaks in React 19?",
+          "hint": "The lesson's React 19 slide lists what was removed: the old way to start an app, and a class-era feature of function components. Things that were only given a newer alternative still work."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "buildTool: CRA or Vite from package.json",
+          "hint": "Join the script commands into one string and look for react-scripts, then vite."
         }
       ]
     },

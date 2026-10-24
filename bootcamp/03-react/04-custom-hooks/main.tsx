@@ -1,6 +1,6 @@
 // Playground for this module. Run: yarn dev 03-react/04
 // Edit exercises.tsx and this page updates. Errors from unfinished steps show in red.
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Step } from '../../playground/Step';
 import { SearchBox, useDebouncedValue, useToggle } from './exercises';
@@ -24,15 +24,17 @@ function DebounceDemo() {
 
 function SearchDemo() {
   const [log, setLog] = useState<string[]>([]);
+  // useCallback keeps the same function across renders (module 07 explains why that matters here).
+  const onSearch = useCallback((t: string) => setLog((l) => [...l, t]), []);
   return (
     <div>
-      <SearchBox onSearch={(t) => setLog((l) => [...l, t])} />
+      <SearchBox onSearch={onSearch} />
       <p>onSearch was called {log.length} times: {log.map((t) => JSON.stringify(t)).join(', ')}</p>
     </div>
   );
 }
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root') as HTMLElement).render(
   <main style={{ fontFamily: 'system-ui', maxWidth: 640, margin: '40px auto' }}>
     <h1>Custom hooks playground</h1>
     <Step title="Step 1: useToggle"><ToggleDemo /></Step>

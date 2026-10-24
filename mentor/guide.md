@@ -58,7 +58,27 @@ Filled in per module as the material is written.
 | 02-ts/project | Hundreds of errors after renaming, and the junior freezes | "Close every file except `constants.ts`. Which file does everything else import?" |
 | 02-ts/project | Step 6 says "everything still compiles" with an extra state | "Is there a `never` check in `statusLabel`'s `default`, and is the `Ticket` union on one line starting `export type Ticket =`?" |
 | 02-ts/project | Step 7: `fetchTickets` still returns the bad ticket | "Where does `isTicket` run: on the response, or on each item of it?" |
+| 03-react/01 | `NewTicketForm` submits on the button's `onClick`; Enter in the input does nothing | "Which element knows the user submitted: the button or the form?" |
+| 03-react/02 | Step 1 "works" in the browser: the tag shows up as soon as they type again | "Does the tag appear because of your click, or because something else re-rendered? What does `Object.is` say about the array?" |
+| 03-react/02 | Step 5 fixed by deleting the early return | "Can you keep the early return and still call every hook on every render?" |
+| 03-react/03 | `TicketBoard` gets its own `useState` but `StatusTabs` keeps one too | "How many places hold the selected status now? Which one does the list read?" |
+| 03-react/03 | `OpenTimer` counts 2 s per second in the playground | "The playground runs in StrictMode. What does it do to effects, and what stops the second interval?" |
 | 03-react/04 | `useDebouncedValue` updates on every key press | "What does your effect's cleanup do when the value changes again?" |
+| 03-react/05 | Step 1 returns `{ data }` from `useQuery`, and step 2 has no `isPending` | "Return the whole result. What else is on it besides `data`?" |
+| 03-react/05 | Step 3 wraps `useQuery` in `if (id)` | "Rules of Hooks: what does `useQuery` take that says whether it may run?" |
+| 03-react/05 | Step 4 calls `refetch` from the board, or reloads the page | "Who knows the save changed the list: the button or the mutation? What can `onSuccess` tell the cache?" |
+| 03-react/06 | Step 2 still warns about keys after adding `key` to each column | "The warning is about rows, not columns. Which field of a ticket is unique, and which Table prop names it?" |
+| 03-react/06 | Step 3 sorts `high, low, medium, urgent` | "What does `localeCompare` compare? Where is the real order of priorities written down?" |
+| 03-react/06 | Step 5 form stays empty, or shows the first ticket after switching | "When does antd read `initialValues`? What did module 03 say about resetting state with a key?" |
+| 03-react/06 | Copies a version 3 or 4 example (`getFieldDecorator`, `antd/dist/antd.css`) | "Which antd is this project on? Check `package.json` first." |
+| 03-react/07 | Step 1 puts `filters` or the whole state in the `useMemo` dependencies | "Which values does the filter read? Is `compact` one of them?" |
+| 03-react/07 | Step 3 still renders 6 rows after adding `useCallback` | "Did step 2 wrap `TicketRow` in `memo`? Who compares the props?" |
+| 03-react/07 | Wants to memoize everything after this module | Point at step 4 and the "When not to memoize" slide: measure first. |
+| 03-react/08 | Step 1: `/tickets/new` shows "No ticket new" | "Which route matched? Is there a route for `/tickets/new` at all?" |
+| 03-react/08 | Step 4 keeps `useState` and also writes the URL | "Where does the filter live now: in two places? Which one survives a refresh?" |
+| 03-react/08 | Step 4 replaces the whole query string, losing other parameters | "What does `setSearchParams({ status })` do to `?sort=...`? Try the function form." |
+| 03-react/09 | Step 1 passes but the unmount part fails | "What does createRoot give you back, and which of its methods undoes render?" |
+| 03-react/09 | Guesses at steps 2 and 5 until they pass | Ask for the reason behind each answer. The batching demo in the playground shows step 2 live. |
 
 ## The final project's planted problems
 
