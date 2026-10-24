@@ -32,7 +32,7 @@ const shown = module.steps.filter((s) => step === undefined || s.n === step);
 for (const s of shown) {
   const r = results.find((x) => x.n === s.n);
   const state = r?.state ?? 'fail';
-  const notStarted = state !== 'pass' && /^TODO\b/.test(r?.message ?? '');
+  const notStarted = state !== 'pass' && /\bTODO:/.test(r?.message ?? '');
   const mark =
     state === 'pass' ? styleText('green', '✓') : notStarted || s.level === 'stretch' ? styleText('dim', '·') : styleText('red', '✗');
   const label = `${String(s.n).padStart(2)} ${s.level.padEnd(8)}`;

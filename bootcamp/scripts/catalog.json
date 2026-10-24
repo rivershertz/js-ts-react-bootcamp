@@ -34,6 +34,130 @@
       ]
     },
     {
+      "id": "01-js/01",
+      "dir": "01-js/01-values-references",
+      "title": "Values and references",
+      "check": "scripts/checks/01-js/01.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "copyTicket: a copy that does not share the original",
+          "hint": "Spread makes a new object: `{ ...ticket }`. Slide \"Spread copies one level\" shows why `const copy = ticket` is not a copy."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "closeTicket: a closed copy with closedAt",
+          "hint": "Spread first, then the fields that change: `{ ...ticket, status: ..., closedAt }`. Later keys win."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "ticketLabel: destructuring with defaults",
+          "hint": "Unpack in one line: `const { id, title = '(no title)', priority = 'medium' } = ticket;` then build a template string."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "toggleStatus: add or remove without mutating",
+          "hint": "Copy the outer object and build a new statuses array: `.filter()` to remove, `[...statuses, status]` to add. Never `.push()` or `.splice()`."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "replaceTicket: swap one item, keep the rest",
+          "hint": "`.map()` returns a new array. Return `updated` for the matching id and the same `t` for every other one."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "removeTicket: a new array without one item",
+          "hint": "`.filter()` keeps the items you return true for."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "sameContent: deep equality",
+          "hint": "Recursion: compare primitives with ===, then check both are arrays or both objects, compare key counts, and call sameContent on every key."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "deepFreeze: freeze every level",
+          "hint": "Loop over Object.values(value), call deepFreeze on each object inside, then Object.freeze(value)."
+        }
+      ]
+    },
+    {
+      "id": "01-js/02",
+      "dir": "01-js/02-array-object-methods",
+      "title": "Array and object methods",
+      "check": "scripts/checks/01-js/02.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "titles: map",
+          "hint": "`[t.title for t in tickets]` in Python is `tickets.map((t) => t.title)`."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "notClosed: filter",
+          "hint": "`tickets.filter((t) => ...)` keeps the items where the arrow returns true."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "findById: find",
+          "hint": "`.find()` returns the first match, or undefined when nothing matches."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "checkTickets: some and every",
+          "hint": "`.some()` is Python's any(), `.every()` is all(). Return both in one object."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "countByPriority: reduce into an object",
+          "hint": "Start reduce from `{ low: 0, medium: 0, high: 0, urgent: 0 }` and return a new object with one count increased. Slide \"How reduce builds one value\" walks through it."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "newestFirst: sort without mutating",
+          "hint": "Use `.toSorted()`, not `.sort()`. ISO dates compare as text: `b.createdAt.localeCompare(a.createdAt)`."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "indexById: Object.fromEntries",
+          "hint": "Make pairs first: `tickets.map((t) => [t.id, t])`, then turn the pairs into an object."
+        },
+        {
+          "n": 8,
+          "level": "core",
+          "title": "hotList: chain the methods",
+          "hint": "filter (urgent or high, not closed), then toSorted (newest first), then slice(0, n), then map to titles. Slide \"Chaining\"."
+        },
+        {
+          "n": 9,
+          "level": "stretch",
+          "title": "groupBy: write it with reduce",
+          "hint": "For each item, compute its key, then return `{ ...groups, [key]: [...(groups[key] ?? []), item] }`."
+        },
+        {
+          "n": 10,
+          "level": "stretch",
+          "title": "pipe: compose functions",
+          "hint": "`(x) => fns.reduce((value, fn) => fn(value), x)`."
+        }
+      ]
+    },
+    {
       "id": "01-js/03",
       "dir": "01-js/03-scope-closures",
       "title": "Scope and closures",
@@ -68,6 +192,186 @@
           "level": "stretch",
           "title": "debounce: wait until calls stop",
           "hint": "Keep the timer id in the backpack. clearTimeout it on every call, then start a new one."
+        }
+      ]
+    },
+    {
+      "id": "01-js/04",
+      "dir": "01-js/04-async",
+      "title": "Async",
+      "check": "scripts/checks/01-js/04.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "wait: wrap setTimeout in a promise",
+          "hint": "`return new Promise((resolve) => setTimeout(resolve, ms));`"
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "predictOrder: the event loop",
+          "hint": "Normal code runs first, then promise callbacks, then timers. Slide \"The event loop\" plays it step by step."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "fetchTitle: await one request",
+          "hint": "`const response = await client.get(`/tickets/${id}`);` and the ticket is in `response.data`."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "fetchTicketOrNull: handle 404",
+          "hint": "Wrap the await in try / catch. In the catch, return null when `error.response?.status === 404`, otherwise `throw error`."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "fetchMany: requests in parallel",
+          "hint": "Start every request first (map ids to promises, no await inside), then `await Promise.all(promises)`. Slide \"One after another, or all at once?\""
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "fetchSome: partial failures",
+          "hint": "`Promise.allSettled` never rejects. Each result has `status: 'fulfilled'` with `value`, or `'rejected'` with `reason`. Use the index to know which id failed."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "withTimeout: race a timer",
+          "hint": "`Promise.race([promise, a promise that rejects after ms])`."
+        },
+        {
+          "n": 8,
+          "level": "stretch",
+          "title": "retry: try again on failure",
+          "hint": "A for loop from 1 to times with try / catch inside. Remember the last error and throw it after the loop."
+        }
+      ]
+    },
+    {
+      "id": "01-js/05",
+      "dir": "01-js/05-modules",
+      "title": "Modules",
+      "check": "scripts/checks/01-js/05.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "priorities.js: named exports",
+          "hint": "Write `export` in front of the const and the function. Only exported names can be imported; Python lets you import anything, JavaScript does not."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "format.js: import, and a default export",
+          "hint": "At the top: `import { PRIORITIES } from './priorities.js';` Then `export default function formatTicket(...)`. Slide \"Named or default\"."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "dates.js: split a file in two",
+          "hint": "Create dates.js next to tickets.js, move the whole isOverdue function into it with `export` in front, then import it in tickets.js. Python does the same with a new .py file."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "index.js: re-export from one place",
+          "hint": "`export { PRIORITIES, comparePriority } from './priorities.js';` re-exports without importing first. A default export is re-exported with `export { default as formatTicket } from './format.js';`. Slide \"One front door: index.js\"."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "counter.js: module state and live imports",
+          "hint": "`export let count = 0;` and a function that does `count += 1`. A module runs once, so every importer shares the same count. Slide \"Imports are live\"."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "report.js: use the front door",
+          "hint": "Import comparePriority, formatTicket and overdueTickets from './index.js'. Then: overdue tickets → toSorted(comparePriority) → map(formatTicket)."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "report.js: load a module on demand",
+          "hint": "`const module = await import('./format.js');` returns a promise of the module. The default export is `module.default`."
+        }
+      ]
+    },
+    {
+      "id": "01-js/project",
+      "dir": "01-js/project",
+      "title": "Phase 1 project: ticket logic",
+      "check": "scripts/checks/01-js/project.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "api.js: load tickets and assignees",
+          "hint": "createClient returns `axios.create({ baseURL })`. The fetch functions await client.get(...) and return response.data. Module 01-js/04, steps 3 to 5."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "api.js: loadAll survives a server that is down",
+          "hint": "Use Promise.allSettled, which never rejects. For each result, check `status === 'fulfilled'` to pick its value or an empty list plus a warning."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "api.js: loadAll keeps tickets when assignees fail",
+          "hint": "Start both requests before awaiting anything: `await Promise.allSettled([fetchTickets(client), fetchAssignees(client)])`."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "filters.js: filter by status, priority, assignee, search",
+          "hint": "One filter call with a condition per field. Lowercase both the title and the search text before `.includes()`."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "filters.js: combined and empty filters",
+          "hint": "For each field: `(!status || t.status === status)`. An empty string is falsy, so it lets everything through. Trim the search text."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "filters.js: sort by date, priority or title, both ways",
+          "hint": "toSorted, never sort. Priority order is `PRIORITIES.indexOf(...)`. For descending, multiply the compare result by -1."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "stats.js: group by status, with empty groups",
+          "hint": "Start from STATUSES, not from the tickets: `Object.fromEntries(STATUSES.map((s) => [s, ...]))`."
+        },
+        {
+          "n": 8,
+          "level": "core",
+          "title": "stats.js: total, open, overdue, average age",
+          "hint": "Compare dates as text: `t.dueDate < now.toISOString().slice(0, 10)`. Age in days: `Math.floor((now - new Date(t.createdAt)) / 86400000)`."
+        },
+        {
+          "n": 9,
+          "level": "core",
+          "title": "validation.js: every error at once",
+          "hint": "Start with `const errors = []`, push one `{ field, message }` per broken rule (no early return), then return `{ valid: errors.length === 0, errors }`."
+        },
+        {
+          "n": 10,
+          "level": "core",
+          "title": "Clean modules: no console, everything works through index.js",
+          "hint": "Remove any console.log from src/ (yarn tickets prints for you). Own imports need the extension: `./constants.js`."
+        },
+        {
+          "n": 11,
+          "level": "stretch",
+          "title": "filters.js: sort by due date, missing dates last",
+          "hint": "Handle the null case before the direction: if only one ticket has no dueDate, it goes after the other whatever the direction."
         }
       ]
     },
