@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/08',
   title: 'Routing with React Router',
-  time: '10 min lesson · 25 min exercises',
+  time: '10 min lesson · 30 min exercises',
   subtitle: 'One HTML page, many URLs. The router reads the URL and picks the page component.',
 };
 

@@ -91,7 +91,7 @@ export function useStatusFilter(): [Status | undefined, (status: Status | undefi
   return [status, setStatus];
 }
 
-// Step 5 (stretch)
+// Step 5 (core)
 export function NewTicketPage({ onCreate }: { onCreate: (title: string) => Promise<string> }): ReactNode {
   const [title, setTitle] = useState('');
   const navigate = useNavigate();

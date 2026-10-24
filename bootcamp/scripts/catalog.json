@@ -65,7 +65,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "replaceTicket: swap one item, keep the rest",
           "hint": "`.map()` returns a new array. Return `updated` for the matching id and the same `t` for every other one."
         },
@@ -115,7 +115,7 @@
         },
         {
           "n": 4,
-          "level": "stretch",
+          "level": "core",
           "title": "checkTickets: some and every",
           "hint": "`.some()` is Python's any(), `.every()` is all(). Return both in one object."
         },
@@ -133,7 +133,7 @@
         },
         {
           "n": 7,
-          "level": "stretch",
+          "level": "core",
           "title": "indexById: Object.fromEntries",
           "hint": "Make pairs first: `tickets.map((t) => [t.id, t])`, then turn the pairs into an object."
         },
@@ -183,7 +183,7 @@
         },
         {
           "n": 4,
-          "level": "stretch",
+          "level": "core",
           "title": "createIdGenerator: ticket ids like T-1, T-2",
           "hint": "Same pattern as makeCounter, plus a template string: `${prefix}-${n}`."
         },
@@ -283,7 +283,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "counter.js: module state and live imports",
           "hint": "`export let count = 0;` and a function that does `count += 1`. A module runs once, so every importer shares the same count. Slide \"Imports are live\"."
         },
@@ -451,7 +451,7 @@
         },
         {
           "n": 6,
-          "level": "stretch",
+          "level": "core",
           "title": "TicketFilter: a function type",
           "hint": "A function type looks like an arrow: `(ticket: Ticket) => boolean`. Once isOpen has that type, its parameter is typed for free."
         },
@@ -495,7 +495,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "errorMessage: narrow unknown with instanceof",
           "hint": "unknown allows nothing until you check it. `error instanceof Error` first, then `typeof error === 'string'`."
         },
@@ -545,7 +545,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "assertTicket: throw instead of returning false",
           "hint": "Return type `asserts value is Ticket`. Inside: `if (!isTicket(value)) throw new Error(...)`. Slide \"Guard or assert?\"."
         },
@@ -595,7 +595,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "close: build from the base fields",
           "hint": "Destructure the base fields out of ticket, then add status, closedAt and (when the ticket has one) assignee. Spreading the whole ticket would carry blockedReason along."
         },
@@ -639,7 +639,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "summarize: Pick at run time",
           "hint": "Types do not remove fields at run time. Build the object yourself: `{ id: ticket.id, title: ticket.title }`."
         },
@@ -821,7 +821,7 @@
         },
         {
           "n": 4,
-          "level": "stretch",
+          "level": "core",
           "title": "EstimateCounter: state and events",
           "hint": "`const [hours, setHours] = useState(0)`, then onClick={() => setHours(...)}. Math.max(0, ...) keeps it at 0 or more."
         },
@@ -853,7 +853,7 @@
         },
         {
           "n": 2,
-          "level": "stretch",
+          "level": "core",
           "title": "AssigneePicker: never mutate state (objects)",
           "hint": "Same rule for objects: build a new one with a spread, { ...ticket, assignee: id }."
         },
@@ -865,7 +865,7 @@
         },
         {
           "n": 4,
-          "level": "stretch",
+          "level": "core",
           "title": "NumberedTitles: rendering is pure",
           "hint": "A render must not change anything outside itself. The row number is already in map's second argument: (t, i)."
         },
@@ -903,7 +903,7 @@
       "steps": [
         {
           "n": 1,
-          "level": "stretch",
+          "level": "core",
           "title": "TripleVote: state is a snapshot",
           "hint": "`votes` does not change inside one render, so all three calls set the same value. Pass an updater: setVotes((v) => v + 1)."
         },
@@ -991,7 +991,7 @@
         },
         {
           "n": 3,
-          "level": "stretch",
+          "level": "core",
           "title": "useTicket: wait for an id",
           "hint": "useQuery has an option that says whether the query may run: enabled: id !== undefined."
         },
@@ -1029,7 +1029,7 @@
         },
         {
           "n": 3,
-          "level": "stretch",
+          "level": "core",
           "title": "TicketTable: sort priorities in their real order",
           "hint": "sorter: (a, b) => PRIORITIES.indexOf(a.priority) - PRIORITIES.indexOf(b.priority)."
         },
@@ -1135,7 +1135,7 @@
         },
         {
           "n": 5,
-          "level": "stretch",
+          "level": "core",
           "title": "NewTicketPage: go to the new ticket after saving",
           "hint": "const navigate = useNavigate(), then navigate(`/tickets/${id}`) after onCreate resolves."
         },

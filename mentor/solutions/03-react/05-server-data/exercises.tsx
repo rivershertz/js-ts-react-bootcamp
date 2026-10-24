@@ -30,7 +30,7 @@ export function TicketsView(): ReactNode {
   return <ul>{data.map((ticket) => <li key={ticket.id}>{ticket.title}</li>)}</ul>;
 }
 
-// Step 3 (stretch), and step 5 (stretch): initialData
+// Step 3 (core), and step 5 (stretch): initialData
 export function useTicket(id: string | undefined) {
   const queryClient = useQueryClient();
   return useQuery({

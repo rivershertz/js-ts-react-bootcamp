@@ -4,7 +4,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { STATUSES, type Status, type Ticket } from '../tickets';
 
-// Step 1 (stretch)
+// Step 1 (core)
 // "+3" should add three votes per click. It adds one. Keep the three setVotes calls.
 export function TripleVote() {
   const [votes, setVotes] = useState(0);

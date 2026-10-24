@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/01',
   title: 'React fundamentals in TypeScript',
-  time: '15 min lesson · 25 min exercises',
+  time: '15 min lesson · 30 min exercises',
   subtitle: 'Components are functions of props and state. React calls them and puts what they return on the page.',
 };
 

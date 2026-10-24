@@ -32,7 +32,7 @@ export function addTicket(tickets: readonly Ticket[], ticket: Ticket): readonly 
   return [...tickets, ticket];
 }
 
-// @step 6 (stretch)
+// @step 6 (core)
 export type TicketFilter = (ticket: Ticket) => boolean;
 export const isOpen: TicketFilter = (ticket) => ticket.status !== 'closed';
 

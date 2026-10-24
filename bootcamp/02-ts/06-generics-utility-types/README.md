@@ -1,6 +1,6 @@
 # 02-ts/06 Generics and utility types
 
-**Time:** 10 min lesson, 20 min exercises (core), plus 15 min stretch.
+**Time:** 10 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -25,7 +25,7 @@ Open [`exercises.ts`](exercises.ts). No `any`: a type parameter is how you keep 
 | 2 | core | `indexBy<T>` with a typed callback |
 | 3 | core | `TicketDraft`, `TicketChanges`, `TicketSummary` with `Omit`, `Partial`, `Pick` |
 | 4 | core | `updateTicket` with a `Partial` |
-| 5 | stretch | `summarize`: really return only two fields |
+| 5 | core | `summarize`: really return only two fields |
 | 6 | core | `Result<T>` and `unwrap` |
 | 7 | stretch | `countBy<T, K extends string>` |
 

@@ -1,6 +1,6 @@
 # 01-js/01 Values and references
 
-**Time:** 15 min lesson, 30 min exercises (core), plus 20 min stretch.
+**Time:** 15 min lesson, 35 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ Open [`exercises.js`](exercises.js). The checker **freezes** every object it giv
 | 2 | core | `closeTicket`: a closed copy with `closedAt` |
 | 3 | core | `ticketLabel`: destructuring with defaults |
 | 4 | core | `toggleStatus`: add or remove a status in nested filters |
-| 5 | stretch | `replaceTicket`: replace one item, keep the others as they are |
+| 5 | core | `replaceTicket`: replace one item, keep the others as they are |
 | 6 | core | `removeTicket` |
 | 7 | stretch | `sameContent`: compare contents, like Python's `==` |
 | 8 | stretch | `deepFreeze` |

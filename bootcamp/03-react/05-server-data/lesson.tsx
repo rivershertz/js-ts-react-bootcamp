@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/05',
   title: 'Server data with React Query',
-  time: '15 min lesson · 20 min exercises',
+  time: '15 min lesson · 25 min exercises',
   subtitle: 'Data from the server lives in a shared cache, not in component state. React Query owns that cache.',
 };
 

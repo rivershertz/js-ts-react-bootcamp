@@ -1,6 +1,6 @@
 # 03-react/05 Server data with React Query
 
-**Time:** 15 min lesson, 20 min exercises (core), plus 15 min stretch.
+**Time:** 15 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -30,7 +30,7 @@ Open [`exercises.tsx`](exercises.tsx). The axios client is in [`client.ts`](clie
 | --- | --- | --- |
 | 1 | core | `useTickets`: replace a hand-written `useEffect` fetch with `useQuery` |
 | 2 | core | `TicketsView`: loading and error states, with Retry |
-| 3 | stretch | `useTicket`: do not ask for `/tickets/undefined` |
+| 3 | core | `useTicket`: do not ask for `/tickets/undefined` |
 | 4 | core | `useCloseTicket`: the list should show the new status after a save |
 | 5 | stretch | `useTicket`: start from the ticket already in the list cache |
 

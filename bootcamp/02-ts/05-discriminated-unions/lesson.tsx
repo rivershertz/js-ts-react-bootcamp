@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/05',
   title: 'Discriminated unions: ticket states',
-  time: '10 min lesson · 15 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'Make impossible tickets impossible to write: one type per state, and a switch that must handle them all.',
 };
 

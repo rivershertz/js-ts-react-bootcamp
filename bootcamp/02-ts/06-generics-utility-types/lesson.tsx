@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/06',
   title: 'Generics and utility types',
-  time: '10 min lesson · 20 min exercises',
+  time: '10 min lesson · 25 min exercises',
   subtitle: 'Write a function once for any type without losing the type, and derive new types instead of copying fields.',
 };
 

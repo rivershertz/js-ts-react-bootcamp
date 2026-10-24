@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, Reveal, Slide, TitleSlide, type D
 export const meta: DeckMeta = {
   id: '03-react/02',
   title: 'Rules of React',
-  time: '15 min lesson · 30 min exercises',
+  time: '15 min lesson · 40 min exercises',
   subtitle: 'Three rules that React assumes you follow. Break one and the bug shows up somewhere else, later.',
 };
 

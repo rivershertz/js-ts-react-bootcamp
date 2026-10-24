@@ -1,6 +1,6 @@
 # 03-react/06 Ant Design: Table, Form, theming, versions
 
-**Time:** 15 min lesson, 50 min exercises (core), plus 15 min stretch.
+**Time:** 15 min lesson, 55 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -24,7 +24,7 @@ Open [`exercises.tsx`](exercises.tsx).
 | --- | --- | --- |
 | 1 | core | `PriorityTag`: a coloured antd `Tag` per priority |
 | 2 | core | `TicketTable`: typed columns, row keys, 5 per page |
-| 3 | stretch | `TicketTable`: sort priorities from low to urgent |
+| 3 | core | `TicketTable`: sort priorities from low to urgent |
 | 4 | core | `TicketForm`: required fields with messages |
 | 5 | core | `TicketForm`: edit an existing ticket |
 | 6 | core | `ThemedApp`: the team's colour and corners |

@@ -89,7 +89,7 @@ export function useStatusFilter(): [Status | undefined, (status: Status | undefi
   return useState<Status>();
 }
 
-// Step 5 (stretch)
+// Step 5 (core)
 // After a successful create, the user should land on the new ticket's page.
 // Right now the form only says "Saved". Look up useNavigate.
 export function NewTicketPage({ onCreate }: { onCreate: (title: string) => Promise<string> }): ReactNode {

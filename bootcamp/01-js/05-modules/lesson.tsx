@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/05',
   title: 'Modules',
-  time: '15 min lesson · 30 min exercises',
+  time: '15 min lesson · 35 min exercises',
   subtitle: 'One file, one module: export what others may use, import it with a path, and split a big file into small ones.',
 };
 

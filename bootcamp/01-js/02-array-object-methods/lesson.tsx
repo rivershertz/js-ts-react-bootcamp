@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/02',
   title: 'Array and object methods',
-  time: '15 min lesson · 35 min exercises',
+  time: '15 min lesson · 45 min exercises',
   subtitle: 'map, filter, reduce and friends: the JavaScript version of list comprehensions, plus the sort() trap.',
 };
 

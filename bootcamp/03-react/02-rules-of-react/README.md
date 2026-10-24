@@ -1,6 +1,6 @@
 # 03-react/02 Rules of React
 
-**Time:** 15 min lesson, 30 min exercises (core), plus 20 min stretch.
+**Time:** 15 min lesson, 40 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -22,9 +22,9 @@ Open [`exercises.tsx`](exercises.tsx). Each component works a little, and each b
 | Step | Level | Task |
 | --- | --- | --- |
 | 1 | core | `TagEditor`: adding a tag does nothing |
-| 2 | stretch | `AssigneePicker`: assigning does nothing |
+| 2 | core | `AssigneePicker`: assigning does nothing |
 | 3 | core | `SortedTitles`: the parent's list changes order |
-| 4 | stretch | `NumberedTitles`: wrong numbers |
+| 4 | core | `NumberedTitles`: wrong numbers |
 | 5 | core | `TicketDetails`: crashes going back to no ticket |
 | 6 | core | `DocumentTitle`: the tab title does not follow |
 | 7 | core | `yarn eslint 03-react/02-rules-of-react` reports nothing |

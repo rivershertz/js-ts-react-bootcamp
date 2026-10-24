@@ -34,7 +34,7 @@ export function TicketsView(): ReactNode {
   return <ul>{data?.map((ticket) => <li key={ticket.id}>{ticket.title}</li>)}</ul>;
 }
 
-// Step 3 (stretch)
+// Step 3 (core)
 // useTicket(id) loads one ticket, GET /tickets/<id>, under the key ['tickets', id].
 // When no ticket is picked yet, id is undefined, and it still asks the server for
 // /tickets/undefined (look in the Network tab). Tell useQuery not to run until there is an id.

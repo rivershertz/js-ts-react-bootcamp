@@ -33,13 +33,13 @@ Each module README gives a lesson time, a core exercise time and a stretch time.
 | Phase | Core time |
 | --- | --- |
 | Setup | 0.5 h |
-| Phase 1: JavaScript, with its project | 5.5 h |
-| Phase 2: TypeScript, with its project (about 2 to 2.5 h) | 6 h |
-| Phase 3: React modules | 6 h |
+| Phase 1: JavaScript, with its project | 6 h |
+| Phase 2: TypeScript, with its project (about 2 to 2.5 h) | 6.5 h |
+| Phase 3: React modules | 6.5 h |
 | Final project | 4.5 h |
-| **Total** | **about 22.5 h** |
+| **Total** | **about 24 h** |
 
-These are estimates (about 1.25 minutes per slide, and 4 to 6 minutes per core step), corrected after a dry run, until a real cohort has gone through. The dry run found the final project's TypeScript migration of the antd code the slowest part. Note where juniors are much faster or slower, so the guides can be corrected.
+These are estimates (about 1.25 minutes per slide, and 4 to 6 minutes per core step), corrected after a dry run, until a real cohort has gone through. After the first cohort, decide which core steps to move to stretch so core fits the calendar: relabelling a step changes its level in `scripts/catalog.json`, the module README's step table and time, the deck's time and the step's comment. Check first that no later core step needs it. The dry run found the final project's TypeScript migration of the antd code the slowest part. Note where juniors are much faster or slower, so the guides can be corrected.
 
 ## Unblocking without giving the answer
 

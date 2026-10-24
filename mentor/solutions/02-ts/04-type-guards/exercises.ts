@@ -46,7 +46,7 @@ export function isTicket(value: unknown): value is Ticket {
   );
 }
 
-// @step 5 (stretch)
+// @step 5 (core)
 export function assertTicket(value: unknown): asserts value is Ticket {
   if (!isTicket(value)) {
     const id = isRecord(value) && typeof value.id === 'string' ? value.id : '?';

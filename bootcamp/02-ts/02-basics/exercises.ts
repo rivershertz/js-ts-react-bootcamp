@@ -39,7 +39,7 @@ export function addTicket(tickets: readonly Ticket[], ticket: Ticket): readonly 
   return tickets;
 }
 
-// @step 6 (stretch)
+// @step 6 (core)
 // TicketFilter is the type of a function that takes a Ticket and returns a boolean.
 // isOpen is a TicketFilter: true when the status is not 'closed'.
 export type TicketFilter = (ticket: unknown) => unknown; // TODO

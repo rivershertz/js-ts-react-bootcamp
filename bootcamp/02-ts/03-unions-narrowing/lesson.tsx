@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/03',
   title: 'Unions and narrowing',
-  time: '10 min lesson · 20 min exercises',
+  time: '10 min lesson · 25 min exercises',
   subtitle: 'Values that can be one of several things, and the checks that tell TypeScript which one you have.',
 };
 

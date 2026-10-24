@@ -32,7 +32,7 @@ export function describeResult(result: Ticket | ApiError): string {
   return result.title;
 }
 
-// @step 5 (stretch)
+// @step 5 (core)
 // Anything can be thrown. Return its message: an Error gives error.message, a string is used as it is,
 // anything else gives 'Something went wrong'.
 export function errorMessage(error: unknown): string {
