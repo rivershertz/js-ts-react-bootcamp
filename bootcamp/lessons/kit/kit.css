@@ -55,11 +55,25 @@
   margin: 0;
 }
 
+.k-lead {
+  font-size: 23px;
+  line-height: 1.4;
+  color: var(--muted);
+  margin: 12px 0 0;
+  max-width: 1080px;
+}
+
 .k-body {
   flex: 1;
   min-height: 0;
   font-size: 26px;
   line-height: 1.5;
+}
+
+/* Fills the body; FitBody scales it down when the content would run into the footer. */
+.k-fit {
+  height: 100%;
+  transform-origin: top left;
 }
 
 .k-body p {
@@ -113,6 +127,22 @@
   height: 100%;
   background: var(--accent);
   transition: width 200ms ease;
+}
+
+.k-homebtn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 4px 12px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.k-homebtn:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .k-navbtn {

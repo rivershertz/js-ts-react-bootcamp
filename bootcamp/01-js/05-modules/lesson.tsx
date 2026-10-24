@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/05',
   title: 'Modules',
-  time: '25 min lesson · 35 min exercises',
+  time: '15 min lesson · 35 min exercises',
   subtitle: 'One file, one module: export what others may use, import it with a path, and split a big file into small ones.',
 };
 
@@ -53,7 +53,7 @@ export default function Lesson(props: LessonProps) {
       <TitleSlide chips={['Coming from Python: a file is a module, like a .py file']} />
 
       <CompareSlide
-        title="Importing, side by side"
+        title="Importing, side by side" lead={<>A JavaScript file is a module, like a .py file. The difference: you choose what other files may use.</>}
         python={`# stats.py\ndef compute(tickets): ...\n_helper = 1   # private by convention only\n\n# main.py\nfrom stats import compute\nimport stats`}
         js={`// stats.js\nexport function compute(tickets) {}\nconst helper = 1; // not exported\n\n// main.js\nimport { compute } from './stats.js';\nimport * as stats from './stats.js';`}
         note={
@@ -64,7 +64,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Paths, not package names" eyebrow="Rules" steps={1}>
+      <Slide title="Paths, not package names" lead={<>An import names a file by its path from the current file. There is no search path to configure.</>} eyebrow="Rules" steps={1}>
         <Code
           code={`import { compute } from './stats.js';      // same folder\nimport { STATUSES } from '../constants.js'; // one folder up\nimport axios from 'axios';                   // a package in node_modules`}
         />
@@ -85,7 +85,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="Named or default" eyebrow="Two kinds of export">
+      <Slide title="Named or default" lead={<>A file can export many things by name, and at most one thing as its default. They are imported differently.</>} eyebrow="Two kinds of export">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Named: many per file</div>
@@ -109,7 +109,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <SequenceSlide
-        title="A module runs once"
+        title="A module runs once" lead={<>Press → to watch the import order. Each file runs the first time something imports it, and never again.</>}
         eyebrow="Walkthrough · press → to step"
         actors={[
           { id: 'main', label: 'main.js', detail: 'the entry' },
@@ -121,7 +121,7 @@ export default function Lesson(props: LessonProps) {
       />
 
       <PredictSlide
-        title="Imports are live"
+        title="Imports are live" lead={<>This is one of the places JavaScript differs from Python. Predict before you look.</>}
         code={`// counter.js\nexport let count = 0;\nexport function increment() { count += 1; }\n// main.js\nimport { count, increment } from './counter.js';\nincrement();\nconsole.log(count);`}
         answer="1"
         surprising
@@ -133,7 +133,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="One front door: index.js" eyebrow="Pattern">
+      <Slide title="One front door: index.js" lead={<>Larger folders get one file that lists what the rest of the app may use from them.</>} eyebrow="Pattern">
         <p>Collect a folder&apos;s public names in one file. The rest of the code imports from there and does not care how the folder is split.</p>
         <Code
           small
@@ -144,7 +144,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Splitting a file" eyebrow="The everyday move" steps={2}>
+      <Slide title="Splitting a file" lead={<>When a file grows too long, you move part of it out. Three steps, and nothing else changes.</>} eyebrow="The everyday move" steps={2}>
         <ol>
           <li>Create the new file and move the function into it, unchanged.</li>
           <li>
@@ -165,7 +165,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="import() loads on demand" eyebrow="Reference">
+      <Slide title="import() loads on demand" lead={<>Normal imports load before the file runs. import() as a function loads a file later, when you need it.</>} eyebrow="Reference">
         <Code
           small
           code={`// at the top of a file: loaded before the file runs\nimport formatTicket from './format.js';\n\n// inside a function: loaded when this line runs, returns a promise\nasync function showReport() {\n  const module = await import('./format.js');\n  const formatTicket = module.default;\n}`}
@@ -184,6 +184,12 @@ export default function Lesson(props: LessonProps) {
           'A module runs once, on its first import. Every importer shares it, and imports are live.',
           'index.js can re-export a folder’s public names: one front door.',
         ]}
+        next={
+          <>
+            Next: this module&apos;s exercises (<code>yarn verify 01-js/05</code>). Then Phase 1 ends with its project: open the lesson{' '}
+            <a href="#/01-js/project">01-js/project</a> for what you build, how to run and test it, and what to expect.
+          </>
+        }
       />
     </Deck>
   );

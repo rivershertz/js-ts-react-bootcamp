@@ -1,6 +1,6 @@
 # 03-react/08 Routing with React Router
 
-**Time:** 20 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 30 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

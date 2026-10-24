@@ -20,7 +20,7 @@ export function assigneeName(assigneeId: string | undefined, assignees: Assignee
 }
 
 // @step 3 (core)
-// Old ids arrive as numbers (12), new ones as strings ('t12'). Always return the string form.
+// Old ids arrive as numbers (12), new ones as strings ('t12'). Always return the string form: 12 becomes 't12'.
 export function toTicketId(id: string | number): string {
   return id;
 }

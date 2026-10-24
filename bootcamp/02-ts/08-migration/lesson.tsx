@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/08',
   title: 'Migrating JavaScript to TypeScript',
-  time: '20 min lesson · 30 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'From working JavaScript to strict TypeScript in small, safe steps, without ever switching the checker off.',
 };
 
@@ -22,7 +22,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: like adding mypy to an old codebase, one module at a time']} />
 
-      <Slide title="The ladder" eyebrow="The workflow" steps={4}>
+      <Slide title="The ladder" lead={<>Migrating a file is five small steps. After each one the code still runs, so you can stop at any point and ship.</>} eyebrow="The workflow" steps={4}>
         <ol>
           <li>
             <code>// @ts-check</code> on the <code>.js</code> file: loose checking, finds real bugs.
@@ -47,7 +47,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <PredictSlide
-        title="What does @ts-check find?"
+        title="What does @ts-check find?" lead={<>The first step only adds one comment. Here is the kind of bug it finds in old JavaScript.</>}
         question="Python habits die hard. What is wrong here? Decide before you press →"
         code={`// @ts-check\nexport function averageWeight(tickets) {\n  const total = tickets.reduce((sum, t) => sum + weight(t), 0);\n  return Math.round(total / tickets.length, 1);\n}`}
         answer="Expected 1 arguments, but got 2"
@@ -60,7 +60,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="allowJs, checkJs and strict" eyebrow="The knobs in tsconfig.json">
+      <Slide title="allowJs, checkJs and strict" lead={<>Four settings in tsconfig.json decide how much TypeScript checks while a project is half migrated.</>} eyebrow="The knobs in tsconfig.json">
         <table className="k-table">
           <tbody>
             <tr>
@@ -86,7 +86,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Typing a migrated file" eyebrow="Step 3">
+      <Slide title="Typing a migrated file" lead={<>After the rename, strict mode asks you to type each parameter. Shared types come in through imports.</>} eyebrow="Step 3">
         <Code
           lang="ts"
           small
@@ -98,7 +98,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Four ways to switch the checker off" eyebrow="Do not" steps={1}>
+      <Slide title="Four ways to switch the checker off" lead={<>When the red underlines pile up, these four look like quick fixes. Each one hides the problem instead.</>} eyebrow="Do not" steps={1}>
         <Code
           lang="ts"
           small
@@ -112,7 +112,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="The edge: axios data is any" eyebrow="Step 5">
+      <Slide title="The edge: axios data is any" lead={<>The last step is where data comes into your code. Ask axios for unknown, then check it with a guard.</>} eyebrow="Step 5">
         <Code
           lang="ts"
           code={`const response = await client.get<unknown>('/tickets');\nconst data = Array.isArray(response.data) ? response.data : [];\nconst tickets = data.filter(isTicket);   // Ticket[], checked`}
@@ -130,6 +130,12 @@ export default function Lesson(props: LessonProps) {
           'No any, as, ! or @ts-ignore: each hides a question.',
           'API data enters as unknown and goes through a type guard.',
         ]}
+        next={
+          <>
+            Next: this module&apos;s exercises (<code>yarn verify 02-ts/08</code>). Then Phase 2 ends with its project: open the lesson{' '}
+            <a href="#/02-ts/project">02-ts/project</a> for what you build, how to run and test it, and what to expect.
+          </>
+        }
       />
     </Deck>
   );

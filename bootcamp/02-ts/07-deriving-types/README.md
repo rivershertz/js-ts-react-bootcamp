@@ -1,6 +1,6 @@
 # 02-ts/07 Deriving types from values
 
-**Time:** 25 min lesson, 25 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 10 min exercises (core), plus 5 min stretch.
 
 ## 1. Watch the lesson
 

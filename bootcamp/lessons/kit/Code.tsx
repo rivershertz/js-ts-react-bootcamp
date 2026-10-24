@@ -25,10 +25,11 @@ type Props = {
   /** One line (1-based) marked as "running now", without dimming the rest. */
   active?: number;
   small?: boolean;
+  /** Off by default for plain text (terminal output). */
   lineNumbers?: boolean;
 };
 
-export function Code({ code, lang = 'js', focus, active, small, lineNumbers = true }: Props) {
+export function Code({ code, lang = 'js', focus, active, small, lineNumbers = lang !== 'text' }: Props) {
   return (
     <Highlight code={code.trim()} language={prismLang[lang]} theme={theme}>
       {({ tokens, getLineProps, getTokenProps }) => (
@@ -39,7 +40,7 @@ export function Code({ code, lang = 'js', focus, active, small, lineNumbers = tr
             const { className, ...lineProps } = getLineProps({ line });
             return (
               <div key={i} {...lineProps} className={`${className} k-code-line${state}`}>
-                {lineNumbers ? <span className="k-code-ln">{n}</span> : <span style={{ width: 20 }} />}
+                {lineNumbers ? <span className="k-code-ln">{n}</span> : <span style={{ width: 20, flex: 'none' }} />}
                 <span>
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token })} />

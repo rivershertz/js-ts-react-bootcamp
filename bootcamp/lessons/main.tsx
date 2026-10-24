@@ -6,20 +6,24 @@ import * as galleryModule from './kit/Gallery';
 import './kit/tokens.css';
 import './kit/kit.css';
 
+const FIRST = '00-start';
+
 type DeckModule = { meta: DeckMeta; default: ComponentType<{ initialSlide?: number; onSlideChange?: (i: number) => void }> };
 
-// Every module folder may have a lesson.tsx. They are found automatically.
-const decks = Object.values(import.meta.glob<DeckModule>('../0*/**/lesson.tsx', { eager: true })).sort((a, b) =>
-  a.meta.id.localeCompare(b.meta.id),
-);
+// Every module folder may have a lesson.tsx, and each project has a deck in projects/. They are found
+// automatically and ordered by id, except the welcome deck, which always comes first.
+const decks = Object.values(
+  import.meta.glob<DeckModule>(['./welcome.tsx', '../0*/**/lesson.tsx', './projects/*.tsx'], { eager: true }),
+).sort((a, b) => Number(b.meta.id === FIRST) - Number(a.meta.id === FIRST) || a.meta.id.localeCompare(b.meta.id));
 
 const gallery: DeckModule = galleryModule;
 
 const PHASES: Record<string, string> = {
-  '00': 'Phase 0 · Setup',
+  '00': 'Start here',
   '01': 'Phase 1 · JavaScript',
   '02': 'Phase 2 · TypeScript',
   '03': 'Phase 3 · React and antd',
+  fi: 'Final project',
 };
 
 try {

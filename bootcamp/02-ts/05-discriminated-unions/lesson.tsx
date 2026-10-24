@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/05',
   title: 'Discriminated unions: ticket states',
-  time: '30 min lesson · 35 min exercises',
+  time: '10 min lesson · 20 min exercises',
   subtitle: 'Make impossible tickets impossible to write: one type per state, and a switch that must handle them all.',
 };
 
@@ -23,7 +23,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: like match on a Literal tag, checked by the compiler']} />
 
-      <Slide title="The bag of optionals" eyebrow="The problem" steps={1}>
+      <Slide title="The bag of optionals" lead={<>A ticket has different fields in different states. Marking them all optional is the first idea, and it does not work.</>} eyebrow="The problem" steps={1}>
         <Code
           lang="ts"
           code={`type Ticket = {\n  status: 'open' | 'assigned' | 'blocked' | 'closed';\n  assignee?: string;\n  blockedReason?: string;\n  closedAt?: string;\n};`}
@@ -34,7 +34,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="One type per state" eyebrow="Mental model">
+      <Slide title="One type per state" lead={<>Write one small type for each state, with exactly the fields that state has, then join them into a union.</>} eyebrow="Mental model">
         <Code
           lang="ts"
           small
@@ -47,14 +47,14 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="Switching on the tag"
+        title="Switching on the tag" lead={<>Check the status, and TypeScript knows which state you have, and which fields exist.</>}
         python={`match ticket["status"]:\n    case "blocked":\n        return ticket["blocked_reason"]\n    case "closed":\n        return ticket["closed_at"]`}
         js={`switch (ticket.status) {\n  case 'blocked':  // BlockedTicket\n    return ticket.blockedReason;\n  case 'closed':   // ClosedTicket\n    return ticket.closedAt;\n}`}
         jsLang="ts"
         note={<>Inside each case TypeScript has narrowed the union to one member, so the fields of that state are allowed.</>}
       />
 
-      <Slide title="never: the case you forgot" eyebrow="Exhaustiveness" steps={1}>
+      <Slide title="never: the case you forgot" lead={<>never is the type with no values. If a value can still reach it, a case is missing, and TypeScript tells you.</>} eyebrow="Exhaustiveness" steps={1}>
         <Code
           lang="ts"
           small
@@ -71,7 +71,7 @@ export default function Lesson(props: LessonProps) {
 
       <PredictSlide
         lang="ts"
-        title="Changing state"
+        title="Changing state" lead={<>Turning a blocked ticket into a closed one looks like a one-line spread. Look at what the spread brings along.</>}
         question="Does this compile? What does the result contain? Decide before you press →"
         code={`function close(ticket: BlockedTicket, closedAt: string): ClosedTicket {\n  return { ...ticket, status: 'closed', closedAt };\n}`}
         answer="It compiles, and the closed ticket still has blockedReason"

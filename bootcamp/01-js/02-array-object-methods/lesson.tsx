@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/02',
   title: 'Array and object methods',
-  time: '35 min lesson · 50 min exercises',
+  time: '15 min lesson · 45 min exercises',
   subtitle: 'map, filter, reduce and friends: the JavaScript version of list comprehensions, plus the sort() trap.',
 };
 
@@ -68,7 +68,7 @@ export default function Lesson(props: LessonProps) {
       <TitleSlide chips={['Coming from Python: comprehensions become method chains']} />
 
       <CompareSlide
-        title="Comprehensions become methods"
+        title="Comprehensions become methods" lead={<>Where Python uses a list comprehension, JavaScript calls a method on the array and passes it a small function.</>}
         python={`titles = [t["title"] for t in tickets]\n\nurgent = [t for t in tickets\n          if t["priority"] == "urgent"]`}
         js={`const titles = tickets.map((t) => t.title);\n\nconst urgent = tickets.filter(\n  (t) => t.priority === 'urgent',\n);`}
         note={
@@ -79,7 +79,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="The toolbox" eyebrow="Reference">
+      <Slide title="The toolbox" lead={<>Six methods cover almost every loop you would write over tickets. None of them changes the array they are called on.</>} eyebrow="Reference">
         <table className="k-table">
           <thead>
             <tr>
@@ -102,7 +102,7 @@ export default function Lesson(props: LessonProps) {
         </table>
       </Slide>
 
-      <Slide title="How reduce builds one value" eyebrow="Walkthrough · press → to step" steps={reduceRows.length - 1}>
+      <Slide title="How reduce builds one value" lead={<>reduce walks the array once and carries a running result from item to item. Press → to see the result after each ticket.</>} eyebrow="Walkthrough · press → to step" steps={reduceRows.length - 1}>
         <Code
           small
           code={`const counts = tickets.reduce(\n  (counts, t) => ({ ...counts, [t.status]: counts[t.status] + 1 }),\n  { open: 0, closed: 0 },\n);`}
@@ -130,12 +130,12 @@ export default function Lesson(props: LessonProps) {
           <>
             <code>sort()</code> sorts the array <strong>in place</strong> and returns the same array. Python’s <code>list.sort()</code>{' '}
             does this too, but returns <code>None</code> so you notice. Use <code>toSorted()</code>, which returns a new array. In
-            React, sorting data in place is a real bug you will fix on day 2.
+            React, sorting data in place is a real bug you will fix in the final project.
           </>
         }
       />
 
-      <Slide title="Writing a compare function" eyebrow="Reference" steps={1}>
+      <Slide title="Writing a compare function" lead={<>sort and toSorted ask your function about two items at a time. The sign of the number you return decides their order.</>} eyebrow="Reference" steps={1}>
         <p>
           <code>compare(a, b)</code> returns a negative number if <code>a</code> goes first, positive if <code>b</code> goes first, 0 if
           equal.
@@ -153,7 +153,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="Objects as dictionaries"
+        title="Objects as dictionaries" lead={<>A plain object works like a Python dict. To loop over it or change it, turn it into a list of [key, value] pairs first.</>}
         python={`for key, value in d.items():\n    ...\nlist(d.keys())\nlist(d.values())\n\ndict(pairs)`}
         js={`for (const [key, value] of\n     Object.entries(d)) {}\nObject.keys(d)\nObject.values(d)\n\nObject.fromEntries(pairs)`}
         note={
@@ -164,7 +164,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Chaining" eyebrow="Putting it together">
+      <Slide title="Chaining" lead={<>Because every method returns a new array, you can line them up. Each line does one small job.</>} eyebrow="Putting it together">
         <p>Each method returns a new array, so you can call the next one on it. Read it top to bottom like a pipeline.</p>
         <Code
           code={`const busyPeople = tickets\n  .filter((t) => t.status !== 'closed')   // still open\n  .map((t) => t.assignee)                  // who has them\n  .filter(Boolean)                         // drop missing\n  .filter((a, i, all) => all.indexOf(a) === i); // unique`}
@@ -172,7 +172,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <RunSlide
-        title="Practise on real-looking data"
+        title="Practise on real-looking data" lead={<>The code runs in your browser. Change it as much as you like: nothing is saved.</>}
         code={`const tickets = [\n  { id: 't1', priority: 'low', status: 'open' },\n  { id: 't2', priority: 'urgent', status: 'closed' },\n  { id: 't3', priority: 'urgent', status: 'open' },\n];\n\n// 1. The ids of open tickets\n// 2. How many are urgent?\n// 3. Ids, urgent first, without changing tickets\nconsole.log(tickets.map((t) => t.id));`}
       >
         Solve the three comments, one <code>console.log</code> each. Check <code>tickets</code> is unchanged at the end.

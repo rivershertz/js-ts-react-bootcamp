@@ -26,11 +26,11 @@ function Box({ title, items, tone }: { title: string; items?: string[]; tone: st
 }
 
 /** Step-through of the event loop: call stack, waiting work, the two queues, and the console. */
-export function EventLoopSlide({ title, eyebrow, code, steps }: { title: ReactNode; eyebrow?: ReactNode; code: string; steps: LoopStep[] }) {
+export function EventLoopSlide({ title, eyebrow, lead, code, steps }: { title: ReactNode; eyebrow?: ReactNode; lead?: ReactNode; code: string; steps: LoopStep[] }) {
   const i = useStep();
   const now = steps[Math.min(i, steps.length - 1)];
   return (
-    <Slide title={title} eyebrow={eyebrow}>
+    <Slide title={title} eyebrow={eyebrow} lead={lead}>
       <div className="k-walk">
         <Code code={code} active={now.line} small />
         <div className="k-walk-right" style={{ gridTemplateRows: '1fr auto' }}>

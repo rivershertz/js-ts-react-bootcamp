@@ -35,7 +35,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: a map of familiar tools']} />
 
-      <Slide title="Where frontend code runs" eyebrow="Mental model" steps={2}>
+      <Slide title="Where frontend code runs" lead={<>The biggest change from backend work: your code leaves the server and runs on someone else's computer.</>} eyebrow="Mental model" steps={2}>
         <ul>
           <li>Your Python code runs on a server. It answers requests with data.</li>
           <Reveal at={1}>
@@ -52,7 +52,7 @@ export default function Lesson(props: LessonProps) {
         </ul>
       </Slide>
 
-      <Slide title="Your tools, mapped to Python" eyebrow="Coming from Python">
+      <Slide title="Your tools, mapped to Python" lead={<>Each tool has a Python cousin you already know. You run all of them through yarn.</>} eyebrow="Coming from Python">
         <table className="k-table">
           <thead>
             <tr>
@@ -74,7 +74,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="package.json is requirements and scripts in one"
+        title="package.json is requirements and scripts in one" lead={<>One file lists the packages a project needs and names the commands you run on it.</>}
         python={`# requirements.txt\nrequests==2.32.3\n\n# you run things by hand\npython manage.py test`}
         jsLang="json"
         js={`{\n  "scripts": {\n    "verify": "node scripts/verify.mjs"\n  },\n  "dependencies": {\n    "axios": "1.20.0"\n  }\n}`}
@@ -87,7 +87,7 @@ export default function Lesson(props: LessonProps) {
       />
 
       <SequenceSlide
-        title="What happens when you open the app"
+        title="What happens when you open the app" lead={<>Press → to follow one page load from the browser, through Vite, to the Python API and back.</>}
         eyebrow="Walkthrough · press → to step"
         actors={[
           { id: 'browser', label: 'Browser', detail: 'localhost:5173' },
@@ -136,7 +136,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="DevTools is your debugger" eyebrow="Tools" steps={2}>
+      <Slide title="DevTools is your debugger" lead={<>Everything the browser does with your code is visible in DevTools. Keep it open while you work.</>} eyebrow="Tools" steps={2}>
         <p>
           Press <code>F12</code> in the browser.
         </p>
@@ -159,7 +159,7 @@ export default function Lesson(props: LessonProps) {
         </ul>
       </Slide>
 
-      <Slide title="ESLint and Prettier" eyebrow="Tools">
+      <Slide title="ESLint and Prettier" lead={<>Two tools that read your code without running it: one fixes how it looks, the other finds bugs.</>} eyebrow="Tools">
         <ul>
           <li>
             <strong>Prettier</strong> formats your code, like <code>black</code>. Never argue about commas again.

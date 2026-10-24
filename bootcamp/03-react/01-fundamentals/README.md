@@ -1,6 +1,6 @@
 # 03-react/01 React fundamentals in TypeScript
 
-**Time:** 25 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 30 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -19,6 +19,8 @@ Run `yarn lessons` and pick **03-react/01 React fundamentals in TypeScript**.
 ## 3. Exercises
 
 Open [`exercises.tsx`](exercises.tsx). The ticket type and sample tickets come from [`../tickets.ts`](../tickets.ts).
+
+From here on, imports leave the file extension off (`from '../tickets'`), as most React apps do: Vite finds the `.ts` or `.tsx` file for you.
 
 | Step | Level | Task |
 | --- | --- | --- |

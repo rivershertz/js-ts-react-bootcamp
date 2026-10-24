@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/08',
   title: 'Routing with React Router',
-  time: '20 min lesson · 30 min exercises',
+  time: '10 min lesson · 30 min exercises',
   subtitle: 'One HTML page, many URLs. The router reads the URL and picks the page component.',
 };
 
@@ -22,7 +22,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['The final project has a list page and a create / edit page', 'React Router 6']} />
 
-      <Slide title="The URL is state the user can keep" eyebrow="Why a router">
+      <Slide title="The URL is state the user can keep" lead={<>A React app is one page that redraws itself. A router lets it still behave like a website with many pages, each with its own address.</>} eyebrow="Why a router">
         <ul>
           <li>The server sends one HTML page. After that, the app changes what is on screen without loading pages.</li>
           <li>
@@ -37,7 +37,7 @@ export default function Lesson(props: LessonProps) {
         <div className="k-note">Like Flask or Django URL patterns, except they run in the browser and pick a component.</div>
       </Slide>
 
-      <Slide title="Routes: a URL pattern per page" eyebrow="Routes">
+      <Slide title="Routes: a URL pattern per page" lead={<>You list your pages once, at the top of the app: which URL pattern shows which component.</>} eyebrow="Routes">
         <Code
           lang="tsx"
           code={`
@@ -61,7 +61,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <SequenceSlide
-        title="Link versus a plain <a href>"
+        title="Link versus a plain <a href>" lead={<>Both change the URL, but only one keeps your app running. Step through what each click does.</>}
         eyebrow="Navigation · press → to step"
         actors={[
           { id: 'user', label: 'User' },
@@ -76,7 +76,7 @@ export default function Lesson(props: LessonProps) {
         ]}
       />
 
-      <Slide title="useParams: the parts of the URL" eyebrow="Parameters">
+      <Slide title="useParams: the parts of the URL" lead={<>A route like /tickets/:id has a variable part. useParams reads it, so one page component can show any ticket.</>} eyebrow="Parameters">
         <Code
           lang="tsx"
           code={`
@@ -113,7 +113,7 @@ function TicketListPage() {
         }
       />
 
-      <Slide title="useSearchParams: state in the URL" eyebrow="Search parameters">
+      <Slide title="useSearchParams: state in the URL" lead={<>The part after ? in a URL can hold small pieces of state, such as a filter. It survives a refresh and can be shared as a link.</>} eyebrow="Search parameters">
         <Code
           lang="tsx"
           code={`
@@ -133,7 +133,7 @@ setSearchParams((params) => {
         </ul>
       </Slide>
 
-      <Slide title="useNavigate: go somewhere from code" eyebrow="After a save">
+      <Slide title="useNavigate: go somewhere from code" lead={<>Sometimes your code, not a click, decides where to go next: for example, to the new ticket once it is saved.</>} eyebrow="After a save">
         <Code
           lang="tsx"
           code={`

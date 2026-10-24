@@ -205,13 +205,13 @@ function requireTypeScript() {
 
 step(1, () => {
   const js = files(src).filter((f) => /\.jsx?$/.test(f)).map(rel);
-  if (js.length) throw new Error(`Still JavaScript:\n${js.join('\n')}`);
+  if (js.length) throw new Error(`${js.length} file${js.length === 1 ? ' is' : 's are'} still JavaScript: ${js.join(', ')}`);
 });
 
 step(2, () => {
   requireTypeScript();
   const { ok, output } = run('typescript/bin/tsc', ['-p', 'final-project/tsconfig.json', '--pretty', 'false']);
-  if (!ok) throw new Error(output.split('\n').slice(0, 8).join('\n'));
+  if (!ok) throw new Error(output);
   const shortcuts = files(src).flatMap((f) =>
     findShortcuts(readFileSync(f, 'utf8'), f)
       .filter((s) => s.kind === 'any' || s.kind === 'ts-ignore')
@@ -222,7 +222,7 @@ step(2, () => {
 
 step(3, () => {
   const { ok, output } = run('eslint/bin/eslint.js', ['final-project', '--no-inline-config', '--max-warnings', '0']);
-  if (!ok) throw new Error(output.split('\n').slice(0, 8).join('\n'));
+  if (!ok) throw new Error(output);
 });
 
 step(4, async () => {

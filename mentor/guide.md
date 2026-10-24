@@ -4,16 +4,42 @@ For the people supporting juniors through the bootcamp. Juniors never get this f
 
 ## How the bootcamp runs
 
-- **Self-paced, two days.** Day 1 is JavaScript (morning) and TypeScript (afternoon). Day 2 is React, then the final project.
+- **Self-paced, planned as two days.** JavaScript, then TypeScript, then React, then the final project. The time guide below adds up to more than two working days of core work, so plan the calendar from it, not from the day labels.
 - Each module is: a lesson deck (`yarn lessons`), a short README, and an exercise ladder checked by `yarn verify <module>`.
-- **Core** steps fit the two days. **Stretch** steps are optional and never block the next module.
+- **Core** steps are the path. **Stretch** steps are optional and never block the next module.
 - A junior is done when every core step passes and `yarn verify final-project` is green.
 
 ## Your daily routine
 
-1. Morning: check each junior ran `yarn verify 00-setup` green on day 1.
+1. Morning: check each junior ran `yarn verify 00-setup` green on their first morning.
 2. A few times a day: ask them to run `yarn progress` and share the output. It shows every module, which steps pass, and the next step.
 3. If someone is more than 30 minutes behind the time guide on one module, sit with them.
+
+## Reading `yarn progress`
+
+```
+  01-js/02         Array and object methods           ✓ ✓ ✗ (·) · · (·) · (·) (·)   2/6 core
+```
+
+- One mark per step, in order: ✓ passed, ✗ failed the last time they ran it, · not run yet. Marks in brackets are stretch steps, shown only as (✓) done or (·) not done, so an untouched stretch step never looks like a failure.
+- The count at the end is core steps only. The last line names the next core step to do.
+- It shows the result of each step's last `yarn verify` run, so ask them to run `yarn verify <module>` first if it looks stale.
+- A ✗ followed by several · usually means they are stuck on that step. Ask about it before it costs them 30 minutes.
+
+## Time guide
+
+Each module README gives a lesson time, a core exercise time and a stretch time. Added up, core is about:
+
+| Phase | Core time |
+| --- | --- |
+| Setup | 0.5 h |
+| Phase 1: JavaScript, with its project | 6 h |
+| Phase 2: TypeScript, with its project (about 2 to 2.5 h) | 6.5 h |
+| Phase 3: React modules | 6.5 h |
+| Final project | 4.5 h |
+| **Total** | **about 24 h** |
+
+These are estimates (about 1.25 minutes per slide, and 4 to 6 minutes per core step), corrected after a dry run, until a real cohort has gone through. After the first cohort, decide which core steps to move to stretch so core fits the calendar: relabelling a step changes its level in `scripts/catalog.json`, the module README's step table and time, the deck's time and the step's comment. Check first that no later core step needs it. The dry run found the final project's TypeScript migration of the antd code the slowest part. Note where juniors are much faster or slower, so the guides can be corrected.
 
 ## Unblocking without giving the answer
 
@@ -24,7 +50,7 @@ For the people supporting juniors through the bootcamp. Juniors never get this f
 
 ## If a junior did not finish Phase 2
 
-The final project imports the junior's own Phase 2 ticket logic. If their Phase 2 project is not green by the start of day 2, give them `solutions/02-ts/project/src` to copy into `02-ts/project/src`, so they can do the React work on time.
+The final project imports the junior's own Phase 2 ticket logic. If their Phase 2 project is not green when they reach Phase 3, give them `solutions/02-ts/project/src` to copy into `02-ts/project/src`, so they can do the React work on time.
 
 ## Known sticking points
 
@@ -48,7 +74,7 @@ Filled in per module as the material is written.
 | 01-js/project | Priority sort comes out alphabetical (`high, low, medium, urgent`) | "Where is the real order of priorities written down?" |
 | 01-js/project | `averageAgeDays` off by a little | "Are you averaging all tickets or only the ones that are not closed? Rounded how?" |
 | 02-ts/01 | Thinks the `'75'` result is a TypeScript bug | "What type does `JSON.parse` return? Who checked the data at run time?" |
-| 02-ts/02 | `addTicket` uses `push` and gets "Property 'push' does not exist on readonly" | "The readonly type is telling you something. How did you add to an array without changing it on day 1?" |
+| 02-ts/02 | `addTicket` uses `push` and gets "Property 'push' does not exist on readonly" | "The readonly type is telling you something. How did you add to an array without changing it in Phase 1?" |
 | 02-ts/03 | Reaches for `as Priority` to make an error go away | "What would make TypeScript sure it is a Priority? Which check narrows a string to one of the four?" |
 | 02-ts/04 | `isTicket` checks only `id` and `title` | "Which fields does a `blocked` ticket need that an `open` one does not?" |
 | 02-ts/05 | Step 3 fails even though `statusLabel` looks complete | "What happens in your `default` if a fifth status appears? Which type is left over there?" |

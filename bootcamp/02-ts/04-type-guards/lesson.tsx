@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/04',
   title: 'Type guards: checking unknown data',
-  time: '30 min lesson · 35 min exercises',
+  time: '10 min lesson · 25 min exercises',
   subtitle: 'Types vanish at run time. A type guard is the run-time check that earns the type back.',
 };
 
@@ -23,7 +23,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: like validating with pydantic, written by hand']} />
 
-      <Slide title="The type says Ticket. The server disagrees." eyebrow="The problem">
+      <Slide title="The type says Ticket. The server disagrees." lead={<>Types are deleted before the code runs (module 01), so they cannot check what a server sends. A type annotation on API data is only a hope.</>} eyebrow="The problem">
         <Code
           lang="ts"
           code={`const response = await client.get<Ticket[]>('/tickets');\nconst tickets = response.data;          // TypeScript: Ticket[]\n\n// what --bad-data actually sends as the last item:\n{ id: 't-bad', title: 'Imported…', priority: 3, status: 'open' }`}
@@ -34,7 +34,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="unknown in, checked type out" eyebrow="Mental model" steps={1}>
+      <Slide title="unknown in, checked type out" lead={<>A type guard is an ordinary function that checks a value at run time, and tells TypeScript what it found.</>} eyebrow="Mental model" steps={1}>
         <Code
           lang="ts"
           code={`function isPriority(value: unknown): value is Priority {\n  return PRIORITIES.some((p) => p === value);\n}\n\nconst input: unknown = form.priority;\nif (isPriority(input)) {\n  input;   // Priority here\n}`}
@@ -49,7 +49,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="Checking a shape"
+        title="Checking a shape" lead={<>To check an object, first check it is an object, then check each field you need, one typeof at a time.</>}
         python={`def is_assignee(\n    value: object,\n) -> TypeGuard[Assignee]:\n    return (\n        isinstance(value, dict)\n        and isinstance(value.get("id"), str)\n        and isinstance(value.get("name"), str)\n    )`}
         js={`function isAssignee(\n  value: unknown,\n): value is Assignee {\n  return (\n    isRecord(value) &&\n    typeof value.id === 'string' &&\n    typeof value.name === 'string'\n  );\n}`}
         jsLang="ts"
@@ -62,7 +62,7 @@ export default function Lesson(props: LessonProps) {
       />
 
       <PredictSlide
-        title="A JavaScript classic"
+        title="A JavaScript classic" lead={<>typeof is how you check primitives. It has two surprises you need to know before you write isRecord.</>}
         code={`console.log(typeof null);\nconsole.log(typeof []);\nconsole.log(Array.isArray([]));`}
         answer="'object', 'object', true"
         surprising
@@ -74,7 +74,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Guard or assert?" eyebrow="Two shapes of the same check">
+      <Slide title="Guard or assert?" lead={<>The same check can return true or false, or throw. Which shape you want depends on what bad data means for you.</>} eyebrow="Two shapes of the same check">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Guard: you decide what to do</div>
@@ -91,7 +91,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Guards are filter callbacks" eyebrow="The pattern your project uses">
+      <Slide title="Guards are filter callbacks" lead={<>A guard has the right shape for filter, and filter keeps its type. This is how API data becomes Ticket[] in your project.</>} eyebrow="The pattern your project uses">
         <Code
           lang="ts"
           code={`function parseTickets(data: unknown) {\n  if (!Array.isArray(data)) throw new Error('Expected a list of tickets');\n  const tickets = data.filter(isTicket);    // Ticket[]\n  return { tickets, invalid: data.length - tickets.length };\n}`}

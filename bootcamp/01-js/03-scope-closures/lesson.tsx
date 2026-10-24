@@ -17,7 +17,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/03',
   title: 'Scope and closures',
-  time: '45 min lesson · 45 min exercises',
+  time: '20 min lesson · 25 min exercises',
   subtitle: 'How JavaScript decides where a variable lives, and how a function can carry variables with it.',
 };
 
@@ -170,7 +170,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: nested def + nonlocal']} />
 
-      <Slide title="Two things happen when code runs" eyebrow="Mental model" steps={2}>
+      <Slide title="Two things happen when code runs" lead={<>To understand closures you need a picture of what the engine keeps track of while it runs your code.</>} eyebrow="Mental model" steps={2}>
         <ul>
           <li>
             A <strong>thread of execution</strong> goes through the code one line at a time.
@@ -190,10 +190,10 @@ export default function Lesson(props: LessonProps) {
         </ul>
       </Slide>
 
-      <WalkthroughSlide title="Calling a function" eyebrow="Walkthrough · press → to step" code={callCode} steps={callSteps} />
+      <WalkthroughSlide title="Calling a function" lead={<>Same diagram as in module 01. Watch the call stack: calling a function adds a box with its own variables on top, and returning removes it.</>} eyebrow="Walkthrough · press → to step" code={callCode} steps={callSteps} />
 
       <CompareSlide
-        title="Blocks have their own scope"
+        title="Blocks have their own scope" lead={<>In Python a variable belongs to its whole function. In JavaScript, let and const belong to the nearest pair of curly braces.</>}
         python={`if True:\n    label = "urgent"\n\nprint(label)  # urgent`}
         js={`if (true) {\n  const label = 'urgent';\n}\nconsole.log(label); // ReferenceError`}
         note={
@@ -216,7 +216,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Functions are values" eyebrow="Mental model">
+      <Slide title="Functions are values" lead={<>A function is a value like a number or an object. That is what makes closures possible.</>} eyebrow="Mental model">
         <p>You can store a function in a variable, pass it to another function, and return it. Python works the same way.</p>
         <Code
           code={`const shout = (text) => text.toUpperCase() + '!';\n\nfunction applyTo(fn, value) {\n  return fn(value);\n}\n\napplyTo(shout, 'ship it'); // 'SHIP IT!'`}
@@ -226,7 +226,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <WalkthroughSlide title="The backpack" eyebrow="Walkthrough · press → to step" code={backpackCode} steps={backpackSteps} />
+      <WalkthroughSlide title="The backpack" lead={<>When a function is created inside another function, it takes the variables around it along. Watch the 🎒 Backpack box on the heap.</>} eyebrow="Walkthrough · press → to step" code={backpackCode} steps={backpackSteps} />
 
       <PredictSlide
         code={`const a = outer();\nconst b = outer();\na();\na();\nconsole.log(b());`}
@@ -240,7 +240,7 @@ export default function Lesson(props: LessonProps) {
       />
 
       <CompareSlide
-        title="The same closure in Python"
+        title="The same closure in Python" lead={<>If you have written a nested def in Python, you have already used a closure.</>}
         python={`def outer():\n    calls = 0\n    def inner():\n        nonlocal calls\n        calls += 1\n        return calls\n    return inner`}
         js={`function outer() {\n  let calls = 0;\n  function inner() {\n    calls = calls + 1;\n    return calls;\n  }\n  return inner;\n}`}
         note={
@@ -252,13 +252,13 @@ export default function Lesson(props: LessonProps) {
       />
 
       <RunSlide
-        title="Change the backpack"
+        title="Change the backpack" lead={<>The code runs in your browser. Change it as much as you like: nothing is saved.</>}
         code={`function outer(start) {\n  let calls = start;\n  return function inner() {\n    calls = calls + 1;\n    return calls;\n  };\n}\n\nconst fromTen = outer(10);\nconsole.log(fromTen());\nconsole.log(fromTen());\n\n// Make a second tracker that starts at 0.\n// Does it change fromTen?`}
       >
         Edit the code and press Run. Parameters go into the backpack too: <code>start</code> is remembered as well.
       </RunSlide>
 
-      <Slide title="What goes in the backpack" eyebrow="Patterns you will build" steps={1}>
+      <Slide title="What goes in the backpack" lead={<>Every exercise in this module keeps something in a backpack. Here is what each one remembers between calls.</>} eyebrow="Patterns you will build" steps={1}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 24 }}>
           <tbody>
             {[

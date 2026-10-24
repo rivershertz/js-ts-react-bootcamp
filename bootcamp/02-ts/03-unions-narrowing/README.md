@@ -1,6 +1,6 @@
 # 02-ts/03 Unions and narrowing
 
-**Time:** 30 min lesson, 30 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

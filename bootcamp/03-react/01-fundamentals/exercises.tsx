@@ -46,6 +46,7 @@ export function EstimateCounter() {
 
 // Step 5 (core)
 // NewTicketForm is a <form> with a controlled input labelled "Title" and an "Add" button.
+// Label it by wrapping it: <label>Title <input ... /></label>, as in the other steps.
 // - The button is disabled while the title is empty or only spaces.
 // - Submitting (the button or Enter) calls onAdd with the trimmed title, then clears the input.
 // - The page must not reload: call event.preventDefault() in the submit handler.

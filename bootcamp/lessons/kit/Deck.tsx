@@ -77,10 +77,12 @@ export function Deck({ meta, children, initialSlide = 0, onSlideChange }: Props)
         <div className="k-stage" style={{ transform: `scale(${scale})` }}>
           {slides[index]}
           <div className="k-footer">
-            <a href="#/" style={{ color: 'inherit' }} title="All lessons (Esc)">
-              {meta.id}
+            <a href="#/" className="k-homebtn" title="Back to the list of lessons (Esc)">
+              ☰ All lessons
             </a>
-            <span>{meta.title}</span>
+            <span>
+              {meta.id} · {meta.title}
+            </span>
             <div className="k-progress" aria-hidden>
               <div style={{ width: `${Math.min(1, progress) * 100}%` }} />
             </div>

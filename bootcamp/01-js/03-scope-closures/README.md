@@ -1,6 +1,6 @@
 # 01-js/03 Scope and closures
 
-**Time:** 45 min lesson, 45 min exercises (core), plus 15 min stretch.
+**Time:** 20 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

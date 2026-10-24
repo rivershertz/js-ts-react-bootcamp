@@ -1,6 +1,6 @@
 # 01-js/02 Array and object methods
 
-**Time:** 35 min lesson, 50 min exercises (core), plus 20 min stretch.
+**Time:** 15 min lesson, 45 min exercises (core), plus 20 min stretch.
 
 ## 1. Watch the lesson
 
@@ -40,4 +40,4 @@ Open [`exercises.js`](exercises.js). All steps use the same 12 tickets from `scr
 yarn verify 01-js/02
 ```
 
-You will reuse steps 5, 6 and 9 almost unchanged in the Phase 1 project.
+You will reuse steps 5 and 6 (and 9, if you did it) almost unchanged in the Phase 1 project.

@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect } from 'vitest';
+import { ensure } from '../../lib/ensure';
 import { defineSteps } from '../../lib/steps';
 import { load, root } from '../../lib/paths';
 import { findShortcuts } from '../../lib/source';
@@ -53,7 +54,7 @@ step(1, () => {
   requireSrc();
   const files = readdirSync(srcDir, { recursive: true, encoding: 'utf8' });
   const js = files.filter((f) => /\.jsx?$/.test(f));
-  expect(js, 'Rename every .js file in 02-ts/project/src to .ts').toEqual([]);
+  ensure(js.length === 0, `Still JavaScript: ${js.join(', ')}. Rename each one in 02-ts/project/src to .ts.`);
   for (const name of MODULES) expect(existsSync(path.join(srcDir, `${name}.ts`)), `src/${name}.ts is missing`).toBe(true);
 });
 

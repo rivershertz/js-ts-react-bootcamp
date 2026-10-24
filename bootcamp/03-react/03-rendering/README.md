@@ -1,6 +1,6 @@
 # 03-react/03 Rendering: snapshots, lifting state, keys, effects
 
-**Time:** 35 min lesson, 40 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 30 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

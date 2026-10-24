@@ -30,7 +30,7 @@ const REF_COLORS = ['var(--ref-1)', 'var(--ref-2)', 'var(--ref-3)', 'var(--ref-4
  * Step-through of how code runs: the running line, the call stack, the heap,
  * and the closure "backpack". Each build step of the slide shows one WalkStep.
  */
-export function WalkthroughSlide({ title, eyebrow, code, steps }: { title: ReactNode; eyebrow?: ReactNode; code: string; steps: WalkStep[] }) {
+export function WalkthroughSlide({ title, eyebrow, lead, code, steps }: { title: ReactNode; eyebrow?: ReactNode; lead?: ReactNode; code: string; steps: WalkStep[] }) {
   const i = useStep();
   const now = steps[Math.min(i, steps.length - 1)];
   const before = i > 0 ? steps[i - 1] : undefined;
@@ -55,7 +55,7 @@ export function WalkthroughSlide({ title, eyebrow, code, steps }: { title: React
   };
 
   return (
-    <Slide title={title} eyebrow={eyebrow}>
+    <Slide title={title} eyebrow={eyebrow} lead={lead}>
       <div className="k-walk">
         <div style={{ minHeight: 0 }}>
           <Code code={code} active={now.line} small />
@@ -71,7 +71,7 @@ export function WalkthroughSlide({ title, eyebrow, code, steps }: { title: React
           </div>
           <div className="k-mem">
             <div className="k-mem-col">
-              <h4>Call stack</h4>
+              <h4>Variables · call stack</h4>
               <div className="k-stack">
                 {now.stack.map((f, n) => (
                   <div key={f.name + n} className={`k-frame${n === now.stack.length - 1 ? ' top' : ''}`}>
@@ -88,7 +88,7 @@ export function WalkthroughSlide({ title, eyebrow, code, steps }: { title: React
               </div>
             </div>
             <div className="k-mem-col">
-              <h4>Heap</h4>
+              <h4>Objects · heap</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {(now.heap ?? []).map((h) => (
                   <div key={h.id} className="k-obj" style={{ borderLeftColor: color(h.id) }}>

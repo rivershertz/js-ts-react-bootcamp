@@ -1,6 +1,6 @@
 # 03-react/02 Rules of React
 
-**Time:** 20 min lesson, 35 min exercises (core), plus 5 min stretch.
+**Time:** 15 min lesson, 40 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

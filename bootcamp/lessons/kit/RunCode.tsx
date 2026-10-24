@@ -15,7 +15,7 @@ function show(value: unknown): string {
 }
 
 /** An editable JavaScript snippet with a Run button and its console output. Runs in this page only. */
-export function RunSlide({ title, eyebrow = 'Try it', code, children }: { title: ReactNode; eyebrow?: ReactNode; code: string; children?: ReactNode }) {
+export function RunSlide({ title, eyebrow = 'Try it', lead, code, children }: { title: ReactNode; eyebrow?: ReactNode; lead?: ReactNode; code: string; children?: ReactNode }) {
   const [source, setSource] = useState(code.trim());
   const [lines, setLines] = useState<Line[]>([]);
   const runId = useRef(0);
@@ -39,7 +39,7 @@ export function RunSlide({ title, eyebrow = 'Try it', code, children }: { title:
   }
 
   return (
-    <Slide title={title} eyebrow={eyebrow}>
+    <Slide title={title} eyebrow={eyebrow} lead={lead}>
       <div className="k-run">
         <textarea
           value={source}

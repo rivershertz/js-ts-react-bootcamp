@@ -13,7 +13,7 @@ import {
 export const meta: DeckMeta = {
   id: '03-react/05',
   title: 'Server data with React Query',
-  time: '25 min lesson · 40 min exercises',
+  time: '15 min lesson · 25 min exercises',
   subtitle: 'Data from the server lives in a shared cache, not in component state. React Query owns that cache.',
 };
 
@@ -22,7 +22,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={["The final project's api/tickets.js is built from what this deck shows"]} />
 
-      <Slide title="Server data is not like other state" eyebrow="Why a library">
+      <Slide title="Server data is not like other state" lead={<>Data from the API has problems your own state does not: it loads slowly, it can fail, and it goes out of date.</>} eyebrow="Why a library">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">With useState and useEffect, you write</div>
@@ -51,7 +51,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="useQuery: a key and a function" eyebrow="Queries">
+      <Slide title="useQuery: a key and a function" lead={<>useQuery takes a name for the data and a function that fetches it. It gives back the data and where the request is.</>} eyebrow="Queries">
         <Code
           lang="tsx"
           code={`
@@ -73,7 +73,7 @@ const { data, isPending, isError, refetch } = useTickets();`}
       </Slide>
 
       <SequenceSlide
-        title="Two components, one request"
+        title="Two components, one request" lead={<>Each column is one part of the app, and each arrow a message between them. Press → to see how the cache saves a request.</>}
         eyebrow="The cache · press → to step"
         actors={[
           { id: 'count', label: 'TicketCount', detail: 'useTickets()' },
@@ -97,7 +97,7 @@ const { data, isPending, isError, refetch } = useTickets();`}
         ]}
       />
 
-      <Slide title="Three states, in this order" eyebrow="Loading and errors">
+      <Slide title="Three states, in this order" lead={<>A query is loading, failed, or has data. Check them in that order, and TypeScript knows data is there at the end.</>} eyebrow="Loading and errors">
         <Code
           lang="tsx"
           code={`
@@ -142,7 +142,7 @@ function useTicket(id: string | undefined) {
         }
       />
 
-      <Slide title="Query keys are arrays, matched by prefix" eyebrow="Keys">
+      <Slide title="Query keys are arrays, matched by prefix" lead={<>A key is an array. Its first item names the kind of data, the rest says which part of it.</>} eyebrow="Keys">
         <table className="k-table">
           <thead>
             <tr>
@@ -196,7 +196,7 @@ const close = useMutation({
         }
       />
 
-      <Slide title="useMutation: change data, then mark it stale" eyebrow="Mutations">
+      <Slide title="useMutation: change data, then mark it stale" lead={<>useMutation runs a change on the server. When it succeeds, you tell the cache which data is now out of date.</>} eyebrow="Mutations">
         <Code
           lang="tsx"
           code={`
@@ -216,7 +216,7 @@ const save = useSaveTicket();
         </div>
       </Slide>
 
-      <Slide title="Stretch: start from data you already have" eyebrow="initialData">
+      <Slide title="Stretch: start from data you already have" lead={<>The list is already in the cache. A query for one ticket can start from it instead of from nothing.</>} eyebrow="initialData">
         <Code
           lang="tsx"
           code={`

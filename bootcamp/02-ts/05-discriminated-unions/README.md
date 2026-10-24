@@ -1,6 +1,6 @@
 # 02-ts/05 Discriminated unions: ticket states
 
-**Time:** 30 min lesson, 35 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

@@ -1,6 +1,6 @@
 # 03-react/05 Server data with React Query
 
-**Time:** 25 min lesson, 40 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

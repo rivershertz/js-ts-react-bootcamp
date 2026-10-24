@@ -1,6 +1,6 @@
 # 02-ts/06 Generics and utility types
 
-**Time:** 30 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 10 min lesson, 25 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

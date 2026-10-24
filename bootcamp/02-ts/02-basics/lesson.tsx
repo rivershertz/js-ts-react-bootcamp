@@ -14,7 +14,7 @@ import {
 export const meta: DeckMeta = {
   id: '02-ts/02',
   title: 'Basics: object types and functions',
-  time: '30 min lesson · 30 min exercises',
+  time: '10 min lesson · 25 min exercises',
   subtitle: 'Describe the shape of your data once, then let the checker hold every function to it.',
 };
 
@@ -24,7 +24,7 @@ export default function Lesson(props: LessonProps) {
       <TitleSlide chips={['Coming from Python: like a TypedDict or a dataclass, without the class']} />
 
       <CompareSlide
-        title="Describing a shape"
+        title="Describing a shape" lead={<>An object type lists the fields an object must have, and the type of each one.</>}
         python={`class Assignee(TypedDict):\n    id: str\n    name: str\n\ndef greet(a: Assignee) -> str:\n    return f"Hi {a['name']}"`}
         js={`type Assignee = {\n  id: string;\n  name: string;\n};\n\nfunction greet(a: Assignee): string {\n  return \`Hi \${a.name}\`;\n}`}
         jsLang="ts"
@@ -36,8 +36,8 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Three kinds of maybe" eyebrow="Mental model" steps={2}>
-        <Code
+      <Slide title="Three kinds of maybe" lead={<>A field can be fixed, missing, or present but empty. TypeScript writes each one differently, and then makes you check before you use it.</>} eyebrow="Mental model" steps={2}>
+        <Code small
           lang="ts"
           code={`type Ticket = {\n  readonly id: string;     // always there, never reassigned\n  description?: string;    // may be missing entirely\n  dueDate: string | null;  // always there, may be null\n};`}
         />
@@ -52,7 +52,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="type or interface?" eyebrow="Reference">
+      <Slide title="type or interface?" lead={<>Two ways to name a type. For the object shapes in this bootcamp, either works.</>} eyebrow="Reference">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">type: any shape</div>
@@ -69,7 +69,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Typing functions" eyebrow="The everyday part">
+      <Slide title="Typing functions" lead={<>Type every parameter. The return type is usually inferred, but writing it makes mistakes show up in the right place.</>} eyebrow="The everyday part">
         <Code
           lang="ts"
           code={`function createTicket(id: string, title: string, priority = 'medium'): Ticket {\n  // priority: string, optional, because it has a default\n}\n\ntype TicketFilter = (ticket: Ticket) => boolean;\nconst isOpen: TicketFilter = (ticket) => ticket.status !== 'closed';\n// (ticket) needs no annotation: its type comes from TicketFilter`}
@@ -78,7 +78,7 @@ export default function Lesson(props: LessonProps) {
 
       <PredictSlide
         lang="ts"
-        title="Does this compile?"
+        title="Does this compile?" lead={<>The type checker is about to enforce a rule from Phase 1. Which one?</>}
         question="Does TypeScript accept this? Decide before you press →"
         code={`function addTicket(tickets: readonly Ticket[], t: Ticket) {\n  tickets.push(t);\n  return tickets;\n}`}
         answer="No: Property 'push' does not exist on type 'readonly Ticket[]'"
@@ -92,7 +92,7 @@ export default function Lesson(props: LessonProps) {
 
       <PredictSlide
         lang="ts"
-        title="Extra fields"
+        title="Extra fields" lead={<>TypeScript checks that an object has every field a type needs. When does it also complain about fields it does not need?</>}
         question="Which line is an error? Decide before you press →"
         code={`const a: Assignee = { id: 'a1', name: 'Dana', team: 'web' };\n\nconst raw = { id: 'a1', name: 'Dana', team: 'web' };\nconst b: Assignee = raw;`}
         answer="Only the first"

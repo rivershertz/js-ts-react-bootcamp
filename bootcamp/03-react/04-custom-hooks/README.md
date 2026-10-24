@@ -1,6 +1,6 @@
 # 03-react/04 Custom hooks
 
-**Time:** 20 min lesson, 35 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 20 min exercises (core), plus 5 min stretch.
 
 ## 1. Watch the lesson
 

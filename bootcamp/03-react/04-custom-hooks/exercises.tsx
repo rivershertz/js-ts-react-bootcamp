@@ -19,6 +19,8 @@ export function useDebouncedValue<T>(value: T, delayMs = 300): T {
 // Step 3 (core)
 // SearchBox shows an input labelled "Search". It calls onSearch(text) once the user
 // has stopped typing for 300 ms, not on every key press. Use your useDebouncedValue.
+// If onSearch is in your effect's dependencies, the parent must pass the same function every
+// render (useCallback, module 07), or the effect runs after every parent render. The playground does.
 export function SearchBox({ onSearch }: { onSearch: (text: string) => void }) {
   const [text, setText] = useState('');
   return (

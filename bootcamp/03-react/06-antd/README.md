@@ -1,6 +1,6 @@
 # 03-react/06 Ant Design: Table, Form, theming, versions
 
-**Time:** 30 min lesson, 45 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 55 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

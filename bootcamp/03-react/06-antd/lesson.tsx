@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, Slide, TitleSlide, type DeckMeta,
 export const meta: DeckMeta = {
   id: '03-react/06',
   title: 'Ant Design: Table, Form, theming, versions',
-  time: '30 min lesson · 45 min exercises',
+  time: '15 min lesson · 55 min exercises',
   subtitle: "The team's component library: a typed Table, a validated Form, a theme, and how to tell versions 3, 4 and 5 apart.",
 };
 
@@ -12,7 +12,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={["The team's apps use antd 3, 4 and 5", 'This deck teaches 5, and how to spot the others']} />
 
-      <Slide title="A component library is props all the way down" eyebrow="antd">
+      <Slide title="A component library is props all the way down" lead={<>antd gives you ready-made, consistent components: tables, forms, buttons, tags. You use them the way you use your own: through props.</>} eyebrow="antd">
         <Code
           lang="tsx"
           code={`
@@ -32,7 +32,7 @@ import { Button, Tag } from 'antd';
         </ul>
       </Slide>
 
-      <Slide title="Table: typed columns" eyebrow="Table">
+      <Slide title="Table: typed columns" lead={<>A Table takes two arrays: the rows (dataSource) and a description of each column (columns). TypeScript checks every column against your row type.</>} eyebrow="Table">
         <Code
           lang="tsx"
           code={`
@@ -65,7 +65,7 @@ const columns: TableColumnsType<Ticket> = [
         }
       />
 
-      <Slide title="Sorting and filtering" eyebrow="Table columns">
+      <Slide title="Sorting and filtering" lead={<>Sorting and filtering are set per column. antd can do it for you, or tell you what the user clicked and let you do it.</>} eyebrow="Table columns">
         <Code
           lang="tsx"
           code={`
@@ -88,8 +88,8 @@ const columns: TableColumnsType<Ticket> = [
         </ul>
       </Slide>
 
-      <Slide title="Form: fields, rules, onFinish" eyebrow="Form">
-        <Code
+      <Slide title="Form: fields, rules, onFinish" lead={<>An antd Form keeps the field values and the validation for you. You describe the fields and their rules, and get the values once they are valid.</>} eyebrow="Form">
+        <Code small
           lang="tsx"
           code={`
 <Form<TicketFormValues> onFinish={(values) => save.mutate(values)}>
@@ -132,7 +132,7 @@ function EditPage({ ticket }: { ticket: Ticket }) {
         }
       />
 
-      <Slide title="Form.useForm: the form from the outside" eyebrow="Form instance">
+      <Slide title="Form.useForm: the form from the outside" lead={<>Sometimes code outside the fields needs to change the form: fill it, reset it, or show a server error. Form.useForm gives you a handle to it.</>} eyebrow="Form instance">
         <Code
           lang="tsx"
           code={`
@@ -151,7 +151,7 @@ form.setFields([{ name: 'title', errors: ['Already taken'] }]);`}
         </div>
       </Slide>
 
-      <Slide title="Theming in version 5: tokens" eyebrow="ConfigProvider">
+      <Slide title="Theming in version 5: tokens" lead={<>Colours, sizes and corners are set once for the whole app, at the top, and every antd component follows them.</>} eyebrow="ConfigProvider">
         <Code
           lang="tsx"
           code={`
@@ -168,7 +168,7 @@ const { token } = theme.useToken();   // read the theme in your own components
         </ul>
       </Slide>
 
-      <Slide title="Three versions in the same team" eyebrow="Versions">
+      <Slide title="Three versions in the same team" lead={<>The team's apps were started at different times, so they use different major versions of antd. Most ideas carry over; these details do not.</>} eyebrow="Versions">
         <table className="k-table">
           <thead>
             <tr>
@@ -216,7 +216,7 @@ const { token } = theme.useToken();   // read the theme in your own components
         </div>
       </Slide>
 
-      <Slide title="Which antd is this project on?" eyebrow="30-second check">
+      <Slide title="Which antd is this project on?" lead={<>Before you copy an example from the docs or the internet, check which version the app you are in uses. It takes 30 seconds.</>} eyebrow="30-second check">
         <ol>
           <li>
             <code>package.json</code>, under <code>dependencies</code>: <code>&quot;antd&quot;: &quot;^4.24.0&quot;</code> means

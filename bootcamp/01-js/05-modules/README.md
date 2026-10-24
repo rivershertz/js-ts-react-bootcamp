@@ -1,6 +1,6 @@
 # 01-js/05 Modules
 
-**Time:** 25 min lesson, 35 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 35 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 

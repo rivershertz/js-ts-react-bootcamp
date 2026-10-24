@@ -1,6 +1,6 @@
 # 02-ts/01 Why TypeScript, and how it runs
 
-**Time:** 20 min lesson, 20 min exercises (core).
+**Time:** 10 min lesson, 20 min exercises (core).
 
 ## 1. Watch the lesson
 

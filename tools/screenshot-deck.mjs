@@ -11,6 +11,7 @@ for (const scheme of ['light', 'dark']) {
   const page = await browser.newPage({ viewport: { width: 1320, height: 760 }, colorScheme: scheme });
   const errors = [];
   const overflows = new Set();
+  const shrunk = new Map();
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(`http://localhost:5174/#/${id}`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
@@ -37,6 +38,12 @@ for (const scheme of ['light', 'dark']) {
       return bad.length ? `${document.querySelector('.k-footer span:nth-of-type(2)')?.textContent}: ${bad[0].className || bad[0].tagName}` : null;
     });
     if (overflow) overflows.add(overflow);
+    // A body scaled down to fit (see FitBody in the kit) is fine, but a lot of shrinking means a crowded slide.
+    const fit = await page.evaluate(() => {
+      const t = document.querySelector('.k-fit')?.style.transform.match(/scale\(([\d.]+)\)/);
+      return t ? [document.querySelector('.k-footer span:nth-of-type(2)')?.textContent, Number(t[1])] : null;
+    });
+    if (fit) shrunk.set(fit[0], Math.min(fit[1], shrunk.get(fit[0]) ?? 1));
     const shot = await page.screenshot({ path: `${out}/${scheme}-${String(n).padStart(3, '0')}.png` });
     const key = shot.toString('base64');
     if (key === previous) break;
@@ -45,6 +52,7 @@ for (const scheme of ['light', 'dark']) {
   }
   // Content that overflows its slide is a layout bug.
   if (overflows.size) console.log(`${scheme}: content runs into the footer or off the slide:\n  ${[...overflows].join('\n  ')}`);
+  if (shrunk.size) console.log(`${scheme}: scaled to fit: ${[...shrunk].map(([slide, s]) => `${slide} (${s})`).join(', ')}`);
   if (errors.length) console.log(`${scheme}: page errors:\n${errors.join('\n')}`);
   await page.close();
 }

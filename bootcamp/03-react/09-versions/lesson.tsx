@@ -3,7 +3,7 @@ import { Code, Deck, PredictSlide, RecapSlide, Slide, TitleSlide, type DeckMeta,
 export const meta: DeckMeta = {
   id: '03-react/09',
   title: 'Versions and tooling: React 16 / 18 / 19, CRA and Vite',
-  time: '20 min lesson · 30 min exercises',
+  time: '10 min lesson · 30 min exercises',
   subtitle: "You learned today's React. The team's older apps differ in a few places. Learn to spot them.",
 };
 
@@ -12,7 +12,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['React 16, 18 and 19 side by side', 'Create React App and Vite side by side']} />
 
-      <Slide title="Which React is this app on?" eyebrow="30-second check">
+      <Slide title="Which React is this app on?" lead={<>The team's apps were started years apart, so they run different React versions. Check which one before you copy an example or follow a guide.</>} eyebrow="30-second check">
         <ol>
           <li>
             <code>package.json</code>: <code>&quot;react&quot;: &quot;^16.14.0&quot;</code>. Same rules as antd (module 06):
@@ -26,7 +26,7 @@ export default function Lesson(props: LessonProps) {
         </ol>
       </Slide>
 
-      <Slide title="Starting the app: render versus createRoot" eyebrow="Entry point">
+      <Slide title="Starting the app: render versus createRoot" lead={<>The one line that starts the app is the quickest clue to its version. It changed in React 18.</>} eyebrow="Entry point">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">React 16 and 17</div>
@@ -82,7 +82,7 @@ async function save() {
         }
       />
 
-      <Slide title="React 19: what changed" eyebrow="React 19">
+      <Slide title="React 19: what changed" lead={<>React 19 removed a few old APIs and added some optional new ones. The way you write components and hooks is the same.</>} eyebrow="React 19">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Removed</div>
@@ -118,7 +118,7 @@ async function save() {
         </div>
       </Slide>
 
-      <Slide title="Create React App and Vite" eyebrow="Tooling">
+      <Slide title="Create React App and Vite" lead={<>These are the tools that run the dev server and build the app. Older apps use Create React App; this bootcamp and new apps use Vite.</>} eyebrow="Tooling">
         <table className="k-table">
           <thead>
             <tr>
@@ -178,7 +178,7 @@ const baseURL = import.meta.env.API_URL;`}
         }
       />
 
-      <Slide title="What yarn build makes" eyebrow="Builds">
+      <Slide title="What yarn build makes" lead={<>yarn build turns your source into a few plain files for a web server. Knowing what is inside explains the rules about env variables.</>} eyebrow="Builds">
         <Code
           lang="text"
           lineNumbers={false}
@@ -206,7 +206,7 @@ dist/
           'CRA: REACT_APP_, "proxy" in package.json, build/. Vite: VITE_, vite.config.ts, dist/.',
           'A build is static files with env variables baked in. No secrets in the front end.',
         ]}
-        next="Next: the final project. Read its README first."
+        next={<>Next: <a href="#/final-project">the final project</a>. Its slides and README say what to build and how it is checked.</>}
       />
     </Deck>
   );
