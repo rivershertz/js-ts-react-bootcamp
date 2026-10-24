@@ -23,8 +23,8 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: think of a component as a pure function that returns a template']} />
 
-      <Slide title="A component is a function that returns markup" eyebrow="Components">
-        <Code
+      <Slide title="A component is a function that returns markup" lead={<>React builds a page from components: plain functions that take data and return what to show, written in JSX.</>} eyebrow="Components">
+        <Code small
           lang="tsx"
           code={`
 function TicketCard({ ticket }: { ticket: Ticket }) {
@@ -45,7 +45,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
         </ul>
       </Slide>
 
-      <Slide title="JSX is not HTML" eyebrow="The differences that bite">
+      <Slide title="JSX is not HTML" lead={<>JSX looks like HTML but is JavaScript underneath. Four differences cause most first-day errors.</>} eyebrow="The differences that bite">
         <table className="k-table">
           <thead>
             <tr>
@@ -81,7 +81,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
         </table>
       </Slide>
 
-      <Slide title="Props are the function's arguments, typed" eyebrow="Props">
+      <Slide title="Props are the function's arguments, typed" lead={<>A parent passes data to a component as props, like arguments to a function. TypeScript checks every one.</>} eyebrow="Props">
         <Code
           lang="tsx"
           code={`
@@ -100,7 +100,7 @@ function PriorityBadge({ priority, small = false }: Props) {
         </div>
       </Slide>
 
-      <Slide title="State: values a component remembers" eyebrow="useState" steps={1}>
+      <Slide title="State: values a component remembers" lead={<>Props come from outside. State is the component's own memory, kept by React between renders.</>} eyebrow="useState" steps={1}>
         <Code
           lang="tsx"
           code={`
@@ -125,7 +125,7 @@ function EstimateCounter() {
       </Slide>
 
       <RenderSlide
-        title="What happens when you click"
+        title="What happens when you click" lead={<>The tree shows your components. One lights up when React calls it, which is a render. The log lists each step in order. Press → to click.</>}
         eyebrow="Walkthrough · press → to step"
         tree={{ name: 'App', children: [{ name: 'EstimateCounter' }, { name: 'TicketList' }] }}
         steps={[
@@ -158,7 +158,7 @@ function handleClick() {
         }
       />
 
-      <Slide title="Events: pass the function, do not call it" eyebrow="Common mistake">
+      <Slide title="Events: pass the function, do not call it" lead={<>An event prop wants a function for React to call later. The parentheses decide whether you give it one.</>} eyebrow="Common mistake">
         <Code
           lang="tsx"
           code={`
@@ -177,7 +177,7 @@ function handleClick() {
         </div>
       </Slide>
 
-      <Slide title="Lists need keys" eyebrow="Lists">
+      <Slide title="Lists need keys" lead={<>To show a list, map each item to JSX. React needs a key on each one to tell them apart.</>} eyebrow="Lists">
         <Code
           lang="tsx"
           code={`
@@ -214,8 +214,8 @@ return <div>{tickets.length && <TicketList tickets={tickets} />}</div>;`}
         }
       />
 
-      <Slide title="Controlled inputs: React owns the value" eyebrow="Forms">
-        <Code
+      <Slide title="Controlled inputs: React owns the value" lead={<>In a controlled input, state holds the text and the input only shows it. Every key press updates the state.</>} eyebrow="Forms">
+        <Code small
           lang="tsx"
           code={`
 const [title, setTitle] = useState('');

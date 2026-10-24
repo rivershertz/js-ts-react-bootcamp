@@ -25,7 +25,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: like asyncio, but everything is async']} />
 
-      <Slide title="One thread that never waits" eyebrow="Mental model" steps={2}>
+      <Slide title="One thread that never waits" lead={<>Python code usually waits for a slow call to finish. JavaScript in the browser cannot afford to: the page would freeze.</>} eyebrow="Mental model" steps={2}>
         <ul>
           <li>JavaScript runs your code on one thread. While it runs, nothing else happens: no clicks, no redraws.</li>
           <Reveal at={1}>
@@ -42,8 +42,30 @@ export default function Lesson(props: LessonProps) {
         </ul>
       </Slide>
 
+      <Slide
+        title="How to read the event loop diagram"
+        eyebrow="Before the walkthrough"
+        lead="The next slide runs five lines and shows where each piece of work is after every step. Four boxes, read left to right:"
+      >
+        <ul>
+          <li>
+            <strong>Call stack:</strong> the code running right now. JavaScript can only run what is here, one thing at a time.
+          </li>
+          <li>
+            <strong>Waiting:</strong> timers and network requests. The browser handles them outside JavaScript, so they do not block it.
+          </li>
+          <li>
+            <strong>Microtask queue:</strong> promise callbacks (<code>.then</code>, the code after <code>await</code>) that are ready to run.
+          </li>
+          <li>
+            <strong>Task queue:</strong> other ready callbacks: timers, clicks. They run only after all microtasks.
+          </li>
+        </ul>
+        <div className="k-note">Something moves from a queue to the call stack only when the stack is empty.</div>
+      </Slide>
+
       <EventLoopSlide
-        title="The event loop"
+        title="The event loop" lead={<>Predict the order of the four lines in the console, then press → to check.</>}
         eyebrow="Walkthrough · press → to step"
         code={`console.log('start');\nsetTimeout(() => console.log('timer'), 0);\naxios.get('/api/tickets')\n  .then(() => console.log('tickets'));\nconsole.log('end');`}
         steps={[
@@ -57,7 +79,7 @@ export default function Lesson(props: LessonProps) {
         ]}
       />
 
-      <Slide title="A promise is a value that arrives later" eyebrow="Mental model" steps={1}>
+      <Slide title="A promise is a value that arrives later" lead={<>Anything slow, like a network request, gives you a promise right away. The real value comes later.</>} eyebrow="Mental model" steps={1}>
         <Code
           code={`const promise = axios.get('/api/tickets'); // pending\n\npromise\n  .then((response) => console.log(response.data)) // fulfilled\n  .catch((error) => console.log(error.message));  // rejected`}
         />
@@ -70,7 +92,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="async / await reads like normal code"
+        title="async / await reads like normal code" lead={<>await lets you write async code top to bottom, like asyncio in Python, instead of chaining .then calls.</>}
         python={`async def first_title():\n    tickets = await fetch_tickets()\n    return tickets[0]["title"]`}
         js={`async function firstTitle() {\n  const res = await axios.get('/api/tickets');\n  return res.data[0].title;\n}`}
         note={
@@ -92,7 +114,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Errors: try / catch around await" eyebrow="Reference">
+      <Slide title="Errors: try / catch around await" lead={<>A rejected promise becomes an exception at the await, so you catch it the way you would in Python.</>} eyebrow="Reference">
         <Code
           small
           code={`try {\n  const { data } = await client.get(\`/tickets/\${id}\`);\n  return data;\n} catch (error) {\n  if (error.response?.status === 404) return null; // the server said "not found"\n  throw error;                                     // anything else: let it go up\n}`}
@@ -103,7 +125,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="One after another, or all at once?" eyebrow="Mental model" steps={1}>
+      <Slide title="One after another, or all at once?" lead={<>Each await waits before the next line starts. When requests do not depend on each other, start them all first.</>} eyebrow="Mental model" steps={1}>
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label" style={{ color: 'var(--bad)' }}>
@@ -126,7 +148,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="all or allSettled?" eyebrow="Reference">
+      <Slide title="all or allSettled?" lead={<>Both wait for a list of promises. They differ in what happens when one of them fails.</>} eyebrow="Reference">
         <table className="k-table">
           <thead>
             <tr>
@@ -157,7 +179,7 @@ export default function Lesson(props: LessonProps) {
         </table>
       </Slide>
 
-      <Slide title="axios in one slide" eyebrow="Reference">
+      <Slide title="axios in one slide" lead={<>axios is the HTTP library the team's apps use, like requests in Python.</>} eyebrow="Reference">
         <Code
           small
           code={`import axios from 'axios';\n\nconst client = axios.create({ baseURL: '/api' });\n\nconst { data: tickets } = await client.get('/tickets');           // GET\nconst { data: created } = await client.post('/tickets', draft);   // POST with JSON body\nawait client.put(\`/tickets/\${id}\`, ticket);                        // PUT`}
@@ -168,7 +190,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <RunSlide
-        title="Feel the difference"
+        title="Feel the difference" lead={<>The code runs in your browser. Change it as much as you like: nothing is saved.</>}
         code={`const job = async (name) => {\n  await new Promise((r) => setTimeout(r, 300));\n  return name;\n};\n\nlet start = Date.now();\nawait job('a');\nawait job('b');\nawait job('c');\nconsole.log('one by one', Date.now() - start, 'ms');\n\nstart = Date.now();\nconst all = await Promise.all([\n  job('a'), job('b'), job('c'),\n]);\nconsole.log('together', Date.now() - start, 'ms', all);`}
       >
         Run it. Then make job('b') throw and compare Promise.all with Promise.allSettled.

@@ -45,13 +45,13 @@ yarn verify 00-setup
 
 All four steps should be green. Each red step says what to do.
 
-## 5. Watch the setup lesson
+## 5. Watch the first two lessons
 
 ```
 yarn lessons
 ```
 
-Open the link it prints and pick **00-setup**. It explains what a dev server is, why the browser talks to Vite instead of to Python directly, and the tools you will use: VS Code, the browser's DevTools, ESLint and Prettier.
+Open the link it prints. Watch **00-start** first: it shows how the bootcamp works and how to read a lesson slide. Then **00-setup**, which explains what a dev server is, why the browser talks to Vite instead of to Python directly, and the tools you will use: VS Code, the browser's DevTools, ESLint and Prettier.
 
 ## 6. Keep the cheat sheet open
 

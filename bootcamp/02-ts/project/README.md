@@ -1,5 +1,13 @@
 # Phase 2 project: ticket logic in strict TypeScript
 
+**Time:** about 2 to 2.5 hours. **Before you start:** the Phase 1 project and every core step of modules 02-ts/01 to 02-ts/08 are green in `yarn progress`.
+
+## What you are building
+
+The same code as Phase 1, made safe. You copy your Phase 1 project, rename every file to `.ts`, and answer every question strict TypeScript asks, without switching the checker off. Two things are new: the API's answer is checked before it is trusted, and a ticket's type knows which fields each status has.
+
+For the user, nothing changes: `yarn tickets` prints the same thing as before. In the final project a React app imports this code, so keep the function names exactly as they are.
+
 ## Definition of Done
 
 For the user, `yarn tickets` behaves exactly as before. Nothing visible changes; the code is now safe to build on.
@@ -16,11 +24,7 @@ Technical:
 
 **Stretch:** the due-date sort from Phase 1 still works (step 9), then template literal types, mapped types, and generic constraints with `extends` wherever they make your code clearer.
 
-**Time:** about 2 to 2.5 hours.
-
-## What you are building
-
-The same code as Phase 1, made safe. In the final project a React app imports it from here, so keep the function names exactly as they are.
+## The files
 
 ```
 src/
@@ -31,6 +35,71 @@ src/
   stats.ts        groupByStatus, computeStats, statusLabel                           (statusLabel is new)
   validation.ts   validateTicket, isTicket                                           (isTicket is new)
   index.ts        re-exports everything, including types.ts
+```
+
+## How to run it
+
+You need two terminals, both in the `bootcamp` folder.
+
+1. Terminal 1, the API. Start it and leave it running: `python server/server.py`.
+2. Terminal 2, once: `yarn copy-project`. It copies `01-js/project/src` into `02-ts/project/src`. It never overwrites: if the folder exists, it stops and tells you.
+3. Terminal 2, as often as you like: `yarn tickets`. As soon as `02-ts/project/src/index.ts` exists, it runs your TypeScript version instead of the Phase 1 one, and says so on the first line.
+
+To see a malformed ticket reported, stop the API with Ctrl+C and start it with `python server/server.py --bad-data`. The last ticket it sends has a number where the priority should be.
+
+## How to test it
+
+- `yarn verify 02-ts/project` checks every step. `yarn verify 02-ts/project/5` checks one.
+- Step 2 runs the TypeScript checker on your `src` folder only. Untouched stretch exercises elsewhere never fail it.
+- Step 8 runs the Phase 1 checks again on your TypeScript code, so you know the migration changed nothing for the user.
+- VS Code shows the same type errors as red underlines while you type. Hover one to read it.
+
+| Step | Level | What `yarn verify 02-ts/project/<step>` checks |
+| --- | --- | --- |
+| 1 | core | Every file in `src/` is `.ts` |
+| 2 | core | `tsc` in strict mode finds no errors in `src/` |
+| 3 | core | No `any`, no `as` casts (`as const` is fine), no `!`, no `@ts-ignore` or `@ts-expect-error` |
+| 4 | core | `STATUSES` and `PRIORITIES` are `as const`, and `Status` and `Priority` are derived from them |
+| 5 | core | `Ticket` is a discriminated union: an open ticket cannot have `closedAt`, an assigned one needs an `assignee` |
+| 6 | core | `statusLabel` gives the labels above, and adding a status breaks the build |
+| 7 | core | `api.ts` asks for `unknown`, `isTicket` is a type guard, and `loadAll` names the malformed ticket |
+| 8 | core | Phase 1 steps 1 to 10 still pass on this version |
+| 9 | stretch | Phase 1 step 11 (due-date sort) still passes |
+
+## What to expect
+
+**Right after `yarn copy-project`**, step 1 lists your `.js` files, and every other core step says "Finish step 1 first":
+
+```
+  ✗  1 core    Every file is .ts
+                Still JavaScript: api.js, constants.js, filters.js, index.js, stats.js, validation.js. Rename each one in 02-ts/project/src to .ts.
+  ✗  2 core    tsc strict: zero errors
+                Finish step 1 first. Not .ts yet: src/constants, src/api, src/filters, src/stats, src/validation, src/index
+```
+
+**After the renames**, VS Code fills with red underlines, and step 2 lists the same errors. That is expected: work through them one file at a time (see How to work below).
+
+**When you are done**, `yarn tickets` looks exactly like Phase 1, with two differences. The first line says it runs TypeScript, and a new section shows `statusLabel`:
+
+```
+Using 02-ts/project/src/index.ts (TypeScript)
+
+Loading tickets and assignees (loadAll)
+  40 tickets, 6 assignees
+...
+One ticket per status (statusLabel)
+  t1     Open
+  t2     Assigned to a1
+  t3     Blocked: Waiting for design
+  t4     Closed on 2026-07-28
+```
+
+With the API started with `--bad-data`, every good ticket still loads, and the bad one is named:
+
+```
+Loading tickets and assignees (loadAll)
+  40 tickets, 6 assignees
+  Warning: Skipped 1 malformed ticket(s): t-bad
 ```
 
 ## How to work
@@ -49,8 +118,7 @@ src/
       - Write a helper that both `fetchTickets` and `loadAll` use, which returns the valid tickets and the ids of the others: `{ tickets: Ticket[]; invalidIds: string[] }`.
       - In `loadAll`, add a warning that names them, for example `Skipped 1 malformed ticket(s): t-bad`.
       - The error in a `catch` or a rejected promise is `unknown`, and `as` is not allowed. Narrow it: `axios.isAxiosError(error)` tells you it is an axios error (then `error.response?.status` is typed), and `error instanceof Error` gives you `error.message` for anything else.
-4. Run `yarn tickets` after each file. It now runs your TypeScript version (it says so on the first line), so you see at once if something stopped working.
-5. Run `yarn verify 02-ts/project` to check everything, or `yarn verify 02-ts/project/5` for one step.
+4. After each file, run `yarn tickets` to see that nothing stopped working, and `yarn verify 02-ts/project` to see which steps pass.
 
 Keep the `Ticket` union on one line that starts with `export type Ticket =`. Step 6 adds a fifth status to a copy of that line to prove your `switch` notices.
 
@@ -62,8 +130,6 @@ Keep the `Ticket` union on one line that starts with `export type Ticket =`. Ste
 | assigned to `a1` | `Assigned to a1` |
 | blocked, reason "Waiting for design" | `Blocked: Waiting for design` |
 | closed at `2026-10-28T12:00:00Z` | `Closed on 2026-10-28` |
-
-To see a malformed ticket reported, stop the server (Ctrl+C) and start it with `python server/server.py --bad-data`. `yarn tickets` should still show every good ticket, plus a warning that names the bad one.
 
 ## What the final project imports
 
@@ -84,20 +150,6 @@ The final project's React app imports these from your `src/index.ts`. Keep these
 
 Name the types of the filter, sort and stats objects as you like: you import them by your own names when you migrate the app.
 
-## Steps
-
-| Step | Level | What `yarn verify 02-ts/project/<step>` checks |
-| --- | --- | --- |
-| 1 | core | Every file in `src/` is `.ts` |
-| 2 | core | `tsc` in strict mode finds no errors in `src/` |
-| 3 | core | No `any`, no `as` casts (`as const` is fine), no `!`, no `@ts-ignore` or `@ts-expect-error` |
-| 4 | core | `STATUSES` and `PRIORITIES` are `as const`, and `Status` and `Priority` are derived from them |
-| 5 | core | `Ticket` is a discriminated union: an open ticket cannot have `closedAt`, an assigned one needs an `assignee` |
-| 6 | core | `statusLabel` gives the labels above, and adding a status breaks the build |
-| 7 | core | `api.ts` asks for `unknown`, `isTicket` is a type guard, and `loadAll` names the malformed ticket |
-| 8 | core | Phase 1 steps 1 to 10 still pass on this version |
-| 9 | stretch | Phase 1 step 11 (due-date sort) still passes |
-
 ## When you are done
 
-Run `yarn progress`. If every Phase 2 core step is green, Phase 2 is done. Next is Phase 3's first lesson, and the final project imports this `src` folder.
+Run `yarn progress`. When every Phase 2 core step is green, Phase 2 is done. Next is Phase 3's first lesson. The final project imports this `src` folder.

@@ -12,7 +12,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['ESLint checks two of the three for you']} />
 
-      <Slide title="The three rules" eyebrow="Overview" steps={3}>
+      <Slide title="The three rules" lead={<>React assumes your components follow three rules. Break one and the bugs show up somewhere else, later.</>} eyebrow="Overview" steps={3}>
         <ul>
           <li>
             <strong>1. Rendering is pure.</strong> Same props and state, same JSX. A render changes nothing outside itself.
@@ -42,7 +42,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="Rule 1: rendering is pure" eyebrow="Pure render">
+      <Slide title="Rule 1: rendering is pure" lead={<>A render only works out what to show. It reads props and state, and changes nothing else.</>} eyebrow="Pure render">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Impure</div>
@@ -80,7 +80,7 @@ function Rows({ tickets }: Props) {
         </div>
       </Slide>
 
-      <Slide title="Rule 2: React compares state by identity" eyebrow="Never mutate state">
+      <Slide title="Rule 2: React compares state by identity" lead={<>React decides whether to render again by asking: is this the same object as before? A changed old object looks the same.</>} eyebrow="Never mutate state">
         <Code
           lang="tsx"
           code={`
@@ -118,7 +118,7 @@ function assign() {
         }
       />
 
-      <Slide title="A new value for every change" eyebrow="Cheat sheet">
+      <Slide title="A new value for every change" lead={<>Every everyday change has a version that returns a new array or object. Use those with state and props.</>} eyebrow="Cheat sheet">
         <table className="k-table">
           <thead>
             <tr>
@@ -161,7 +161,7 @@ function assign() {
         </div>
       </Slide>
 
-      <Slide title="Props are read-only too" eyebrow="Never mutate props">
+      <Slide title="Props are read-only too" lead={<>Props belong to the parent. Changing them, even by sorting, changes the parent's data behind its back.</>} eyebrow="Never mutate props">
         <Code
           lang="tsx"
           code={`
@@ -181,7 +181,7 @@ function SortedTitles({ tickets }: { tickets: Ticket[] }) {
         </ul>
       </Slide>
 
-      <Slide title="Rule 3: hooks are matched by order" eyebrow="Rules of Hooks">
+      <Slide title="Rule 3: hooks are matched by order" lead={<>React stores each hook's state by its position in the component, so every render must call the same hooks in the same order.</>} eyebrow="Rules of Hooks">
         <div className="k-cols" style={{ height: 'auto' }}>
           <Code
             lang="tsx"
@@ -210,7 +210,7 @@ function TicketDetails({ ticket }: Props) {
         </div>
       </Slide>
 
-      <Slide title="Effects list everything they read" eyebrow="Dependencies">
+      <Slide title="Effects list everything they read" lead={<>An effect runs after a render. Its dependency array lists every value it reads, so React knows when to run it again.</>} eyebrow="Dependencies">
         <Code
           lang="tsx"
           code={`
@@ -228,7 +228,7 @@ useEffect(() => {
         </div>
       </Slide>
 
-      <Slide title="ESLint checks rule 3 and dependencies" eyebrow="Tooling">
+      <Slide title="ESLint checks rule 3 and dependencies" lead={<>Two ESLint rules catch the hooks mistakes for you. The other two rules are your job.</>} eyebrow="Tooling">
         <table className="k-table">
           <thead>
             <tr>

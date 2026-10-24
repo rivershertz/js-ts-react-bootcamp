@@ -38,7 +38,7 @@ export default function Lesson(props: LessonProps) {
       <TitleSlide chips={['Coming from Python: type hints plus mypy, always on']} />
 
       <CompareSlide
-        title="Type hints, side by side"
+        title="Type hints, side by side" lead={<>TypeScript is JavaScript with type hints, written almost exactly like Python's.</>}
         python={`def days_open(created_at: str,\n              now: datetime) -> int:\n    ...\n\ntitles: list[str] = []\ndue: str | None = None`}
         js={`function daysOpen(createdAt: string,\n                   now: Date): number {\n  ...\n}\nconst titles: string[] = [];\nlet due: string | null = null;`}
         jsLang="ts"
@@ -50,7 +50,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="What it catches before you run anything" eyebrow="Why bother">
+      <Slide title="What it catches before you run anything" lead={<>These three mistakes all run until a user hits them. TypeScript underlines them while you type.</>} eyebrow="Why bother">
         <Code
           lang="ts"
           small
@@ -62,7 +62,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Types disappear when the code runs" eyebrow="Mental model">
+      <Slide title="Types disappear when the code runs" lead={<>TypeScript is checked, then the types are deleted. The browser only ever runs plain JavaScript.</>} eyebrow="Mental model">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">What you write (.ts)</div>
@@ -80,7 +80,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <SequenceSlide
-        title="Who checks, who runs"
+        title="Who checks, who runs" lead={<>Press → to follow one file from your editor to the browser. Two separate tools touch it, and only one looks at the types.</>}
         eyebrow="Walkthrough · press → to step"
         actors={[
           { id: 'you', label: 'You', detail: 'VS Code' },
@@ -104,7 +104,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="tsc and Vite have different jobs" eyebrow="Reference">
+      <Slide title="tsc and Vite have different jobs" lead={<>One tool checks types and runs nothing. The other runs your code and ignores types.</>} eyebrow="Reference">
         <table className="k-table">
           <thead>
             <tr>
@@ -141,7 +141,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="You write fewer types than you think" eyebrow="Inference" steps={1}>
+      <Slide title="You write fewer types than you think" lead={<>TypeScript works out most types from the values. You only write them where it cannot guess.</>} eyebrow="Inference" steps={1}>
         <Code
           lang="ts"
           code={`const count = 3;                         // number\nconst titles = tickets.map((t) => t.title); // string[]\n\nfunction isUrgent(t: Ticket) {           // parameters: always typed\n  return t.priority === 'urgent';        // result: boolean, inferred\n}`}
@@ -154,7 +154,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="Strict mode is on" eyebrow="The settings you work with">
+      <Slide title="Strict mode is on" lead={<>Strict mode turns on the checks that catch the most bugs. Every exercise and the team's apps use it.</>} eyebrow="The settings you work with">
         <ul>
           <li>
             <strong>No implicit any:</strong> a parameter without a type is an error, not a silent &ldquo;anything&rdquo;.

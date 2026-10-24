@@ -22,7 +22,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Measure first, then fix', "Three of the final project's checks are about this"]} />
 
-      <Slide title="When is a React app slow?" eyebrow="The usual causes">
+      <Slide title="When is a React app slow?" lead={<>Most React apps are fast enough without any tuning. When one is not, the cause is nearly always one of these three.</>} eyebrow="The usual causes">
         <ul>
           <li>
             <strong>Slow work in a render</strong> that runs again when its inputs did not change: filtering or sorting
@@ -41,7 +41,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="Measure: count the renders" eyebrow="Measuring">
+      <Slide title="Measure: count the renders" lead={<>Before you change anything, find out how many renders one action really costs. The simplest tool is a counter in the console.</>} eyebrow="Measuring">
         <Code
           lang="tsx"
           code={`
@@ -59,7 +59,7 @@ function TicketRow({ ticket }: Props) {
         </ul>
       </Slide>
 
-      <Slide title="Measure: the Performance tab" eyebrow="Browser DevTools">
+      <Slide title="Measure: the Performance tab" lead={<>When the app feels slow, the browser can record exactly where the time went. Use it to find the slow function, not to guess.</>} eyebrow="Browser DevTools">
         <ol>
           <li>F12, then the Performance tab. Click record (the round button).</li>
           <li>Do the slow thing in the page, then stop recording.</li>
@@ -74,7 +74,7 @@ function TicketRow({ ticket }: Props) {
         </div>
       </Slide>
 
-      <Slide title="useMemo: remember a result" eyebrow="useMemo">
+      <Slide title="useMemo: remember a result" lead={<>useMemo keeps the result of slow work between renders, and does the work again only when its inputs change.</>} eyebrow="useMemo">
         <Code
           lang="tsx"
           code={`
@@ -108,7 +108,7 @@ const rows = useMemo(
         }
       />
 
-      <Slide title="memo: skip a render when props are the same" eyebrow="memo">
+      <Slide title="memo: skip a render when props are the same" lead={<>memo wraps a component so it skips rendering when its parent renders but its own props did not change.</>} eyebrow="memo">
         <Code
           lang="tsx"
           code={`
@@ -124,7 +124,7 @@ const TicketRow = memo(function TicketRow({ ticket, selected, onSelect }: RowPro
       </Slide>
 
       <RenderSlide
-        title="Why memo alone often does nothing"
+        title="Why memo alone often does nothing" lead={<>memo compares props by identity. A function created during render is a new one every time, so the comparison fails. useCallback keeps the same function.</>}
         eyebrow="useCallback · press → to step"
         code={`
 function TicketPicker({ tickets }: Props) {
@@ -162,7 +162,7 @@ function TicketPicker({ tickets }: Props) {
         ]}
       />
 
-      <Slide title="When not to memoize" eyebrow="It is not free">
+      <Slide title="When not to memoize" lead={<>Memoizing costs memory and a comparison on every render. In these cases it costs more than it saves.</>} eyebrow="It is not free">
         <table className="k-table">
           <thead>
             <tr>

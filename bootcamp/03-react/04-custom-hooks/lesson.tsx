@@ -12,7 +12,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['You will use the hook from this module in the final project']} />
 
-      <Slide title="The same logic, twice" eyebrow="Why">
+      <Slide title="The same logic, twice" lead={<>Two search boxes both wait until the user stops typing. The waiting logic is copied, and it uses hooks.</>} eyebrow="Why">
         <Code
           lang="tsx"
           code={`
@@ -32,7 +32,7 @@ function TicketSearch() {
         </div>
       </Slide>
 
-      <Slide title="A custom hook is a function that calls hooks" eyebrow="Extract">
+      <Slide title="A custom hook is a function that calls hooks" lead={<>Move the hooks into a function whose name starts with use. Each component calls it in one line.</>} eyebrow="Extract">
         <Code
           lang="tsx"
           code={`
@@ -73,7 +73,7 @@ function Row() {
       />
 
       <RenderSlide
-        title="Debouncing, step by step"
+        title="Debouncing, step by step" lead={<>Debouncing means waiting until the user pauses before acting on the text. Watch the log: every key press cancels the last timer.</>}
         eyebrow="useDebouncedValue · press → to step"
         tree={{ name: 'TicketSearch', children: [{ name: 'TicketTable' }] }}
         steps={[
@@ -84,7 +84,7 @@ function Row() {
         ]}
       />
 
-      <Slide title="What to return" eyebrow="Hook design">
+      <Slide title="What to return" lead={<>A hook can return whatever its callers need. Three shapes cover almost every case.</>} eyebrow="Hook design">
         <table className="k-table">
           <thead>
             <tr>
@@ -117,7 +117,7 @@ function Row() {
         </div>
       </Slide>
 
-      <Slide title="Stretch: refs remember without rendering" eyebrow="useRef">
+      <Slide title="Stretch: refs remember without rendering" lead={<>useRef keeps a value between renders like state does, but changing it does not render the component again.</>} eyebrow="useRef">
         <Code
           lang="tsx"
           code={`

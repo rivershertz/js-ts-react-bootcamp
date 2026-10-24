@@ -24,7 +24,7 @@ export default function Lesson(props: LessonProps) {
       <TitleSlide chips={['Coming from Python: Union and Literal, plus isinstance']} />
 
       <CompareSlide
-        title="Unions and literals"
+        title="Unions and literals" lead={<>A union means "one of these types". With literal values, it becomes a closed list, like Literal in Python.</>}
         python={`Priority = Literal[\n    "low", "medium", "high", "urgent"\n]\n\ndef label(due: str | None) -> str:\n    ...`}
         js={`type Priority =\n  'low' | 'medium' | 'high' | 'urgent';\n\n\nfunction label(due: string | null) {\n  ...\n}`}
         jsLang="ts"
@@ -36,7 +36,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="On a union, only what all members share" eyebrow="Mental model" steps={1}>
+      <Slide title="On a union, only what all members share" lead={<>TypeScript only lets you use what every member of a union has. A check in your code tells it which member you have.</>} eyebrow="Mental model" steps={1}>
         <Code
           lang="ts"
           code={`function label(due: string | null) {\n  return due.slice(0, 4);   // error: 'due' is possibly 'null'\n}`}
@@ -53,7 +53,7 @@ export default function Lesson(props: LessonProps) {
         </Reveal>
       </Slide>
 
-      <Slide title="Four ways to narrow" eyebrow="Reference">
+      <Slide title="Four ways to narrow" lead={<>Each of these checks tells TypeScript which member of a union you have inside the branch.</>} eyebrow="Reference">
         <Code
           lang="ts"
           small
@@ -62,7 +62,7 @@ export default function Lesson(props: LessonProps) {
         <div className="k-note">Hover the variable inside each branch in VS Code: its type changes from line to line.</div>
       </Slide>
 
-      <Slide title="unknown, any and as" eyebrow="Three escape hatches, one safe" steps={2}>
+      <Slide title="unknown, any and as" lead={<>Three ways to say "I do not know the type". Only one of them still protects you.</>} eyebrow="Three escape hatches, one safe" steps={2}>
         <Code lang="ts" small code={`function message(error: unknown) {\n  return error.message;   // error: 'error' is of type 'unknown'\n}`} />
         <Reveal at={1}>
           <Code lang="ts" small code={`function message(error: any) {\n  return error.message;   // compiles, crashes when someone throws a string\n}`} />
@@ -77,7 +77,7 @@ export default function Lesson(props: LessonProps) {
 
       <PredictSlide
         lang="ts"
-        title="Does this compile?"
+        title="Does this compile?" lead={<>A switch over a union of four literals, with three cases. What does TypeScript say?</>}
         question="Is there an error, and where? Decide before you press →"
         code={`function rank(p: Priority): number {\n  switch (p) {\n    case 'low': return 1;\n    case 'medium': return 2;\n    case 'high': return 3;\n  }\n}`}
         answer="Yes: Function lacks ending return statement"
@@ -89,7 +89,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Narrowing with find" eyebrow="A common pattern">
+      <Slide title="Narrowing with find" lead={<>When you need to turn a string into a Priority, look it up in the list of priorities instead of forcing it with as.</>} eyebrow="A common pattern">
         <Code
           lang="ts"
           code={`const PRIORITIES: readonly Priority[] = ['low', 'medium', 'high', 'urgent'];\n\nfunction parsePriority(text: string): Priority | undefined {\n  const wanted = text.trim().toLowerCase();\n  return PRIORITIES.find((p) => p === wanted);\n}`}

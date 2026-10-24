@@ -6,7 +6,7 @@ It is self-paced. You work through lessons and exercises on your own machine, an
 
 ## First: setup (about 30 minutes)
 
-Follow [`00-setup/README.md`](00-setup/README.md). It gets the packages installed through Artifactory, starts the ticket API, and ends with `yarn verify 00-setup` all green. Come back here when it is.
+Follow [`00-setup/README.md`](00-setup/README.md). It gets the packages installed through Artifactory, starts the ticket API, and ends with `yarn verify 00-setup` all green. Its last step opens the lessons: watch **00-start**, "Making the most of this bootcamp", first. Come back here when you have.
 
 ## The path
 

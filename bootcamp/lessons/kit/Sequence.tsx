@@ -9,12 +9,12 @@ export type Message = { from: string; to: string; label: string; note: ReactNode
  * A sequence diagram that grows one message per build step:
  * who talks to whom, in order (browser → Vite → Python and back).
  */
-export function SequenceSlide({ title, eyebrow, actors, messages }: { title: ReactNode; eyebrow?: ReactNode; actors: Actor[]; messages: Message[] }) {
+export function SequenceSlide({ title, eyebrow, lead, actors, messages }: { title: ReactNode; eyebrow?: ReactNode; lead?: ReactNode; actors: Actor[]; messages: Message[] }) {
   const step = useStep();
   const x = (id: string) => ((actors.findIndex((a) => a.id === id) + 0.5) / actors.length) * 100;
   const shown = messages.slice(0, step + 1);
   return (
-    <Slide title={title} eyebrow={eyebrow}>
+    <Slide title={title} eyebrow={eyebrow} lead={lead}>
       <div className="k-seq">
         <div className="k-seq-actors" style={{ gridTemplateColumns: `repeat(${actors.length}, 1fr)` }}>
           {actors.map((a) => (

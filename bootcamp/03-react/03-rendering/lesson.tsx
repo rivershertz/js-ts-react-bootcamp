@@ -22,7 +22,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['The final project has a bug for most slides in this deck']} />
 
-      <Slide title="What makes a component render again" eyebrow="Triggers">
+      <Slide title="What makes a component render again" lead={<>A render is React calling your component function again to see what changed. Only a few things cause one.</>} eyebrow="Triggers">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Renders again when</div>
@@ -67,7 +67,7 @@ function addThree() {
         }
       />
 
-      <Slide title="State is a snapshot; updates are batched" eyebrow="One event, one render">
+      <Slide title="State is a snapshot; updates are batched" lead={<>Inside one render, state never changes. Setting it asks for the next render, and React groups the requests.</>} eyebrow="One event, one render">
         <Code
           lang="tsx"
           code={`
@@ -88,7 +88,7 @@ function save() {
       </Slide>
 
       <RenderSlide
-        title="Lifting state up"
+        title="Lifting state up" lead={<>When two components need the same value, it lives in their closest common parent.</>}
         eyebrow="Where state lives · press → to step"
         code={`
 function TicketBoard({ tickets }: Props) {
@@ -98,12 +98,10 @@ function TicketBoard({ tickets }: Props) {
     <>
       <StatusTabs
         selected={status}
-        onSelect={setStatus}
-      />
+        onSelect={setStatus} />
       <StatusTicketList
         tickets={tickets}
-        status={status}
-      />
+        status={status} />
     </>
   );
 }`}
@@ -112,11 +110,11 @@ function TicketBoard({ tickets }: Props) {
           { note: 'Two siblings need the same value: the tabs show it, the list filters by it. Neither can read the other’s state.', rendered: ['TicketBoard', 'StatusTabs', 'StatusTicketList'], line: 3, log: ['render TicketBoard', 'render both children'] },
           { note: 'So the state moves up to their closest common parent, which passes it down as props.', rendered: [], line: 7, log: ['status = "open"'] },
           { note: 'A click in StatusTabs calls onSelect, which is setStatus from the parent.', rendered: [], line: 8, log: ['click "closed"', 'setStatus("closed")'] },
-          { note: 'The parent renders with the new status, and both children render with it. They can never disagree.', rendered: ['TicketBoard', 'StatusTabs', 'StatusTicketList'], line: 12, log: ['render TicketBoard', 'render StatusTabs (selected = closed)', 'render StatusTicketList (status = closed)'] },
+          { note: 'The parent renders with the new status, and both children render with it. They can never disagree.', rendered: ['TicketBoard', 'StatusTabs', 'StatusTicketList'], line: 11, log: ['render TicketBoard', 'render both, with closed'] },
         ]}
       />
 
-      <Slide title="State belongs to a position in the tree" eyebrow="Keys reset state">
+      <Slide title="State belongs to a position in the tree" lead={<>React keeps state for a component at its place in the tree. The key decides whether it is the same component as before.</>} eyebrow="Keys reset state">
         <Code
           lang="tsx"
           code={`
@@ -136,7 +134,7 @@ function TicketBoard({ tickets }: Props) {
       </Slide>
 
       <RenderSlide
-        title="An effect runs after the screen updates"
+        title="An effect runs after the screen updates" lead={<>An effect is code React runs after a render has reached the screen. Press → to follow one from start to cleanup.</>}
         eyebrow="Effects · press → to step"
         code={`
 function OpenTimer() {
@@ -175,7 +173,7 @@ useEffect(() => {
         }
       />
 
-      <Slide title="Every effect that starts something stops it" eyebrow="Cleanup patterns">
+      <Slide title="Every effect that starts something stops it" lead={<>If an effect starts something, it returns a function that stops it. React calls that function for you.</>} eyebrow="Cleanup patterns">
         <table className="k-table">
           <thead>
             <tr>
@@ -208,7 +206,7 @@ useEffect(() => {
         </div>
       </Slide>
 
-      <Slide title="You might not need an effect" eyebrow="Derived values">
+      <Slide title="You might not need an effect" lead={<>Effects are for talking to things outside React. Many effects in real code should be a plain calculation instead.</>} eyebrow="Derived values">
         <div className="k-cols" style={{ height: 'auto' }}>
           <div>
             <div className="k-col-label">Effect: two renders, one of them wrong</div>
@@ -239,7 +237,7 @@ const count = tickets.filter(isOpen).length;`}
         </ul>
       </Slide>
 
-      <Slide title="Stretch: useReducer" eyebrow="When state has rules">
+      <Slide title="Stretch: useReducer" lead={<>When state changes by rules, put the rules in one function, a reducer, and send it actions.</>} eyebrow="When state has rules">
         <Code
           lang="tsx"
           code={`

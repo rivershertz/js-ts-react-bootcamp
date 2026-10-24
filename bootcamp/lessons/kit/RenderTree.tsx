@@ -29,7 +29,7 @@ function Node({ node, rendered }: { node: TreeNode; rendered: string[] }) {
 }
 
 /** Which components re-render, and what React does, one build step at a time. */
-export function RenderSlide({ title, eyebrow, code, tree, steps }: { title: ReactNode; eyebrow?: ReactNode; code?: string; tree: TreeNode; steps: RenderStep[] }) {
+export function RenderSlide({ title, eyebrow, lead, code, tree, steps }: { title: ReactNode; eyebrow?: ReactNode; lead?: ReactNode; code?: string; tree: TreeNode; steps: RenderStep[] }) {
   const i = useStep();
   const now = steps[Math.min(i, steps.length - 1)];
   // Keep the newest lines; older ones scroll away like a terminal.
@@ -38,7 +38,7 @@ export function RenderSlide({ title, eyebrow, code, tree, steps }: { title: Reac
     .flatMap((s) => s.log ?? [])
     .slice(-9);
   return (
-    <Slide title={title} eyebrow={eyebrow}>
+    <Slide title={title} eyebrow={eyebrow} lead={lead}>
       <div className="k-walk" style={code ? undefined : { gridTemplateColumns: '1fr' }}>
         {code ? <Code code={code} active={now.line} small /> : null}
         <div className="k-walk-right" style={{ gridTemplateRows: '1fr auto' }}>

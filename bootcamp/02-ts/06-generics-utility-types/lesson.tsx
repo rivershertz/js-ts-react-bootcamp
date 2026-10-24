@@ -23,7 +23,7 @@ export default function Lesson(props: LessonProps) {
     <Deck meta={meta} {...props}>
       <TitleSlide chips={['Coming from Python: TypeVar and Generic, with less ceremony']} />
 
-      <Slide title="unknown loses the type" eyebrow="The problem">
+      <Slide title="unknown loses the type" lead={<>Some functions work on any kind of list. Typing them with unknown makes them safe but useless to the caller.</>} eyebrow="The problem">
         <Code
           lang="ts"
           code={`function first(items: readonly unknown[]): unknown {\n  return items[0];\n}\n\nconst t = first(tickets);\nt.title;   // error: 't' is of type 'unknown'`}
@@ -34,7 +34,7 @@ export default function Lesson(props: LessonProps) {
         </div>
       </Slide>
 
-      <Slide title="A type parameter" eyebrow="Mental model" steps={1}>
+      <Slide title="A type parameter" lead={<>A generic function takes a type as a parameter, like a value. Whatever type goes in comes back out.</>} eyebrow="Mental model" steps={1}>
         <Code
           lang="ts"
           code={`function first<T>(items: readonly T[]): T | undefined {\n  return items[0];\n}\n\nfirst(tickets);   // T = Ticket  → Ticket | undefined\nfirst([1, 2]);    // T = number  → number | undefined`}
@@ -49,7 +49,7 @@ export default function Lesson(props: LessonProps) {
       </Slide>
 
       <CompareSlide
-        title="Generics, side by side"
+        title="Generics, side by side" lead={<>Python spells this with TypeVar. TypeScript puts the type parameter in angle brackets after the function name.</>}
         python={`T = TypeVar("T")\n\ndef first(items: list[T]) -> T | None:\n    return items[0] if items else None`}
         js={`function first<T>(\n  items: readonly T[],\n): T | undefined {\n  return items[0];\n}`}
         jsLang="ts"
@@ -61,7 +61,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Utility types" eyebrow="Reference">
+      <Slide title="Utility types" lead={<>Build new types from Ticket instead of writing them out again. They stay in step with Ticket by themselves.</>} eyebrow="Reference">
         <Code
           lang="ts"
           small
@@ -75,7 +75,7 @@ export default function Lesson(props: LessonProps) {
 
       <PredictSlide
         lang="ts"
-        title="Types do not touch values"
+        title="Types do not touch values" lead={<>Pick looks like it removes fields. Predict what this really prints.</>}
         code={`function summarize(t: Ticket): Pick<Ticket, 'id' | 'title'> {\n  return t;\n}\n\nconsole.log(Object.keys(summarize(ticket)).length);`}
         answer="7: every field of the ticket"
         explanation={
@@ -86,7 +86,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="Constraints and generic unions" eyebrow="Two more tools">
+      <Slide title="Constraints and generic unions" lead={<>extends limits what a type parameter may be. A generic type can be a union too.</>} eyebrow="Two more tools">
         <Code
           lang="ts"
           small
