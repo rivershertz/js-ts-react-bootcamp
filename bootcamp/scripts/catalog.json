@@ -830,44 +830,86 @@
     {
       "id": "final-project",
       "dir": "final-project",
-      "title": "Final project (POC slice)",
+      "title": "Final project: migrate, fix, extend the ticket app",
       "check": "scripts/checks/final/final.check.tsx",
       "steps": [
         {
           "n": 1,
           "level": "core",
           "title": "Every file in src is .ts or .tsx",
-          "hint": "Rename one file at a time and fix the errors tsc reports before moving on."
+          "hint": "Rename one file at a time and fix what tsc reports before the next. Start with api/, then components/, then pages/."
         },
         {
           "n": 2,
           "level": "core",
-          "title": "tsc --noEmit passes with strict: true",
-          "hint": "Run `yarn tsc -p final-project` to see the errors with file and line."
+          "title": "tsc --noEmit passes with strict: true, no any",
+          "hint": "Run `yarn tsc -p final-project` to see each error with its file and line. Types for the ticket data come from @tickets/logic."
         },
         {
           "n": 3,
           "level": "core",
           "title": "ESLint passes with the React Hooks rules",
-          "hint": "Run `yarn eslint final-project` to see each rule that fails."
+          "hint": "Run `yarn eslint final-project` to see each rule that fails. Fix the code, never the rule: disabling comments are ignored here."
         },
         {
           "n": 4,
           "level": "core",
           "title": "Bug: sorting must not change the cached tickets",
-          "hint": "Rules of React: never mutate data you did not create. Which array methods change the array in place?"
+          "hint": "Rules of React (module 03-react/02): never change data you did not create. Which array methods change the array they are called on?"
         },
         {
           "n": 5,
           "level": "core",
-          "title": "Performance: search filters only after typing stops",
-          "hint": "Your useDebouncedValue hook from 03-react/04, plus useMemo so the filtered list is not rebuilt on every render."
+          "title": "Bug: New ticket, then an existing ticket, without a crash",
+          "hint": "Read the error out loud, then module 03-react/02 on the Rules of Hooks. Does every render call the same hooks in the same order?"
         },
         {
           "n": 6,
           "level": "core",
+          "title": "Bug: no keyboard listener left behind",
+          "hint": "Effects and cleanup (module 03-react/03): what undoes the addEventListener when the component goes away?"
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "Bug: Previous / Next shows the right ticket in the form",
+          "hint": "Module 03-react/03: what does an effect with an empty dependency list do when only the URL changes? A key is another way to start fresh."
+        },
+        {
+          "n": 8,
+          "level": "core",
+          "title": "Bug: the table shows a new sort in the same render",
+          "hint": "\"You might not need an effect\" (module 03-react/03): is any state just a copy of a prop?"
+        },
+        {
+          "n": 9,
+          "level": "core",
+          "title": "Bug: choosing a status filter updates the table",
+          "hint": "Module 03-react/02: React compares the old and new state with Object.is. What do you pass to the setter?"
+        },
+        {
+          "n": 10,
+          "level": "core",
+          "title": "Performance: search filters only after typing stops",
+          "hint": "Your useDebouncedValue hook from module 03-react/04, in src/hooks/useDebouncedValue.ts."
+        },
+        {
+          "n": 11,
+          "level": "core",
+          "title": "Performance: the list is not filtered again on every render",
+          "hint": "Module 03-react/07: useMemo, with the debounced search in its dependencies."
+        },
+        {
+          "n": 12,
+          "level": "core",
+          "title": "Performance: the stats panel skips renders while typing",
+          "hint": "StatsPanel is wrapped in memo (module 03-react/07). memo compares every prop: which ones are new on every render?"
+        },
+        {
+          "n": 13,
+          "level": "core",
           "title": "Feature: assignee filter kept in the URL",
-          "hint": "useSearchParams from react-router-dom reads and writes ?assignee=a2."
+          "hint": "Module 03-react/08: useSearchParams reads and writes ?assignee=a3. Add an Assignee select to the filters."
         }
       ]
     }

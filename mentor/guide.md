@@ -62,12 +62,19 @@ Filled in per module as the material is written.
 
 ## The final project's planted problems
 
-Never point to these directly; each check names the symptom.
+Never point to these directly; each check names the symptom. The solution is in `solutions/final-project/src` (it needs `solutions/02-ts/project/src` as the Phase 2 logic).
 
-| # | Kind | File | Symptom | How to unblock |
-| --- | --- | --- | --- | --- |
-| 1 | Rules of React | `src/pages/TicketListPage` | Sorting reorders the React Query cache | "Which array methods change the array they are called on?" |
-| 2 | Performance | `src/pages/TicketListPage` | Rows rebuilt on every key press | "What should the filter depend on: what is typed, or what was typed 300 ms ago?" |
-| 3 | Lint (Rules of Hooks) | `src/pages/TicketListPage` | `exhaustive-deps` error on the title effect | "What does the effect read? Is it in the dependency array?" |
+| Step | Kind | Where | What is planted | What the junior sees | How to unblock |
+| --- | --- | --- | --- | --- | --- |
+| 4 | Rules of React | `pages/TicketListPage` | `tickets.sort(newestFirst)` on the React Query data when no column is sorted | "The tickets in the React Query cache changed order" | "Which array methods change the array they are called on? Whose array is `data`?" |
+| 5 | Rules of Hooks | `pages/TicketFormPage` | `useTicket` and an effect called after `if (!id) return` | Crash after Create ticket: "Rendered more hooks than during the previous render" (ESLint also flags it) | "Is `TicketFormPage` a new component on `/tickets/t1`, or the same one? Does every render call the same hooks?" |
+| 6 | Effects | `components/TicketFilters` | The `/` shortcut's `keydown` listener has no cleanup | "1 keydown listener(s) are still attached" | "When the list goes away, what removes the listener?" |
+| 7 | Effects | `pages/TicketFormPage` | Pre-fill effect with `[]` deps, so Previous / Next keeps the first ticket in the form (ESLint flags the deps) | The form shows t1's title on t2 | "When does an effect with `[]` run? Is the page mounted again when only `:id` changes?" Fixes: correct deps, or a `key` per ticket |
+| 8 | You might not need an effect | `components/TicketTable` | Rows copied into state and synced in an effect | "The table rendered 1 time(s) with the rows still in the old order" | "Is `rows` anything more than the `tickets` prop?" |
+| 9 | State identity | `components/TicketFilters` | `filters[field] = value; onFiltersChange(filters)` | The status filter does nothing (until something else re-renders) | "How does React decide state changed? Is this a new object?" |
+| 10 | Performance | `pages/TicketListPage` | The search filters on every key press | "filtered for 5 different search texts" | "What should the filter depend on: what is typed, or what was typed 300 ms ago?" |
+| 11 | Performance | `pages/TicketListPage` | Filtering and sorting run on every render | "filtered or sorted again 5 times" | "What does the list depend on? Which hook skips work when those have not changed?" Needs step 10 too |
+| 12 | Performance | `pages/TicketListPage` | `memo(StatsPanel)` gets `computeStats(...)` and `() => refetch()` inline | "re-rendered the stats panel (20 Statistic renders)" | "memo compares each prop with the last one. Which are new objects on every render?" |
+| 13 | Feature | `components/TicketFilters`, `pages/TicketListPage` | Not there yet | "the table shows 10 rows" for `?assignee=a3` | "Where does the router keep the part after `?`?" (`useSearchParams`) |
 
-The full project adds five more Rules of React bugs and two more performance problems; this table grows with them.
+Steps 1 to 3 are the TypeScript migration, `tsc` and ESLint. ESLint finds steps 5 and 7 on its own; the others it cannot see, which is why they have checks.

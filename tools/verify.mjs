@@ -4,7 +4,8 @@
 //   node tools/verify.mjs 01-js/03   one module
 //
 // 1. Starters: every core step must FAIL on the untouched bootcamp/ files
-//    (a check that passes on the starter teaches nothing).
+//    (a check that passes on the starter teaches nothing). The final project is also run with
+//    Phase 2 solved, since it imports that logic.
 // 2. Solutions: mentor/solutions/ is copied over a scratch copy of bootcamp/
 //    and every step, core and stretch, must PASS.
 // 3. Content: no internet links under bootcamp/, relative links resolve, the solved copy
@@ -58,6 +59,31 @@ for (const module of modules) {
       problems.push(`${module.id} step ${s.n} fails on the solution:\n      ${why.split('\n').join('\n      ')}`);
     }
     row.push(onSolution?.state === 'pass' && (s.level === 'stretch' || module.kind === 'smoke' || onStarter !== 'pass') ? styleText('green', '✓') : styleText('red', '✗'));
+  }
+  console.log(row.join(' '));
+}
+
+// The final project imports the junior's Phase 2 logic, which the untouched bootcamp does not have yet.
+// So also run its checks on the starter app with Phase 2 solved: each planted problem must be caught on its own.
+const final = modules.find((m) => m.id === 'final-project');
+if (final) {
+  const withPhase2 = path.join(repo, '.verify-tmp', 'final-starter');
+  rmSync(withPhase2, { recursive: true, force: true });
+  cpSync(bootcamp, withPhase2, {
+    recursive: true,
+    filter: (src) => !src.startsWith(path.join(bootcamp, 'node_modules')) && !src.endsWith('.progress.json'),
+  });
+  symlinkSync(path.join(bootcamp, 'node_modules'), path.join(withPhase2, 'node_modules'), 'junction');
+  rmSync(path.join(withPhase2, '02-ts/project/src'), { recursive: true, force: true });
+  cpSync(path.join(solutions, '02-ts/project/src'), path.join(withPhase2, '02-ts/project/src'), { recursive: true });
+  process.stdout.write(`${'  with Phase 2'.padEnd(16)} `);
+  const results = runChecks({ root: withPhase2, module: final });
+  const row = [];
+  for (const s of final.steps) {
+    const r = results.find((x) => x.n === s.n);
+    if (s.level === 'core' && r?.state === 'pass') problems.push(`final-project step ${s.n} passes on the starter app (with Phase 2 solved)`);
+    if (r?.message?.includes('02-ts/project/src/index.ts is missing')) problems.push(`final-project step ${s.n} could not find the Phase 2 logic`);
+    row.push(r?.state === 'pass' ? styleText('red', '✗') : styleText('green', '✓'));
   }
   console.log(row.join(' '));
 }

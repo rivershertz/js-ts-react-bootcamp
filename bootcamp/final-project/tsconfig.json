@@ -1,7 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "paths": {
+      "@tickets/logic": ["../02-ts/project/src/index.ts"]
+    }
   },
   "include": ["src"],
   "exclude": []
