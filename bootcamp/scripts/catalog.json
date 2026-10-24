@@ -376,6 +376,288 @@
       ]
     },
     {
+      "id": "02-ts/01",
+      "dir": "02-ts/01-why-ts",
+      "title": "Why TypeScript, and how it runs",
+      "check": "scripts/checks/02-ts/01.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "daysOpen: type the parameters and the result",
+          "hint": "Write the type after each name with a colon: `(createdAt: string, now: Date): number`. Like Python's `def f(x: str) -> int`."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "shout: a typo TypeScript found",
+          "hint": "Hover the red underline and read the message: which property does not exist?"
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "titleOf: find may return undefined",
+          "hint": "`.find()` returns the ticket or undefined. Check `found` before using it, and return '(not found)' when it is missing."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "dueLabel: handle null before passing it on",
+          "hint": "dueDate is `string | null`, but formatDate only takes a string. Check for null first; after the check TypeScript knows it is a string."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "run-me.ts: what Node prints when types are wrong",
+          "hint": "Run `node 02-ts/01-why-ts/run-me.ts` in the bootcamp folder and copy the text after \"Total hours:\". Slide \"Types disappear when the code runs\"."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/02",
+      "dir": "02-ts/02-basics",
+      "title": "Basics: object types and functions",
+      "check": "scripts/checks/02-ts/02.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Assignee: an object type",
+          "hint": "`type Assignee = { id: string; name: string };` An object type lists each field and its type."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "Ticket: optional, readonly and nullable fields",
+          "hint": "`readonly id: string` cannot be reassigned; `description?: string` may be missing; `dueDate: string | null` is always there but may be null. Slide \"Three kinds of maybe\"."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "createTicket: typed parameters and a default",
+          "hint": "A parameter with a default is optional: `priority = 'medium'`. Say what it returns: `): Ticket {`."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "ClosedTicket: an interface that extends Ticket",
+          "hint": "`export interface ClosedTicket extends Ticket { closedAt: string }`. Then return `{ ...ticket, status: 'closed', closedAt }`."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "addTicket: readonly arrays have no push",
+          "hint": "Return a new array with spread: `[...tickets, ticket]`. readonly is TypeScript's way of saying \"do not mutate\"."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "TicketFilter: a function type",
+          "hint": "A function type looks like an arrow: `(ticket: Ticket) => boolean`. Once isOpen has that type, its parameter is typed for free."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "indexById: Record<string, Ticket>",
+          "hint": "`Record<string, Ticket>` is an object with string keys and Ticket values, like Python's dict[str, Ticket]."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/03",
+      "dir": "02-ts/03-unions-narrowing",
+      "title": "Unions and narrowing",
+      "check": "scripts/checks/02-ts/03.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Priority: a union of literal types",
+          "hint": "`type Priority = 'low' | 'medium' | ...;` Then read the new red underline on DEFAULT_PRIORITY."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "assigneeName: narrow undefined away",
+          "hint": "Two checks, two early returns: first for assigneeId === undefined, then for a find that found nothing. After each check TypeScript knows more."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "toTicketId: narrow with typeof",
+          "hint": "`typeof id === 'number'` works like Python's isinstance(id, int). Inside the if, id is a number; after it, a string."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "describeResult: narrow with in",
+          "hint": "`'error' in result` tells the two shapes apart. Slide \"Four ways to narrow\"."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "errorMessage: narrow unknown with instanceof",
+          "hint": "unknown allows nothing until you check it. `error instanceof Error` first, then `typeof error === 'string'`."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "priorityRank: switch over a union",
+          "hint": "One case per priority. If every case returns, TypeScript knows the function always returns a number."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "parsePriority: from text to a Priority without as",
+          "hint": "Normalise the text, then `PRIORITIES.find((p) => p === wanted)`: find on a Priority[] returns Priority | undefined."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/04",
+      "dir": "02-ts/04-type-guards",
+      "title": "Type guards: checking unknown data",
+      "check": "scripts/checks/02-ts/04.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "isPriority: a type predicate",
+          "hint": "Change `: boolean` to `: value is Priority`. Compare without `as`: `PRIORITIES.some((p) => p === value)`."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "isRecord: an object you can read",
+          "hint": "Three checks: typeof value === 'object', value !== null (typeof null is 'object'!), and !Array.isArray(value)."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "isAssignee: build guards from guards",
+          "hint": "After `isRecord(value) &&`, TypeScript lets you read value.id and value.name as unknown. Check each with typeof."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "isTicket: every field, the right type",
+          "hint": "One && chain: isRecord, then one check per field. Write a small isStatus like isPriority. dueDate is `=== null` or a string."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "assertTicket: throw instead of returning false",
+          "hint": "Return type `asserts value is Ticket`. Inside: `if (!isTicket(value)) throw new Error(...)`. Slide \"Guard or assert?\"."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "parseTickets: keep the valid ones",
+          "hint": "`if (!Array.isArray(data)) throw new Error(...)`. Then `data.filter(isTicket)` gives a Ticket[], because isTicket is a type guard. invalid is the difference in length."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "ticketProblems: say what is wrong",
+          "hint": "Same checks as isTicket, but push a message for each failure instead of stopping at the first."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/05",
+      "dir": "02-ts/05-discriminated-unions",
+      "title": "Discriminated unions: ticket states",
+      "check": "scripts/checks/02-ts/05.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Ticket: one type per status, joined in a union",
+          "hint": "Add the extra fields to each of the four types, then `export type Ticket = OpenTicket | AssignedTicket | BlockedTicket | ClosedTicket;` Slide \"One type per state\"."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "statusLabel: switch on the discriminant",
+          "hint": "`switch (ticket.status)`. Inside `case 'blocked':` TypeScript knows ticket is a BlockedTicket, so ticket.blockedReason is allowed."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "statusLabel: exhaustive with never",
+          "hint": "Add `default: return assertNever(ticket);`. When every status has a case, ticket is `never` there; a new status makes it an error."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "assign: open in, assigned out",
+          "hint": "`return { ...ticket, status: 'assigned', assignee };` The return type checks you added everything an AssignedTicket needs."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "close: build from the base fields",
+          "hint": "Destructure the base fields out of ticket, then add status, closedAt and (when the ticket has one) assignee. Spreading the whole ticket would carry blockedReason along."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "assigneeOf: read a field only some states have",
+          "hint": "`ticket.status === 'open' ? undefined : ticket.assignee` narrows the union to the three states that have assignee."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/06",
+      "dir": "02-ts/06-generics-utility-types",
+      "title": "Generics and utility types",
+      "check": "scripts/checks/02-ts/06.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "first<T>: a generic function",
+          "hint": "Add `<T>` after the name and use T for the items and the result: `first<T>(items: readonly T[]): T | undefined`. Slide \"A type parameter\"."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "indexBy<T>: generic callbacks",
+          "hint": "Use T in both places: `items: readonly T[]` and `keyOf: (item: T) => string`, and return Record<string, T>."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "TicketDraft, TicketChanges, TicketSummary from Ticket",
+          "hint": "`Omit<Ticket, 'id' | 'createdAt'>`, `Partial<TicketDraft>`, `Pick<Ticket, 'id' | 'title'>`. Slide \"Utility types\"."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "updateTicket: apply a Partial",
+          "hint": "Spread the ticket, then the changes, then put id and createdAt back from the original ticket."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "summarize: Pick at run time",
+          "hint": "Types do not remove fields at run time. Build the object yourself: `{ id: ticket.id, title: ticket.title }`."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "Result<T>: a generic union",
+          "hint": "Two members with a literal ok: `{ ok: true; data: T } | { ok: false; error: string }`. Then `result.ok ? result.data : fallback`."
+        },
+        {
+          "n": 7,
+          "level": "stretch",
+          "title": "countBy<T, K extends string>",
+          "hint": "A second type parameter for the key: `K extends string`, and the callback returns K. The result is Partial<Record<K, number>>."
+        }
+      ]
+    },
+    {
       "id": "02-ts/07",
       "dir": "02-ts/07-deriving-types",
       "title": "Deriving types from values",
@@ -404,6 +686,112 @@
           "level": "stretch",
           "title": "TicketField: the keys of a ticket, as a type",
           "hint": "keyof works on a type. Which type describes a ticket here?"
+        }
+      ]
+    },
+    {
+      "id": "02-ts/08",
+      "dir": "02-ts/08-migration",
+      "title": "Migrating JavaScript to TypeScript",
+      "check": "scripts/checks/02-ts/08.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "@ts-check: let TypeScript read the JavaScript",
+          "hint": "Put `// @ts-check` as the first line of report.js and hover the red underline. Python's round(x, 1) has no JavaScript twin: round x * 10, then divide by 10."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "Rename report.js to report.ts",
+          "hint": "Rename the file in VS Code (F2 on it in the explorer). Behaviour must stay the same; the red underlines are next step's job."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "Zero type errors under strict",
+          "hint": "Import the types: `import { isTicket, type Ticket } from './types.ts';` Type each parameter; client is `AxiosInstance` (import type from 'axios')."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "No any, no as, no !, no @ts-ignore",
+          "hint": "Each of these hides a question TypeScript asked. Answer it with a real type or a check instead."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "fetchReport: check what the API sends",
+          "hint": "`client.get<unknown>('/tickets')`, then keep only `data.filter(isTicket)` when data is an array. Return type: Promise<string[]>."
+        },
+        {
+          "n": 6,
+          "level": "stretch",
+          "title": "PRIORITY_WEIGHT: as const satisfies",
+          "hint": "Export it and end the object with `as const satisfies Record<Priority, number>`. Module 07, step 2."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/project",
+      "dir": "02-ts/project",
+      "title": "Phase 2 project: ticket logic in strict TypeScript",
+      "check": "scripts/checks/02-ts/project.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Every file is .ts",
+          "hint": "Run `yarn copy-project` once, then rename each file in 02-ts/project/src to .ts and change the imports to './constants.ts' and so on."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "tsc strict: zero errors",
+          "hint": "Work file by file in the order of README.md. Hover each red underline; module 02-ts/08 is the same workflow."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "No any, as, ! or @ts-ignore",
+          "hint": "Each shortcut hides a question. Use a type guard, a narrowing check or a real type instead. `as const` is allowed."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "STATUSES and PRIORITIES as const, types derived",
+          "hint": "`export const STATUSES = [...] as const; export type Status = (typeof STATUSES)[number];` Module 02-ts/07."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "Ticket is a discriminated union",
+          "hint": "One type per status, joined with |. Put them in a new src/types.ts and re-export it from index.ts. Module 02-ts/05."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "statusLabel: exhaustive switch with never",
+          "hint": "Bring statusLabel and assertNever from module 02-ts/05 into your project and export them."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "API data checked by a type guard",
+          "hint": "`client.get<unknown>(...)`, then isTicket on every item. Count the malformed ones and add a warning in loadAll that names their ids."
+        },
+        {
+          "n": 8,
+          "level": "core",
+          "title": "Everything from Phase 1 still works",
+          "hint": "The message names the Phase 1 step that broke. Run `yarn tickets`: it now runs your TypeScript version."
+        },
+        {
+          "n": 9,
+          "level": "stretch",
+          "title": "Due-date sort still works",
+          "hint": "Phase 1 step 11, now typed: tickets without a dueDate go last."
         }
       ]
     },

@@ -100,6 +100,16 @@ await section('Grouped by status (groupByStatus)', async () => {
   }
 });
 
+// Phase 2 adds statusLabel. Phase 1 projects do not have it, so the section only shows up once it exists.
+if (typeof project.statusLabel === 'function') {
+  await section('One ticket per status (statusLabel)', async () => {
+    for (const status of ['open', 'assigned', 'blocked', 'closed']) {
+      const t = tickets.find((x) => x.status === status);
+      if (t) console.log(`  ${pad(t.id, 6)} ${project.statusLabel(t)}`);
+    }
+  });
+}
+
 await section('Summary (computeStats)', async () => {
   const s = project.computeStats(tickets);
   console.log(`  total ${s.total}   open ${s.open}   overdue ${s.overdue}   average age of open tickets ${s.averageAgeDays} days`);

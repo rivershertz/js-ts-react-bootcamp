@@ -37,7 +37,7 @@ Filled in per module as the material is written.
 | 01-js/01 | `toggleStatus` passes, but `replaceTicket` fails with "changed one of its inputs" | "Which line changes something you were given? What would give you a new array instead?" |
 | 01-js/02 | `newestFirst` uses `.sort()` and fails as a mutation | "Is there a version of sort that returns a new array?" |
 | 01-js/02 | `countByPriority` misses priorities with 0 tickets | "What is your starting value for reduce?" |
-| | 01-js/03 | `once` returns `undefined` on the second call | "Where is the first result stored between calls?" |
+| 01-js/03 | `once` returns `undefined` on the second call | "Where is the first result stored between calls?" |
 | 01-js/03 | `memoize` calls `fn` again for a cached `undefined` | "How do you tell 'no entry' from 'an entry whose value is undefined'?" |
 | 01-js/04 | `predictOrder` answered as `['A', 'B', 'C', 'D']` | "Replay the event-loop slide. Which queue does a promise callback go to, and which one is emptied first?" |
 | 01-js/04 | `fetchMany` is sequential (`await` inside a `for` loop): the timing check fails | "When does the second request start? Can you start all of them before awaiting?" |
@@ -47,7 +47,17 @@ Filled in per module as the material is written.
 | 01-js/project | `loadAll` throws when the server is down | "Which Promise method never rejects?" |
 | 01-js/project | Priority sort comes out alphabetical (`high, low, medium, urgent`) | "Where is the real order of priorities written down?" |
 | 01-js/project | `averageAgeDays` off by a little | "Are you averaging all tickets or only the ones that are not closed? Rounded how?" |
+| 02-ts/01 | Thinks the `'75'` result is a TypeScript bug | "What type does `JSON.parse` return? Who checked the data at run time?" |
+| 02-ts/02 | `addTicket` uses `push` and gets "Property 'push' does not exist on readonly" | "The readonly type is telling you something. How did you add to an array without changing it on day 1?" |
+| 02-ts/03 | Reaches for `as Priority` to make an error go away | "What would make TypeScript sure it is a Priority? Which check narrows a string to one of the four?" |
+| 02-ts/04 | `isTicket` checks only `id` and `title` | "Which fields does a `blocked` ticket need that an `open` one does not?" |
+| 02-ts/05 | Step 3 fails even though `statusLabel` looks complete | "What happens in your `default` if a fifth status appears? Which type is left over there?" |
+| 02-ts/06 | `first<T>` returns `T`, not `T \| undefined` | "What does `first([])` return at run time?" |
 | 02-ts/07 | `Status` comes out as `string` | "Hover `STATUSES`. What type does TypeScript give it? What does `as const` change?" |
+| 02-ts/08 | Fixes errors with `any` or `!` and step 4 fails | "The checker lists each shortcut with its line. What question is that shortcut hiding?" |
+| 02-ts/project | Hundreds of errors after renaming, and the junior freezes | "Close every file except `constants.ts`. Which file does everything else import?" |
+| 02-ts/project | Step 6 says "everything still compiles" with an extra state | "Is there a `never` check in `statusLabel`'s `default`, and is the `Ticket` union on one line starting `export type Ticket =`?" |
+| 02-ts/project | Step 7: `fetchTickets` still returns the bad ticket | "Where does `isTicket` run: on the response, or on each item of it?" |
 | 03-react/04 | `useDebouncedValue` updates on every key press | "What does your effect's cleanup do when the value changes again?" |
 
 ## The final project's planted problems

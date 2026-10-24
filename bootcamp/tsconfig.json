@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2024",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
@@ -12,8 +16,18 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ]
   },
-  "include": ["lessons", "0*-*/**/*.ts", "0*-*/**/*.tsx"],
-  "exclude": ["node_modules", "final-project"]
+  "include": [
+    "lessons",
+    "0*-*/**/*.ts",
+    "0*-*/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "final-project",
+    "02-ts/01-why-ts/run-me.ts"
+  ]
 }

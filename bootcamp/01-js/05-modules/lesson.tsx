@@ -55,7 +55,7 @@ export default function Lesson(props: LessonProps) {
       <CompareSlide
         title="Importing, side by side"
         python={`# stats.py\ndef compute(tickets): ...\n_helper = 1   # private by convention only\n\n# main.py\nfrom stats import compute\nimport stats`}
-        js={`// stats.js\nexport function compute(tickets) { ... }\nconst helper = 1; // not exported: invisible outside\n\n// main.js\nimport { compute } from './stats.js';\nimport * as stats from './stats.js';`}
+        js={`// stats.js\nexport function compute(tickets) {}\nconst helper = 1; // not exported\n\n// main.js\nimport { compute } from './stats.js';\nimport * as stats from './stats.js';`}
         note={
           <>
             In JavaScript nothing leaves a file unless you write <code>export</code>. Importing a name that was not exported

@@ -7,8 +7,8 @@
 //    (a check that passes on the starter teaches nothing).
 // 2. Solutions: mentor/solutions/ is copied over a scratch copy of bootcamp/
 //    and every step, core and stretch, must PASS.
-// 3. Content: no internet links under bootcamp/, relative links resolve, and the lessons,
-//    scripts and starters type-check and lint cleanly (the final project is meant to fail both).
+// 3. Content: no internet links under bootcamp/, relative links resolve, the solved copy
+//    type-checks, and lessons, scripts and starters lint cleanly (the final project is meant to fail both).
 import { spawn, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, symlinkSync } from 'node:fs';
 import path from 'node:path';
@@ -101,13 +101,15 @@ function removeStarterFilesReplacedBySolutions() {
 }
 
 function checkContent() {
-  for (const [label, bin, args] of [
-    ['tsc', 'typescript/bin/tsc', ['-p', 'tsconfig.json', '--pretty', 'false']],
-    ['lesson kit tests', 'vitest/vitest.mjs', ['run', 'lessons', '--config', 'vitest.config.ts']],
-    ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--max-warnings', '0']],
+  // tsc runs on the solved copy: Phase 2 starters contain type errors on purpose (fixing them is the exercise).
+  for (const [label, bin, args, cwd] of [
+    ['tsc', 'typescript/bin/tsc', ['-p', 'tsconfig.json', '--pretty', 'false'], scratch],
+    ['lesson kit tests', 'vitest/vitest.mjs', ['run', 'lessons', '--config', 'vitest.config.ts'], bootcamp],
+    ['eslint', 'eslint/bin/eslint.js', ['lessons', 'scripts', 'playground', '01-js', '02-ts', '03-react', '--max-warnings', '0'], bootcamp],
   ]) {
-    const res = spawnSync(process.execPath, [path.join(bootcamp, 'node_modules', bin), ...args], { cwd: bootcamp, encoding: 'utf8' });
-    if (res.status !== 0) problems.push(`${label} fails on bootcamp/:\n      ${`${res.stdout}${res.stderr}`.trim().split('\n').slice(0, 10).join('\n      ')}`);
+    const res = spawnSync(process.execPath, [path.join(bootcamp, 'node_modules', bin), ...args], { cwd, encoding: 'utf8' });
+    const where = cwd === scratch ? 'the solved copy' : 'bootcamp/';
+    if (res.status !== 0) problems.push(`${label} fails on ${where}:\n      ${`${res.stdout}${res.stderr}`.trim().split('\n').slice(0, 10).join('\n      ')}`);
   }
   const files = walk(bootcamp).filter((f) => /\.(md|tsx?|jsx?|html|css)$/.test(f) && !f.includes('node_modules'));
   for (const file of files) {
