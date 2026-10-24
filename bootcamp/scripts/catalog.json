@@ -1,0 +1,183 @@
+{
+  "modules": [
+    {
+      "id": "00-setup",
+      "dir": "00-setup",
+      "title": "Setup check",
+      "kind": "smoke",
+      "check": "scripts/checks/00-setup/smoke.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Node 24 is installed",
+          "hint": "Run `node -v` in a terminal. If it is older than v24, ask your mentor to update Node."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "Yarn 1 runs this command",
+          "hint": "Run `yarn -v`. It should print 1.22.something. Run the check with `yarn verify 00-setup`, not with npm."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "Dependencies are installed",
+          "hint": "Run `yarn install` in the bootcamp folder. If it cannot download packages, check your .npmrc (see 00-setup/README.md)."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "The ticket API answers on port 8000",
+          "hint": "Start it in a second terminal with `python server/server.py` (or `py server/server.py`) and leave it running."
+        }
+      ]
+    },
+    {
+      "id": "01-js/03",
+      "dir": "01-js/03-scope-closures",
+      "title": "Scope and closures",
+      "check": "scripts/checks/01-js/03.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "makeCounter: each counter keeps its own count",
+          "hint": "Each call to makeCounter creates a new local variable. Slide 'The backpack' shows where it lives."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "once: run a function only the first time",
+          "hint": "Keep two things in the backpack: whether fn already ran, and what it returned."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "memoize: cache results by argument",
+          "hint": "A Map in the closure works like a Python dict. Check with .has() before calling fn."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "createIdGenerator: ticket ids like T-1, T-2",
+          "hint": "Same pattern as makeCounter, plus a template string: `${prefix}-${n}`."
+        },
+        {
+          "n": 5,
+          "level": "stretch",
+          "title": "debounce: wait until calls stop",
+          "hint": "Keep the timer id in the backpack. clearTimeout it on every call, then start a new one."
+        }
+      ]
+    },
+    {
+      "id": "02-ts/07",
+      "dir": "02-ts/07-deriving-types",
+      "title": "Deriving types from values",
+      "check": "scripts/checks/02-ts/07.check.ts",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Status type derived from the STATUSES array",
+          "hint": "Without help, TypeScript widens the array to string[]. The lesson's slide 'Freeze the values' shows how to keep the exact strings, then how to read a union out of an array type."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "PRIORITY_LABELS checked with satisfies",
+          "hint": "`satisfies Record<Priority, string>` checks every key without widening the values."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "statusOptions: dropdown options typed from Status",
+          "hint": "Build the options from STATUSES instead of writing them out. If value comes out as string, look at what type STATUSES has and what map returns."
+        },
+        {
+          "n": 4,
+          "level": "stretch",
+          "title": "TicketField: the keys of a ticket, as a type",
+          "hint": "keyof works on a type. Which type describes a ticket here?"
+        }
+      ]
+    },
+    {
+      "id": "03-react/04",
+      "dir": "03-react/04-custom-hooks",
+      "title": "Custom hooks",
+      "check": "scripts/checks/03-react/04.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "useToggle: a boolean with a toggle function",
+          "hint": "A custom hook is a function that calls other hooks. Start from useState."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "useDebouncedValue: the value, once it stops changing",
+          "hint": "useEffect with a setTimeout, and return a cleanup that clears it. Which values belong in the dependency array?"
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "SearchBox: report the search only after typing stops",
+          "hint": "Keep the text in state, pass it through useDebouncedValue, and call onSearch from an effect on the debounced value."
+        },
+        {
+          "n": 4,
+          "level": "stretch",
+          "title": "usePrevious: the value from the last render",
+          "hint": "A ref survives renders without causing one. Update it in an effect."
+        }
+      ]
+    },
+    {
+      "id": "final-project",
+      "dir": "final-project",
+      "title": "Final project (POC slice)",
+      "check": "scripts/checks/final/final.check.tsx",
+      "steps": [
+        {
+          "n": 1,
+          "level": "core",
+          "title": "Every file in src is .ts or .tsx",
+          "hint": "Rename one file at a time and fix the errors tsc reports before moving on."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "tsc --noEmit passes with strict: true",
+          "hint": "Run `yarn tsc -p final-project` to see the errors with file and line."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "ESLint passes with the React Hooks rules",
+          "hint": "Run `yarn eslint final-project` to see each rule that fails."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "Bug: sorting must not change the cached tickets",
+          "hint": "Rules of React: never mutate data you did not create. Which array methods change the array in place?"
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "Performance: search filters only after typing stops",
+          "hint": "Your useDebouncedValue hook from 03-react/04, plus useMemo so the filtered list is not rebuilt on every render."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "Feature: assignee filter kept in the URL",
+          "hint": "useSearchParams from react-router-dom reads and writes ?assignee=a2."
+        }
+      ]
+    }
+  ]
+}
