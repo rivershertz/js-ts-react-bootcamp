@@ -6,14 +6,14 @@ Everything runs on your own machine. Packages come from the company's Artifactor
 
 ## What you need
 
-Check each one in a terminal (PowerShell or cmd). If one is missing or too old, ask your mentor before you start.
+Check each one in a terminal (PowerShell or cmd on Windows, Terminal on Mac or Linux). If one is missing or too old, ask your mentor before you start.
 
 | Tool | Check with | You need |
 | --- | --- | --- |
 | Git | `git --version` | any recent version |
 | Node | `node -v` | 24 or newer |
 | Yarn | `yarn -v` | 1.x (classic Yarn) |
-| Python | `python --version` (or `py --version`) | 3.x |
+| Python | `python --version` (or `py --version` on Windows, `python3 --version` on Mac or Linux) | 3.x |
 | An editor | | VS Code is what the lessons show |
 | A browser | | Chrome or Edge, for DevTools |
 
@@ -40,13 +40,15 @@ Check each one in a terminal (PowerShell or cmd). If one is missing or too old, 
    yarn install
    ```
 
+   If it stops with `The engine "node" is incompatible with this module. Expected version ">=24"`, your Node is too old. Install Node 24 or newer, then run `yarn install` again.
+
 5. **Start the ticket API** in a **second terminal**, also in the `bootcamp` folder, and leave it running:
 
    ```
    python server/server.py
    ```
 
-   If Windows says `python` is not found, use `py server/server.py`.
+   If Windows says `python` is not found, use `py server/server.py`. On Mac or Linux, use `python3 server/server.py`.
 
 6. **Check your setup.** Back in the first terminal:
 
