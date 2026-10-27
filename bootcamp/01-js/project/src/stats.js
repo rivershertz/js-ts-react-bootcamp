@@ -17,6 +17,7 @@ export function groupByStatus(tickets) {
 //                   A ticket's age is the number of whole days between createdAt and now.
 //                   0 when there are no such tickets.
 // `now` is a parameter so the result does not depend on the day you run it.
+// Needs: new Date(createdAt), getTime() and Math.round (cheat sheet, "Dates and timers" and "Strings and numbers").
 export function computeStats(tickets, now = new Date()) {
   throw new Error('TODO: computeStats');
 }

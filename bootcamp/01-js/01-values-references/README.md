@@ -1,6 +1,6 @@
 # 01-js/01 Values and references
 
-**Time:** 15 min lesson, 35 min exercises (core), plus 15 min stretch.
+**Time:** 20 min lesson, 35 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 

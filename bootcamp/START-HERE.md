@@ -67,7 +67,7 @@ Do the phases in order. Phase 2 starts from your Phase 1 project, and the final 
 
 1. **Watch the lesson.** Run `yarn lessons`, open the link, and pick the module. Press → to move, ? for all keys. Slides marked "Your turn" ask you to predict an answer before you see it: say yours out loud first.
 2. **Read the module's README.** It has a short recap of the lesson and a table of the exercise steps.
-3. **Do the exercises** in the module's starter file, one step at a time. Each step says what to build in a comment above it.
+3. **Do the exercises** in the module's starter file, one step at a time. The comment above each step has three parts: **What** to do, the **Result** to expect (usually an example call and its answer), and what it **Needs**: the lesson slide that teaches it, or a row of the [Python to JavaScript cheat sheet](00-setup/python-to-js.md). An exercise never needs something you have not seen yet.
 4. **Check them** with `yarn verify <module>`. A failing step tells you what is wrong and gives a hint.
 5. Move on when every **core** step is green. **Stretch** steps are extra practice: come back to them when you have time.
 
