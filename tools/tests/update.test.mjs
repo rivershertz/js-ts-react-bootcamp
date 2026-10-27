@@ -4,7 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
-import { findBase, hashContent, listFiles, plan } from '../../bootcamp/scripts/update.mjs';
+import { findBase, hashContent, listFiles, merge, plan } from '../../bootcamp/scripts/update.mjs';
 
 const ORIGINAL = '// Step 1: old comment\nexport function f() {\n  throw new Error("TODO");\n}\n';
 const UPDATED =
@@ -64,4 +64,13 @@ test("keeps the junior's code, takes the new comments, and leaves their progress
   assert.match(merged, /clearer comment/);
   assert.match(merged, /return 1;/);
   assert.equal(readFileSync(path.join(mine, '.progress.json'), 'utf8'), '{}');
+});
+
+test('merges line changes from both sides, and refuses when they touch the same lines', () => {
+  const base = 'a\nb\nc\nd\ne\n';
+  assert.equal(merge('a\nB\nc\nd\ne\n', base, 'a\nb\nc\nD\ne\n'), 'a\nB\nc\nD\ne\n');
+  assert.equal(merge('a\nb\nc\nd\ne\nmine\n', base, 'top\na\nb\nc\nd\ne\n'), 'top\na\nb\nc\nd\ne\nmine\n');
+  assert.equal(merge('a\nb\nd\ne\n', base, 'a\nb\nc\nd\ne\nnew\n'), 'a\nb\nd\ne\nnew\n');
+  assert.equal(merge('a\nX\nc\nd\ne\n', base, 'a\nY\nc\nd\ne\n'), undefined);
+  assert.equal(merge('a\r\nB\r\nc\r\nd\r\ne\r\n', base, base), 'a\nB\nc\nd\ne\n');
 });

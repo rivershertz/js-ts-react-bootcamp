@@ -13,20 +13,17 @@
 // update changes is first copied to .update-backup/ in your folder.
 //
 // Only Node's own modules are used, so this runs before `yarn install`.
-import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   copyFileSync,
   existsSync,
   mkdirSync,
-  mkdtempSync,
   readFileSync,
   readdirSync,
   rmSync,
   statSync,
   writeFileSync,
 } from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
@@ -78,20 +75,56 @@ export function findBase(releases, target) {
   return best;
 }
 
-/** Three-way merge with git. Returns the merged text, or undefined when the changes overlap or git is missing. */
-function merge(yours, original, update) {
-  const dir = mkdtempSync(path.join(os.tmpdir(), 'bootcamp-update-'));
-  try {
-    const files = { yours, original, update };
-    for (const [name, text] of Object.entries(files))
-      writeFileSync(path.join(dir, name), text.replaceAll('\r\n', '\n'));
-    const res = spawnSync('git', ['merge-file', '-p', 'yours', 'original', 'update'], {
-      cwd: dir,
-      encoding: 'utf8',
-    });
-    return res.status === 0 ? res.stdout : undefined;
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
+/** Pairs [i, j] where a[i] === b[j], in order: a longest common subsequence of lines. */
+function commonLines(a, b) {
+  const n = a.length;
+  const m = b.length;
+  const len = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      len[i][j] = a[i] === b[j] ? len[i + 1][j + 1] + 1 : Math.max(len[i + 1][j], len[i][j + 1]);
+  const pairs = new Map();
+  for (let i = 0, j = 0; i < n && j < m;) {
+    if (a[i] === b[j]) pairs.set(i++, j++);
+    else if (len[i + 1][j] >= len[i][j + 1]) i++;
+    else j++;
+  }
+  return pairs;
+}
+
+const same = (x, y) => x.length === y.length && x.every((line, i) => line === y[i]);
+
+/**
+ * Three-way merge of text files, line by line (the diff3 idea, in plain JavaScript).
+ * Returns the merged text, or undefined when yours and the update change the same lines.
+ */
+export function merge(yours, original, update) {
+  const [mine, base, next] = [yours, original, update].map((t) =>
+    t.replaceAll('\r\n', '\n').split('\n'),
+  );
+  if (base.length * Math.max(mine.length, next.length) > 4_000_000) return undefined;
+  const inMine = commonLines(base, mine);
+  const inNext = commonLines(base, next);
+  const out = [];
+  let o = 0;
+  let a = 0;
+  let b = 0;
+  for (;;) {
+    // The next base line that is unchanged on both sides anchors the merge.
+    let k = o;
+    while (k < base.length && !(inMine.has(k) && inNext.has(k))) k++;
+    const end = k < base.length;
+    const chunk = {
+      base: base.slice(o, k),
+      mine: mine.slice(a, end ? inMine.get(k) : mine.length),
+      next: next.slice(b, end ? inNext.get(k) : next.length),
+    };
+    if (same(chunk.mine, chunk.base)) out.push(...chunk.next);
+    else if (same(chunk.next, chunk.base) || same(chunk.mine, chunk.next)) out.push(...chunk.mine);
+    else return undefined;
+    if (!end) return out.join('\n');
+    out.push(base[k]);
+    [o, a, b] = [k + 1, inMine.get(k) + 1, inNext.get(k) + 1];
   }
 }
 
