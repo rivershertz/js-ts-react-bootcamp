@@ -1,4 +1,4 @@
-export { Deck } from './Deck';
+export { Deck, isThemeKey, toggleTheme } from './Deck';
 export { Code } from './Code';
 export type { DeckMeta } from './context';
 export { useStep } from './context';
