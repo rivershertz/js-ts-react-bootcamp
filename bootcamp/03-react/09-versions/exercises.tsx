@@ -2,7 +2,6 @@
 //
 // What you build: answers to the version questions you meet in the team's older apps, and one real fix.
 // Finished when:  `yarn verify 03-react/09` shows ✓ for steps 1 to 5. Stretch steps are optional.
-// Every step says What to do, the Result to expect, and what it Needs (a lesson slide, or an earlier module).
 //
 // Check your work with:   yarn verify 03-react/09
 // See it in the browser:  yarn dev 03-react/09
@@ -11,11 +10,13 @@ import type { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 // Step 1 (core): mount the React 18 way
-// What:   mount() starts an app the React 16 and 17 way. On React 18 it still works, but it runs the app
-//         in "React 17 mode" (no automatic batching) and the console warns about it.
-//         Start the app the React 18 way instead, and return a function that unmounts it.
-// Result: the app shows, the console has no warning, and calling the returned function removes it.
-// Needs:  slide "Starting the app: render versus createRoot".
+// mount() starts an app the React 16 and 17 way. On React 18 it still works, but it runs the app
+// in "React 17 mode" (no automatic batching) and the console warns about it.
+// Start the app the React 18 way instead, and return a function that unmounts it.
+//
+// Example:
+//   const unmount = mount(container, <App />);   // App shows, no warning in the console
+//   unmount();                                   // container is empty again
 export function mount(container: HTMLElement, app: ReactNode): () => void {
   ReactDOM.render(<>{app}</>, container);
   return () => {
@@ -24,10 +25,10 @@ export function mount(container: HTMLElement, app: ReactNode): () => void {
 }
 
 // Step 2 (core): count the renders
-// What:   A handler calls two state setters:  setSaving(false); setError(message);
-//         How many renders follow? Replace each undefined with a number.
-// Result: every undefined is a number.
-// Needs:  slide "Starting the app: render versus createRoot" (automatic batching).
+// A handler calls two state setters:  setSaving(false); setError(message);
+// How many renders follow? Replace each undefined with a number.
+//
+// When done: no undefined is left; each value is a number.
 export const rendersAfterTwoSetters = {
   // the two calls run inside a click handler
   clickOnReact17: undefined as number | undefined,
@@ -38,20 +39,21 @@ export const rendersAfterTwoSetters = {
 };
 
 // Step 3 (core): environment variables
-// What:   How does code read an environment variable called name (for example "API_URL")?
-//         Return the expression as a string. CRA: process.env with the REACT_APP_ prefix.
-//         Vite: import.meta.env with the VITE_ prefix.
-// Result: envAccess('vite', 'API_URL') → 'import.meta.env.VITE_API_URL';
-//         envAccess('cra', 'API_URL') → 'process.env.REACT_APP_API_URL'
-// Needs:  slide "Create React App and Vite".
+// How does code read an environment variable called name (for example "API_URL")?
+// Return the expression as a string. CRA: process.env with the REACT_APP_ prefix.
+// Vite: import.meta.env with the VITE_ prefix.
+//
+// Example:
+//   envAccess('vite', 'API_URL')   // 'import.meta.env.VITE_API_URL'
+//   envAccess('cra', 'API_URL')    // 'process.env.REACT_APP_API_URL'
 export function envAccess(tool: 'cra' | 'vite', name: string): string {
   throw new Error('TODO: step 3');
 }
 
 // Step 4 (core): where things are
-// What:   Where things are in each tool. Fill in each undefined from the lesson's table.
-// Result: every undefined is one of the answers its comment offers.
-// Needs:  slides "Create React App and Vite" and "What yarn build makes".
+// Where things are in each tool. Fill in each undefined from the lesson's table.
+//
+// When done: no undefined is left; each value is one of the answers its comment offers.
 export const tooling = {
   // the folder that `yarn build` writes: 'build' or 'dist'
   buildFolder: { cra: undefined as string | undefined, vite: undefined as string | undefined },
@@ -63,9 +65,9 @@ export const tooling = {
 };
 
 // Step 5 (core): what React 19 breaks
-// What:   You upgrade an app from React 18 to React 19. Which of these stop working? true or false.
-// Result: every letter is true or false.
-// Needs:  slide "React 19: what changed".
+// You upgrade an app from React 18 to React 19. Which of these stop working? true or false.
+//
+// When done: no undefined is left; each letter A to D is true or false.
 export const breaksInReact19: Record<'A' | 'B' | 'C' | 'D', boolean | undefined> = {
   // A: ReactDOM.render(<App />, document.getElementById('root'))
   A: undefined,
@@ -78,10 +80,13 @@ export const breaksInReact19: Record<'A' | 'B' | 'C' | 'D', boolean | undefined>
 };
 
 // Step 6 (stretch): which tool builds it?
-// What:   Given a package.json, which tool builds the app? Look at the "start" or "dev" script:
-//         react-scripts means 'cra', vite means 'vite', anything else 'unknown'.
-// Result: { scripts: { start: 'react-scripts start' } } → 'cra';  { scripts: { dev: 'vite' } } → 'vite';  {} → 'unknown'
-// Needs:  ?. and includes (cheat sheet).
+// Given a package.json, which tool builds the app? Look at the "start" or "dev" script:
+// react-scripts means 'cra', vite means 'vite', anything else 'unknown'.
+//
+// Example:
+//   buildTool({ scripts: { start: 'react-scripts start' } })   // 'cra'
+//   buildTool({ scripts: { dev: 'vite' } })                    // 'vite'
+//   buildTool({})                                              // 'unknown'
 export function buildTool(packageJson: { scripts?: Record<string, string> }): 'cra' | 'vite' | 'unknown' {
   throw new Error('TODO: step 6');
 }

@@ -10,8 +10,6 @@ import { PRIORITIES } from './constants.js';
 //   dueDate   optional (null, undefined or ''). If set, it must look like '2026-12-31'
 //             and must not be before today's date.
 // Write your own messages; the checker only looks at the field names.
-// Needs: trim, a regular expression for the date format, and comparing ISO dates as text
-//        (cheat sheet, "Strings and numbers" and "Dates and timers").
 export function validateTicket(draft, now = new Date()) {
   throw new Error('TODO: validateTicket');
 }

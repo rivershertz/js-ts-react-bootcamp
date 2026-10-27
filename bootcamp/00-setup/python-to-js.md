@@ -2,7 +2,7 @@
 
 Keep this open during Phase 1. Each row is the closest JavaScript to a Python habit.
 
-Exercises only expect what a lesson taught or what is on this page. When a step needs something from here, it says so in its `Needs:` line.
+Exercises only expect what a lesson taught or what is on this page. If a step uses something you have not seen in a lesson, look here first.
 
 ## Basics
 

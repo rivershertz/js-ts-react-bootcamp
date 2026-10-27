@@ -2,7 +2,6 @@
 //
 // What you build: the routes of a small ticket app: list, ticket page, new ticket form, filter in the URL.
 // Finished when:  `yarn verify 03-react/08` shows ✓ for steps 1 to 5. Stretch steps are optional.
-// Every step says What to do, the Result to expect, and what it Needs (a lesson slide, or an earlier module).
 //
 // Check your work with:   yarn verify 03-react/08
 // See it in the browser:  yarn dev 03-react/08
@@ -24,14 +23,14 @@ export function isStatus(value: unknown): value is Status {
 }
 
 // Step 1 (core): the routes
-// What:   AppRoutes decides which page each URL shows:
-//         - /tickets       <TicketListPage />
-//         - /tickets/new   <NewTicketPage onCreate={createTicket} />
-//         - /tickets/:id   <TicketPage />
-//         - anything else  sends the user to /tickets, with <Navigate>
-//         Only the list has a route so far.
-// Result: /tickets/new shows the form, /tickets/t3 shows ticket t3, /nope ends up on /tickets.
-// Needs:  slide "Routes: a URL pattern per page".
+// AppRoutes decides which page each URL shows:
+// - /tickets       <TicketListPage />
+// - /tickets/new   <NewTicketPage onCreate={createTicket} />
+// - /tickets/:id   <TicketPage />
+// - anything else  sends the user to /tickets (use <Navigate>)
+// Only the list has a route so far.
+//
+// Example: /tickets/new → the form;  /tickets/t3 → ticket t3;  /nope → ends up on /tickets.
 export function AppRoutes(): ReactNode {
   return (
     <Routes>
@@ -41,10 +40,10 @@ export function AppRoutes(): ReactNode {
 }
 
 // Step 2 (core): Link
-// What:   Each title should open its ticket's page, and "New ticket" the form. A plain <a href> asks the
-//         server for a whole new page: the app starts again from nothing. Use React Router's <Link> instead.
-// Result: clicking a title opens /tickets/<id> without a page reload (the Network tab shows no new document).
-// Needs:  slide "Link versus a plain <a href>".
+// Each title should open its ticket's page, and "New ticket" the form. A plain <a href> asks the
+// server for a whole new page: the app starts again from nothing. Use React Router's <Link> instead.
+//
+// Example: click "Login page" → the URL is /tickets/t1, and the page did not reload.
 export function TicketListPage(): ReactNode {
   const [status, setStatus] = useStatusFilter();
   const shown = status ? tickets.filter((t) => t.status === status) : tickets;
@@ -75,10 +74,10 @@ export function TicketListPage(): ReactNode {
 }
 
 // Step 3 (core): read the id
-// What:   TicketPage should show the ticket whose id is in the URL (/tickets/t3 shows t3).
-//         It always shows t1. Read the :id parameter from the route. For an unknown id, show "No ticket <id>".
-// Result: /tickets/t3 shows t3;  /tickets/t99 shows "No ticket t99".
-// Needs:  slide "useParams: the parts of the URL".
+// TicketPage should show the ticket whose id is in the URL (/tickets/t3 shows t3).
+// It always shows t1. Read the :id parameter from the route. For an unknown id, show "No ticket <id>".
+//
+// Example: /tickets/t3 → ticket t3;  /tickets/t99 → "No ticket t99".
 export function TicketPage(): ReactNode {
   const id = 't1';
   const ticket = tickets.find((t) => t.id === id);
@@ -93,20 +92,23 @@ export function TicketPage(): ReactNode {
 }
 
 // Step 4 (core): filter in the URL
-// What:   The list's status filter lives in useState, so a refresh or a shared link loses it.
-//         Keep it in the URL instead, as ?status=open, with useSearchParams. Ignore a value that is
-//         not a status (?status=banana gives undefined), and remove the parameter for undefined.
-// Result: pick "open" → the URL ends in ?status=open, and a refresh keeps the filter.
-// Needs:  slide "useSearchParams: state in the URL"; isStatus above.
+// The list's status filter lives in useState, so a refresh or a shared link loses it.
+// Keep it in the URL instead, as ?status=open, with useSearchParams. Ignore a value that is
+// not a status (?status=banana gives undefined), and remove the parameter for undefined.
+//
+// Example:
+//   pick "open"              → the URL is /tickets?status=open, and a refresh keeps the filter
+//   open /tickets?status=banana → no filter
+//   pick "all" (undefined)   → the URL is /tickets
 export function useStatusFilter(): [Status | undefined, (status: Status | undefined) => void] {
   return useState<Status>();
 }
 
 // Step 5 (core): go to the new ticket
-// What:   After a successful create, the user should land on the new ticket's page.
-//         Right now the form only says "Saved".
-// Result: create "Export" → the app shows /tickets/<the new id>.
-// Needs:  slide "useNavigate: go somewhere from code".
+// After a successful create, the user should land on the new ticket's page.
+// Right now the form only says "Saved". Use useNavigate.
+//
+// Example: create "Export", onCreate resolves to 't13' → the URL is /tickets/t13.
 export function NewTicketPage({ onCreate }: { onCreate: (title: string) => Promise<string> }): ReactNode {
   const [title, setTitle] = useState('');
   const [saved, setSaved] = useState(false);
@@ -132,10 +134,10 @@ export function NewTicketPage({ onCreate }: { onCreate: (title: string) => Promi
 }
 
 // Step 6 (stretch): back one step
-// What:   Back goes to /tickets, which drops the list's ?status filter. Make it go back one step
-//         in the history instead, like the browser's back button.
-// Result: /tickets?status=open → a ticket → Back → /tickets?status=open again.
-// Needs:  slide "useNavigate: go somewhere from code".
+// Back goes to /tickets, which drops the list's ?status filter. Make it go back one step
+// in the history instead, like the browser's back button.
+//
+// Example: /tickets?status=open → open t3 → click Back → /tickets?status=open.
 export function BackButton(): ReactNode {
   return <Link to="/tickets">Back</Link>;
 }

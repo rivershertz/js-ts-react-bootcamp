@@ -2,7 +2,6 @@
 //
 // What you build: ticket loading and saving with React Query, with loading and error states.
 // Finished when:  `yarn verify 03-react/05` shows ✓ for steps 1 to 4. Stretch steps are optional.
-// Every step says What to do, the Result to expect, and what it Needs (a lesson slide, or an earlier module).
 //
 // Start the API first:    python server/server.py
 // Check your work with:   yarn verify 03-react/05
@@ -13,12 +12,12 @@ import type { Ticket } from '../tickets';
 import { client } from './client';
 
 // Step 1 (core): useTickets with useQuery
-// What:   useTickets() loads GET /tickets. It works, but it is written by hand with useEffect:
-//         two components that call it send two requests, errors only reach the console,
-//         and nothing else in the app can tell it to load again.
-//         Rewrite it with useQuery under the query key ['tickets'], and return what useQuery returns.
-// Result: two components using useTickets send one request between them (see the Network tab).
-// Needs:  slides "useQuery: a key and a function" and "Two components, one request".
+// useTickets() loads GET /tickets. It works, but it is written by hand with useEffect:
+// two components that call it send two requests, errors only reach the console,
+// and nothing else in the app can tell it to load again.
+// Rewrite it with useQuery under the query key ['tickets'], and return what useQuery returns.
+//
+// Example: two components that call useTickets() → one GET /tickets in the Network tab.
 export function useTickets() {
   const [data, setData] = useState<Ticket[]>();
   useEffect(() => {
@@ -31,24 +30,24 @@ export function useTickets() {
 }
 
 // Step 2 (core): loading and error states
-// What:   TicketsView lists the ticket titles. While the tickets load it shows an empty page,
-//         and when the server is down it shows the same empty page. Using what useTickets returns:
-//         - while loading, show "Loading tickets..."
-//         - on an error, show "Could not load tickets" and a "Retry" button that calls refetch()
-//         - otherwise, a <ul> with one <li> per ticket title
-// Result: stop the API and reload → "Could not load tickets" and Retry;  start it and click Retry → the list.
-// Needs:  slide "Three states, in this order".
+// TicketsView lists the ticket titles. While the tickets load it shows an empty page,
+// and when the server is down it shows the same empty page. Using what useTickets returns:
+// - while loading, show "Loading tickets..."
+// - on an error, show "Could not load tickets" and a "Retry" button that calls refetch()
+// - otherwise, a <ul> with one <li> per ticket title
+//
+// Example: API stopped → "Could not load tickets" and Retry; start the API, click Retry → the list.
 export function TicketsView(): ReactNode {
   const { data } = useTickets();
   return <ul>{data?.map((ticket) => <li key={ticket.id}>{ticket.title}</li>)}</ul>;
 }
 
 // Step 3 (core): wait for an id
-// What:   useTicket(id) loads one ticket, GET /tickets/<id>, under the key ['tickets', id].
-//         When no ticket is picked yet, id is undefined, and it still asks the server for
-//         /tickets/undefined (look in the Network tab). Tell useQuery not to run until there is an id.
-// Result: no request at all until a ticket is picked, then one GET /tickets/<id>.
-// Needs:  slide "Query keys are arrays, matched by prefix".
+// useTicket(id) loads one ticket, GET /tickets/<id>, under the key ['tickets', id].
+// When no ticket is picked yet, id is undefined, and it still asks the server for
+// /tickets/undefined (look in the Network tab). Tell useQuery not to run until there is an id.
+//
+// Example: useTicket(undefined) → no request; useTicket('t3') → one GET /tickets/t3.
 export function useTicket(id: string | undefined) {
   return useQuery({
     queryKey: ['tickets', id],
@@ -57,11 +56,11 @@ export function useTicket(id: string | undefined) {
 }
 
 // Step 4 (core): refresh after a save
-// What:   useCloseTicket() saves a ticket with status "closed" (PUT /tickets/<id>). The save works:
-//         reload the page and the ticket is closed. But TicketBoard below keeps showing the old status.
-//         After a successful save, tell React Query that the ['tickets'] data is out of date.
-// Result: click Close → the board shows "closed" for that ticket without a page reload.
-// Needs:  slide "useMutation: change data, then mark it stale".
+// useCloseTicket() saves a ticket with status "closed" (PUT /tickets/<id>). The save works:
+// reload the page and the ticket is closed. But TicketBoard below keeps showing the old status.
+// After a successful save, tell React Query that the ['tickets'] data is out of date.
+//
+// Example: click Close on t3 → the board shows t3 as closed, without a page reload.
 export function useCloseTicket() {
   return useMutation({
     mutationFn: (ticket: Ticket) =>
@@ -90,8 +89,8 @@ export function TicketBoard(): ReactNode {
 }
 
 // Step 5 (stretch): start from the list
-// What:   Picking a ticket that is already in the list still shows "Loading..." while GET /tickets/<id> runs.
-//         Change useTicket (step 3) so it starts from the ticket in the ['tickets'] list cache when it is there,
-//         and still asks the server for the latest version.
-// Result: picking a listed ticket shows it at once, with no "Loading...".
-// Needs:  slide "Stretch: start from data you already have" (initialData and queryClient.getQueryData).
+// Picking a ticket that is already in the list still shows "Loading..." while GET /tickets/<id> runs.
+// Change useTicket (step 3) so it starts from the ticket in the ['tickets'] list cache when it is there,
+// and still asks the server for the latest version.
+//
+// Example: the list has loaded; pick t3 → t3 shows at once, with no "Loading...".

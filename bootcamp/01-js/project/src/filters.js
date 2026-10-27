@@ -5,8 +5,7 @@ import { PRIORITIES } from './constants.js';
 // Keep the tickets that match every filter that is set:
 //   filters = { status: 'open', priority: 'high', assignee: 'a1', search: 'login' }
 // A filter that is missing or empty ('') does not filter anything.
-// search matches part of the title, ignoring upper / lower case and spaces around it
-// (trim, toLowerCase and includes are in the cheat sheet, "Strings and numbers").
+// search matches part of the title, ignoring upper / lower case and spaces around it.
 export function filterTickets(tickets, filters = {}) {
   throw new Error('TODO: filterTickets');
 }
