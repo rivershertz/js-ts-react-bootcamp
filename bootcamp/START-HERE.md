@@ -86,6 +86,21 @@ Run these in a terminal in this `bootcamp` folder. Keep the ticket API (`python 
 | `yarn copy-project` | Starts Phase 2 by copying your Phase 1 project. |
 | `yarn server` | Reminds you how to start the ticket API. |
 
+## Getting an updated version
+
+Your mentor may send a newer zip of the bootcamp. Do not unzip it over your folder: that would replace your answers.
+
+1. Unzip it somewhere else, for example next to your current folder.
+2. In a terminal, go into the **new** folder's `bootcamp` folder and preview the update:
+
+   ```
+   node scripts/update.mjs <path to your own bootcamp folder>
+   ```
+
+   It lists every file it would change. Files you never edited are replaced. Files you did edit keep your code, and the new comments or fixes are merged in. If the new version changed the same lines you did, your file is left alone and the new version is saved next to it as `<name>.new`.
+3. Run the same command again with `--apply` at the end. Every file it changes is first copied to `.update-backup/` in your folder, and your progress is kept.
+4. Keep working in your own folder, and delete the new one. If the update says the packages changed, run `yarn install`.
+
 ## When you are stuck
 
 1. Read the step's message and hint from `yarn verify` again, slowly. They describe what the user would see, not the fix.
