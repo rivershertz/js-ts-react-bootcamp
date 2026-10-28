@@ -1,6 +1,6 @@
 // Authoring tool, run before every release that juniors may receive as a zip.
 //
-//   node tools/make-update-history.mjs           rewrite bootcamp/scripts/update/history.json.gz
+//   node tools/make-update-history.mjs           rewrite bootcamp/scripts/update/history.json
 //   node tools/make-update-history.mjs --check   fail if it is missing a release (CI runs this)
 //
 // `yarn update` (bootcamp/scripts/update.mjs) needs to know what the junior's copy looked like
@@ -12,10 +12,9 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { gunzipSync, gzipSync } from 'node:zlib';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const out = path.join(repo, 'bootcamp', 'scripts', 'update', 'history.json.gz');
+const out = path.join(repo, 'bootcamp', 'scripts', 'update', 'history.json');
 const { hashContent } = await import(
   new URL('../bootcamp/scripts/update.mjs', import.meta.url).href
 );
@@ -43,9 +42,7 @@ const commits = git('rev-list', '--first-parent', '--reverse', ref, '--', 'bootc
 if (process.argv.includes('--check')) {
   let known = [];
   try {
-    known = JSON.parse(gunzipSync(readFileSync(out)).toString('utf8')).releases.map(
-      (r) => r.commit,
-    );
+    known = JSON.parse(readFileSync(out, 'utf8')).releases.map((r) => r.commit);
   } catch {
     // missing or unreadable: every commit below is reported
   }
@@ -82,7 +79,7 @@ for (const commit of commits) {
 }
 
 mkdirSync(path.dirname(out), { recursive: true });
-writeFileSync(out, gzipSync(JSON.stringify({ releases, blobs }), { level: 9 }));
+writeFileSync(out, `${JSON.stringify({ releases, blobs }, null, 2)}\n`);
 console.log(
   `Wrote ${path.relative(repo, out)}: ${releases.length} releases, ${Object.keys(blobs).length} original files.`,
 );

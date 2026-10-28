@@ -27,7 +27,6 @@ import {
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
-import { gunzipSync } from 'node:zlib';
 
 const newRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // Never part of a release: installs, build output, and what belongs to one junior.
@@ -215,9 +214,7 @@ function main() {
   }
 
   const history = JSON.parse(
-    gunzipSync(readFileSync(path.join(newRoot, 'scripts', 'update', 'history.json.gz'))).toString(
-      'utf8',
-    ),
+    readFileSync(path.join(newRoot, 'scripts', 'update', 'history.json'), 'utf8'),
   );
   const newFiles = listFiles(newRoot);
   const current = {
