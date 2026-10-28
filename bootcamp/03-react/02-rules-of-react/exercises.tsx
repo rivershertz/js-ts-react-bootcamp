@@ -1,4 +1,8 @@
 // 03-react/02 Rules of React
+//
+// What you build: nothing new: six components that each break one rule of React. Find it and fix it.
+// Finished when:  `yarn verify 03-react/02` shows ✓ for steps 1 to 7. Stretch steps are optional.
+//
 // Check your work with:  yarn verify 03-react/02
 // See it in the browser:  yarn dev 03-react/02
 //
@@ -7,8 +11,10 @@
 import { useEffect, useState } from 'react';
 import type { Ticket } from '../tickets';
 
-// Step 1 (core)
+// Step 1 (core): TagEditor
 // Type a tag and press Add: the tag should appear in the list. It does not.
+//
+// Example: type "ui", press Add → "ui" appears in the list at once.
 export function TagEditor() {
   const [tags, setTags] = useState<string[]>([]);
   const [draft, setDraft] = useState('');
@@ -33,8 +39,10 @@ export function TagEditor() {
   );
 }
 
-// Step 2 (core)
+// Step 2 (core): AssigneePicker
 // Click "Assign to Noa": the text should change to "Assigned to a3". It does not.
+//
+// Example: click "Assign to Noa" → the text reads "Assigned to a3".
 export function AssigneePicker({ initial }: { initial: Ticket }) {
   const [ticket, setTicket] = useState(initial);
 
@@ -51,8 +59,10 @@ export function AssigneePicker({ initial }: { initial: Ticket }) {
   );
 }
 
-// Step 3 (core)
+// Step 3 (core): SortedTitles
 // Shows the titles A to Z. The parent's list changes order too, which it must not.
+//
+// Example: tickets ['Login', 'Export'] → shows Export, Login; the parent's array is still ['Login', 'Export'].
 export function SortedTitles({ tickets }: { tickets: Ticket[] }) {
   const sorted = tickets.sort((a, b) => a.title.localeCompare(b.title));
   return (
@@ -64,8 +74,10 @@ export function SortedTitles({ tickets }: { tickets: Ticket[] }) {
   );
 }
 
-// Step 4 (core)
+// Step 4 (core): NumberedTitles
 // Should show "1. Login page", "2. Export"... The numbers are wrong, and grow every time it renders.
+//
+// Example: three tickets show 1., 2., 3., and still 1., 2., 3. after any number of renders.
 let rowNumber = 0;
 
 export function NumberedTitles({ tickets }: { tickets: Ticket[] }) {
@@ -79,8 +91,10 @@ export function NumberedTitles({ tickets }: { tickets: Ticket[] }) {
   );
 }
 
-// Step 5 (core)
+// Step 5 (core): TicketDetails
 // Works while a ticket is picked, and while none is. Crashes when you go from a ticket back to none.
+//
+// Example: pick t1, then none, then t2, then none → no crash at any point.
 export function TicketDetails({ ticket }: { ticket: Ticket | null }) {
   const [expanded, setExpanded] = useState(false);
   if (!ticket) {
@@ -99,8 +113,10 @@ export function TicketDetails({ ticket }: { ticket: Ticket | null }) {
   );
 }
 
-// Step 6 (core)
+// Step 6 (core): DocumentTitle
 // Sets the browser tab's title to the ticket's title. Pick another ticket: the tab keeps the old one.
+//
+// Example: show t1, then t2 → the tab title is t2's title.
 export function DocumentTitle({ ticket }: { ticket: Ticket }) {
   useEffect(() => {
     document.title = ticket.title;
@@ -108,13 +124,17 @@ export function DocumentTitle({ ticket }: { ticket: Ticket }) {
   return <p>Viewing {ticket.id}</p>;
 }
 
-// Step 7 (core)
+// Step 7 (core): ESLint
 // Run ESLint on this file:  yarn eslint 03-react/02-rules-of-react
 // Once steps 5 and 6 are fixed, it should report nothing. Never silence a rule with a comment.
+//
+// Example: the command prints no problems.
 
-// Step 8 (stretch)
+// Step 8 (stretch): Checklist
 // Ticking an item works on screen, but it also changes the `initial` items the parent passed in.
 // (The playground shows the parent's copy under the list.) Copying the array is not enough.
+//
+// Example: tick the first item → it is ticked on screen; the parent's copy still shows it unticked.
 type Item = { text: string; done: boolean };
 
 export function Checklist({ initial }: { initial: Item[] }) {

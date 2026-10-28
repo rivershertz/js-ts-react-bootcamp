@@ -17,7 +17,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/01',
   title: 'Values and references',
-  time: '15 min lesson · 35 min exercises',
+  time: '20 min lesson · 35 min exercises',
   subtitle: 'What a variable really holds, why === surprises Python developers, and how to update data without changing it.',
 };
 
@@ -185,6 +185,33 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
+      <Slide title="Destructuring, more shapes" eyebrow="Same idea, more places">
+        <p>Each line takes something out of <code>ticket</code> or <code>tickets</code>. Read the left side as a picture of the value on the right.</p>
+        <Code
+          small
+          code={`const ticket = { id: 't1', title: 'Login', assignee: { name: 'Dana' }, tags: ['ui', 'bug'] };\n\n// rename while unpacking: the field is id, the variable is ticketId\nconst { id: ticketId } = ticket;\n\n// reach inside a nested object or array\nconst { assignee: { name } } = ticket;           // name === 'Dana'\nconst { tags: [firstTag] } = ticket;             // firstTag === 'ui'\n\n// keep "the rest" in a new object or array\nconst { id, ...withoutId } = ticket;             // withoutId has no id\nconst [first, ...others] = tickets;\n\n// skip positions you do not need\nconst [, second] = tickets;\n\n// swap two variables\nlet a = 1, b = 2;\n[a, b] = [b, a];`}
+        />
+      </Slide>
+
+      <Slide title="Destructuring in function parameters" eyebrow="This is how React props look">
+        <p>
+          A function can unpack the object it receives right in its parameter list. Defaults work here too. This replaces Python
+          keyword arguments, and every React component starts like this.
+        </p>
+        <Code
+          small
+          code={`// without destructuring\nfunction label(ticket) {\n  return ticket.title + ' (' + (ticket.priority ?? 'medium') + ')';\n}\n\n// with destructuring and a default\nfunction label({ title, priority = 'medium' }) {\n  return \`\${title} (\${priority})\`;\n}\nlabel({ title: 'Login' });          // 'Login (medium)'\n\n// optional argument: give the whole object a default, or label() throws\nfunction describe({ title } = {}) { return title ?? 'untitled'; }\n\n// in a loop or a callback\nfor (const [key, value] of Object.entries(ticket)) console.log(key, value);\ntickets.map(({ id, title }) => id + ': ' + title);`}
+        />
+      </Slide>
+
+      <RunSlide
+        title="Unpack it yourself"
+        lead="Predict each log, then Run. Then try the challenges in the comments."
+        code={`const ticket = {\n  id: 't7',\n  title: 'Export fails',\n  status: undefined,\n  owner: { name: 'Lior', team: 'web' },\n  tags: ['csv', 'bug', 'urgent'],\n};\n\nconst { title, status = 'open', priority = 'low' } = ticket;\nconsole.log(title, status, priority);\n\nconst { owner: { team }, tags: [, secondTag, ...rest] } = ticket;\nconsole.log(team, secondTag, rest);\n\n// 1. Get owner.name into a variable called ownerName.\n// 2. Make an object with every field except tags (use ...).\n// 3. Write describe({ title, owner }) that returns 'Export fails, by Lior'.`}
+      >
+        <code>status</code> is <code>undefined</code>, so its default is used. What would change if it were <code>null</code>?
+      </RunSlide>
+
       <Slide title="Update without changing" eyebrow="The pattern you will use all day">
         <p>Return new objects and arrays instead of changing the ones you were given. React depends on it: it only notices a change when it gets a new object.</p>
         <Code
@@ -206,6 +233,7 @@ export default function Lesson(props: LessonProps) {
           'Primitives are copied. Objects and arrays are shared through references (arrows).',
           '=== on objects means “same object”, never “same contents”. Never use ==.',
           'const stops reassignment, not changes inside the object.',
+          'Destructuring unpacks by position ([a, b]) or by name ({ a, b }), with defaults, renames, nesting and ...rest.',
           'Spread copies one level. Copy every level you change.',
           'Return new objects and arrays instead of changing the ones you were given.',
         ]}

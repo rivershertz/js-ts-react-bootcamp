@@ -67,7 +67,7 @@ Do the phases in order. Phase 2 starts from your Phase 1 project, and the final 
 
 1. **Watch the lesson.** Run `yarn lessons`, open the link, and pick the module. Press → to move, ? for all keys. Slides marked "Your turn" ask you to predict an answer before you see it: say yours out loud first.
 2. **Read the module's README.** It has a short recap of the lesson and a table of the exercise steps.
-3. **Do the exercises** in the module's starter file, one step at a time. Each step says what to build in a comment above it.
+3. **Do the exercises** in the module's starter file, one step at a time. The comment above each step says what to build and shows an example: a call and what it returns, or what you should see on screen. In the JavaScript modules, the comment also gives the type of each parameter: hover the function name in VS Code to see it. Anything a step uses is either in a lesson you have done or in the [Python to JavaScript cheat sheet](00-setup/python-to-js.md).
 4. **Check them** with `yarn verify <module>`. A failing step tells you what is wrong and gives a hint.
 5. Move on when every **core** step is green. **Stretch** steps are extra practice: come back to them when you have time.
 
@@ -85,6 +85,21 @@ Run these in a terminal in this `bootcamp` folder. Keep the ticket API (`python 
 | `yarn tickets` | Runs your Phase 1 or Phase 2 ticket logic against the API. |
 | `yarn copy-project` | Starts Phase 2 by copying your Phase 1 project. |
 | `yarn server` | Reminds you how to start the ticket API. |
+
+## Getting an updated version
+
+Your mentor may send a newer zip of the bootcamp. Do not unzip it over your folder: that would replace your answers.
+
+1. Unzip it somewhere else, for example next to your current folder.
+2. In a terminal, go into the **new** folder's `bootcamp` folder and preview the update:
+
+   ```
+   node scripts/update.mjs <path to your own bootcamp folder>
+   ```
+
+   It lists every file it would change. Files you never edited are replaced. Files you did edit keep your code, and the new comments or fixes are merged in. If the new version changed the same lines you did, your file is left alone and the new version is saved next to it as `<name>.new`.
+3. Run the same command again with `--apply` at the end. Every file it changes is first copied to `.update-backup/` in your folder, and your progress is kept.
+4. Keep working in your own folder, and delete the new one. If the update says the packages changed, run `yarn install`.
 
 ## When you are stuck
 

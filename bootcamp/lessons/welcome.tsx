@@ -278,7 +278,7 @@ export default function Lesson(props: LessonProps) {
             </tr>
             <tr>
               <td className="mono">d</td>
-              <td>switch between light and dark</td>
+              <td>switch between light and dark (or click ◐ at the bottom right)</td>
             </tr>
             <tr>
               <td className="mono">?</td>

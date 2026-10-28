@@ -64,6 +64,30 @@ describe('Deck', () => {
     fireEvent.keyDown(screen.getByLabelText('code'), { key: 'ArrowRight' });
     expect(screen.getByText('1 / 2')).toBeInTheDocument();
   });
+
+  it('switches the theme with the D key on any layout, and with the button', () => {
+    render(
+      <Deck meta={meta}>
+        <Slide title="One" />
+      </Deck>,
+    );
+    const theme = () => document.documentElement.dataset.theme;
+    document.documentElement.dataset.theme = 'light';
+    key('d');
+    expect(theme()).toBe('dark');
+    key('D');
+    expect(theme(), 'Caps Lock').toBe('light');
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ג', code: 'KeyD' });
+    });
+    expect(theme(), 'Hebrew layout').toBe('dark');
+    act(() => {
+      fireEvent.keyDown(window, { key: 'd', code: 'KeyD', ctrlKey: true });
+    });
+    expect(theme(), 'Ctrl+D is left to the browser').toBe('dark');
+    fireEvent.click(screen.getByLabelText(/Switch light and dark/));
+    expect(theme()).toBe('light');
+  });
 });
 
 describe('slides with built-in steps', () => {

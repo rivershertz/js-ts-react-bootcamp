@@ -9,6 +9,14 @@ For the people supporting juniors through the bootcamp. Juniors never get this f
 - **Core** steps are the path. **Stretch** steps are optional and never block the next module.
 - A junior is done when every core step passes and `yarn verify final-project` is green.
 
+## Sending an update to juniors
+
+Juniors work offline from a zip, so a new version reaches them as a new zip, and `scripts/update.mjs` brings it into their folder without touching their answers or progress (START-HERE, "Getting an updated version", has the junior's steps).
+
+1. Before merging a change to `main`, run `node tools/make-update-history.mjs` and commit `bootcamp/scripts/update/history.json`. CI fails until you do. The file remembers every earlier version on `main`, so the update can tell a junior's edits apart from what changed upstream, whichever version they started from.
+2. Zip the repo from `main` and send it as before.
+3. Ask juniors to run the update, and to tell you about any `.new` file it reports: that is a file where their edits and the new version touch the same lines.
+
 ## Your daily routine
 
 1. Morning: check each junior ran `yarn verify 00-setup` green on their first morning.

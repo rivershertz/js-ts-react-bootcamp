@@ -50,6 +50,7 @@ export function Deck({ meta, children, initialSlide = 0, onSlideChange }: Props)
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof Element && e.target.closest('textarea, input')) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') next();
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
       else if (e.key === 'Home') go(0);
@@ -57,7 +58,7 @@ export function Deck({ meta, children, initialSlide = 0, onSlideChange }: Props)
       else if (e.key === '?') setHelp((h) => !h);
       else if (e.key === 'Escape' && help) setHelp(false);
       else if (e.key === 'Escape') location.hash = '#/';
-      else if (e.key === 'd') toggleTheme();
+      else if (isThemeKey(e)) toggleTheme();
       else return;
       e.preventDefault();
     }
@@ -95,6 +96,9 @@ export function Deck({ meta, children, initialSlide = 0, onSlideChange }: Props)
             <button className="k-navbtn" onClick={next} aria-label="Next">
               ›
             </button>
+            <button className="k-navbtn" onClick={toggleTheme} aria-label="Switch light and dark (d)" title="Switch light and dark (d)">
+              ◐
+            </button>
             <button className="k-navbtn" onClick={() => setHelp(true)} aria-label="Keyboard help">
               ?
             </button>
@@ -113,7 +117,7 @@ function Help({ onClose }: { onClose: () => void }) {
         <div><kbd>→</kbd>or <kbd>Space</kbd> next step or slide</div>
         <div><kbd>←</kbd>previous</div>
         <div><kbd>Home</kbd><kbd>End</kbd> first or last slide</div>
-        <div><kbd>d</kbd>switch light and dark</div>
+        <div><kbd>d</kbd>switch light and dark (or the ◐ button)</div>
         <div><kbd>Esc</kbd>back to all lessons</div>
         <div className="k-muted" style={{ marginTop: 12, fontSize: 15 }}>Click anywhere to close.</div>
       </div>
@@ -130,6 +134,12 @@ function useFitScale() {
     return () => window.removeEventListener('resize', fit);
   }, []);
   return scale;
+}
+
+// Matches the physical D key, so it also works with Caps Lock or a non-Latin keyboard layout
+// (on a Hebrew layout, e.key is 'ג').
+export function isThemeKey(e: KeyboardEvent) {
+  return e.code === 'KeyD' || e.key.toLowerCase() === 'd';
 }
 
 export function toggleTheme() {

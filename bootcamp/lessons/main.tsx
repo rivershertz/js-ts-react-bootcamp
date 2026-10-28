@@ -1,7 +1,7 @@
 // The lessons app: a list of decks, and one deck at a time. Run with: yarn lessons
 import { StrictMode, useEffect, useState, type ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { DeckMeta } from './kit';
+import { isThemeKey, toggleTheme, type DeckMeta } from './kit';
 import * as galleryModule from './kit/Gallery';
 import './kit/tokens.css';
 import './kit/kit.css';
@@ -66,12 +66,22 @@ function App() {
 function Index() {
   useEffect(() => {
     document.title = 'Bootcamp lessons';
+    const onKey = (e: KeyboardEvent) => {
+      if (!e.ctrlKey && !e.metaKey && !e.altKey && isThemeKey(e)) toggleTheme();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
   const byPhase = Object.groupBy(decks, (d) => d.meta.id.slice(0, 2));
   return (
     <main className="k-index">
       <h1>Lessons</h1>
-      <p className="k-muted">Open a lesson, then use → and ← to move. Press ? inside a lesson for all keys.</p>
+      <p className="k-muted">Open a lesson, then use → and ← to move. Press ? inside a lesson for all keys. Press d (or{' '}
+        <button className="k-navbtn" onClick={toggleTheme} aria-label="Switch light and dark">
+          ◐
+        </button>
+        ) to switch light and dark.
+      </p>
       {Object.entries(byPhase).map(([phase, list]) => (
         <section key={phase}>
           <h2>{PHASES[phase] ?? phase}</h2>

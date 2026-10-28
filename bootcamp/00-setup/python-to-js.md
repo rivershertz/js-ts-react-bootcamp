@@ -2,6 +2,8 @@
 
 Keep this open during Phase 1. Each row is the closest JavaScript to a Python habit.
 
+Exercises only expect what a lesson taught or what is on this page. If a step uses something you have not seen in a lesson, look here first.
+
 ## Basics
 
 | Python | JavaScript | Watch out |
@@ -63,6 +65,42 @@ Calling a function with too few arguments is not an error: the missing ones are 
 | `copy.deepcopy(d)` | `structuredClone(d)` | |
 | `set()` | `new Set()` | |
 | a dict with any key type | `new Map()` | Plain objects only have string keys. |
+| `d[k] = v`, `k in d`, `d[k]` on that dict | `map.set(k, v)`, `map.has(k)`, `map.get(k)` | |
+
+## Strings and numbers
+
+| Python | JavaScript | Watch out |
+| --- | --- | --- |
+| `s.strip()` | `s.trim()` | |
+| `s.lower()`, `s.upper()` | `s.toLowerCase()`, `s.toUpperCase()` | |
+| `"log" in s` | `s.includes('log')` | |
+| `s.startswith("v")` | `s.startsWith('v')` | |
+| `s.split(".")` | `s.split('.')` | |
+| `s[0]`, `s[1:]` | `s[0]`, `s.slice(1)` | Capital first letter: `s[0].toUpperCase() + s.slice(1)` |
+| `s.lstrip("^~")` | `s.replace(/^[\^~]/, '')` | The `/.../` is a regular expression, like Python's `re`. |
+| `re.fullmatch(r"\d{4}-\d{2}-\d{2}", s)` | `/^\d{4}-\d{2}-\d{2}$/.test(s)` | `^` and `$` make it match the whole string. |
+| `round(x, 1)` | `Math.round(x * 10) / 10` | `Math.round` has no digits argument. |
+
+## Checking values at run time
+
+| Python | JavaScript | Watch out |
+| --- | --- | --- |
+| `isinstance(x, str)` | `typeof x === 'string'` | Also `'number'`, `'boolean'`, `'function'`, `'undefined'`. |
+| `isinstance(x, list)` | `Array.isArray(x)` | |
+| `isinstance(x, dict)` | `typeof x === 'object' && x !== null && !Array.isArray(x)` | `typeof null` and `typeof []` are both `'object'`. |
+| `d.keys()`, `d.values()` | `Object.keys(d)`, `Object.values(d)` | |
+| a frozen object | `Object.freeze(obj)` | One level only, like spread. Changing a frozen object throws. |
+
+## Dates and timers
+
+| Python | JavaScript | Watch out |
+| --- | --- | --- |
+| `datetime.now()` | `new Date()` | |
+| `datetime.fromisoformat(s)` | `new Date(s)` | |
+| `(b - a).days` | `Math.floor((b.getTime() - a.getTime()) / 86_400_000)` | `getTime()` is milliseconds since 1970; a day is 86 400 000 ms. |
+| `d.isoformat()` | `d.toISOString()` | `'2026-10-27T18:00:00.000Z'`. `.slice(0, 10)` gives the date, `'2026-10-27'`. |
+| comparing ISO dates | `'2026-01-05' < '2026-10-15'` | ISO date strings compare correctly as text. |
+| run something later | `const id = setTimeout(fn, ms)` | Runs `fn` once after `ms` ms. Nothing waits: the next line runs at once. `clearTimeout(id)` cancels it. Lesson 01-js/04 explains why. |
 
 ## Classes of errors you will meet
 
