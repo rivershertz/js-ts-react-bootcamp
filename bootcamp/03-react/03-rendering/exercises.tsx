@@ -1,7 +1,9 @@
 // 03-react/03 Rendering: snapshots, lifting state, keys, effects
 //
-// What you build: five small fixes to when and what React renders, plus a reducer as stretch.
-// Finished when:  `yarn verify 03-react/03` shows ✓ for steps 1 to 5. Stretch steps are optional.
+// What you build: seven small fixes to when and what React renders, plus a reducer as stretch.
+// Steps 1 and 2 are the same idea (state is a snapshot), and so are steps 5 and 6 (clean up an effect),
+// so the second of each pair is practice in a new setting.
+// Finished when:  `yarn verify 03-react/03` shows ✓ for steps 1 to 7. Stretch steps are optional.
 //
 // Check your work with:  yarn verify 03-react/03
 // See it in the browser:  yarn dev 03-react/03
@@ -29,7 +31,27 @@ export function TripleVote() {
   );
 }
 
-// Step 2 (core): lift the state up
+// Step 2 (core): DelayedLike
+// "Like" saves after one second (pretend it waits for the server). Three quick clicks should
+// give 3 likes once the saves are done. They give 1. Keep the setTimeout.
+//
+// Example: from 0, click "Like" three times quickly → one second later it shows "Likes: 3".
+export function DelayedLike() {
+  const [likes, setLikes] = useState(0);
+
+  function like() {
+    setTimeout(() => setLikes(likes + 1), 1000);
+  }
+
+  return (
+    <div>
+      <p>Likes: {likes}</p>
+      <button onClick={like}>Like</button>
+    </div>
+  );
+}
+
+// Step 3 (core): lift the state up
 // Clicking a status tab should filter the list next to it. Right now each component keeps
 // its own state, so the list never hears about the click. Lift the selected status up into
 // TicketBoard and pass it down:
@@ -69,7 +91,7 @@ export function TicketBoard({ tickets }: { tickets: Ticket[] }) {
   );
 }
 
-// Step 3 (core): reset with a key
+// Step 4 (core): reset with a key
 // Type a note for one ticket, then switch to another: the note should start empty.
 // Right now the draft stays. Do not change NoteEditor; change how NotesPanel renders it.
 //
@@ -87,7 +109,7 @@ export function NotesPanel({ ticket }: { ticket: Ticket }) {
   return <NoteEditor ticketId={ticket.id} />;
 }
 
-// Step 4 (core): clean up the timer
+// Step 5 (core): clean up the timer
 // Shows "Open for 0 s" and counts up once a second. In development it counts two seconds
 // per second, and it keeps a timer running after it is gone. Fix the effect.
 //
@@ -100,7 +122,22 @@ export function OpenTimer() {
   return <p>Open for {seconds} s</p>;
 }
 
-// Step 5 (core): no effect needed
+// Step 6 (core): EscapeToClose
+// Pressing Escape should call onClose once. In development it calls it twice, and after the
+// component is gone, Escape still calls it. Fix the effect.
+//
+// Example: press Escape → onClose is called once; remove the component, press Escape → nothing happens.
+export function EscapeToClose({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKeyDown);
+  }, [onClose]);
+  return <p>Press Escape to close</p>;
+}
+
+// Step 7 (core): no effect needed
 // Shows how many tickets are not closed. It renders twice whenever the tickets change,
 // and the first of those renders shows the old count. Remove the state and the effect.
 //
@@ -113,7 +150,7 @@ export function OpenCount({ tickets }: { tickets: Ticket[] }) {
   return <p>{count} open</p>;
 }
 
-// Step 6 (stretch): useReducer
+// Step 8 (stretch): useReducer
 // A reducer puts every way a ticket's workflow can change in one pure function.
 // ticketReducer(state, action) returns the new state:
 //   { type: 'assign', assignee }  -> status 'assigned', that assignee, no blockedReason
@@ -134,9 +171,9 @@ export type WorkflowAction =
   | { type: 'reopen' };
 
 export function ticketReducer(state: WorkflowState, action: WorkflowAction): WorkflowState {
-  throw new Error('TODO: step 6');
+  throw new Error('TODO: step 8');
 }
 
 export function TicketWorkflow({ initial }: { initial: WorkflowState }): ReactNode {
-  throw new Error('TODO: step 6');
+  throw new Error('TODO: step 8');
 }

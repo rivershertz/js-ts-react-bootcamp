@@ -14,9 +14,9 @@ Every phase has the same shape: **lessons, then an exercise ladder, then a proje
 
 | Order | Phase | What you do | Core time |
 | --- | --- | --- | --- |
-| 1 | [Phase 1: JavaScript](01-js/) | Modules 01 to 05, then the [Phase 1 project](01-js/project/README.md): the ticket logic in plain JavaScript | about 6 h |
+| 1 | [Phase 1: JavaScript](01-js/) | Modules 01 to 05, then the [Phase 1 project](01-js/project/README.md): the ticket logic in plain JavaScript | about 7 h |
 | 2 | [Phase 2: TypeScript](02-ts/) | Modules 01 to 08, then the [Phase 2 project](02-ts/project/README.md): your Phase 1 code, migrated to strict TypeScript | about 6.5 h |
-| 3 | [Phase 3: React and antd](03-react/) | Modules 01 to 09 | about 6.5 h |
+| 3 | [Phase 3: React and antd](03-react/) | Modules 01 to 09 | about 7 h |
 | 4 | [Final project](final-project/README.md) | Migrate, fix and extend a ticket app built on your Phase 2 code | about 4.5 h |
 
 Those times are for the **core** steps, as a guide, not a limit. Your mentor tells you how they map onto your calendar. Each module's README gives its own time. If you are behind, keep going with core and leave stretch for later. If you are ahead, do stretch steps.

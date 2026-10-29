@@ -1,6 +1,6 @@
 # 01-js/04 Async
 
-**Time:** 20 min lesson, 35 min exercises (core), plus 15 min stretch.
+**Time:** 20 min lesson, 55 min exercises (core), plus 15 min stretch.
 
 ## 1. Watch the lesson
 
@@ -16,18 +16,25 @@
 
 ## 3. Exercises
 
-Open [`exercises.js`](exercises.js). Steps 3 to 6 get an axios `client` that talks to a test copy of the ticket API, so you do not need the Python server running for the checks.
+Open [`exercises.js`](exercises.js). Async code is everywhere in the team's apps and the event loop takes time to click, so the steps climb slowly. Steps 1 to 6 use no network at all. Steps 7 to 11 get an axios `client` that talks to a test copy of the ticket API, so you do not need the Python server running for the checks.
 
-| Step | Level | Task |
-| --- | --- | --- |
-| 1 | core | `wait(ms)`: wrap `setTimeout` in a promise |
-| 2 | core | `predictOrder`: the event loop, on paper |
-| 3 | core | `fetchTitle`: `async` / `await` with axios |
-| 4 | core | `fetchTicketOrNull`: handle a 404, rethrow everything else |
-| 5 | core | `fetchMany`: in parallel with `Promise.all` |
-| 6 | core | `fetchSome`: partial results with `Promise.allSettled` |
-| 7 | stretch | `withTimeout` with `Promise.race` |
-| 8 | stretch | `retry` |
+| Step | Level | Task | New idea |
+| --- | --- | --- | --- |
+| 1 | core | `wait(ms)`: wrap `setTimeout` in a promise | Making a promise |
+| 2 | core | `predictOrder`: the event loop, on paper | Microtasks run before timers |
+| 3 | core | `predictAwait`: the event loop with `await` | An async function runs until its first `await` |
+| 4 | core | `doubleLater`: `await` a value, then use it | `await` unwraps a promise |
+| 5 | core | `addOneWithThen`: the same with `.then` | Reading the older `.then` style |
+| 6 | core | `loadOr`: a fallback when a promise rejects | `try / catch` around `await` |
+| 7 | core | `fetchTitle`: `async` / `await` with axios | One real request |
+| 8 | core | `fetchTicketOrNull`: handle a 404, rethrow everything else | Telling errors apart |
+| 9 | core | `fetchOneByOne`: requests one after another | `await` in a loop |
+| 10 | core | `fetchMany`: in parallel with `Promise.all` | All at once |
+| 11 | core | `fetchSome`: partial results with `Promise.allSettled` | All at once, surviving failures |
+| 12 | stretch | `withTimeout` with `Promise.race` | |
+| 13 | stretch | `retry` | |
+
+If a step feels hard, look back at the step before it: it uses the same idea with one thing less.
 
 ```
 yarn verify 01-js/04

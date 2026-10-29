@@ -24,6 +24,11 @@ export default tseslint.config(
     },
   },
   {
+    // 01-js/03 step 7's starter uses var in a loop on purpose: finding why that breaks the closures is the exercise.
+    files: ['01-js/03-scope-closures/exercises.js'],
+    rules: { 'no-var': 'off' },
+  },
+  {
     // Type-level checks: each @ts-expect-error and test value is the check, and the comment above it is the message juniors see.
     files: ['scripts/checks/**/*.types.ts'],
     rules: {

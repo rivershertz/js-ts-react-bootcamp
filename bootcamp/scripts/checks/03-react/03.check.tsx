@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Profiler, StrictMode, type ComponentType } from 'react';
 import { expect, vi } from 'vitest';
@@ -13,10 +13,12 @@ type Ticket = (typeof sampleTickets)[number];
 type State = { status: string; assignee?: string; blockedReason?: string };
 type Exercises = {
   TripleVote: ComponentType;
+  DelayedLike: ComponentType;
   StatusTabs: ComponentType<{ selected: string; onSelect: (s: string) => void }>;
   TicketBoard: ComponentType<{ tickets: Ticket[] }>;
   NotesPanel: ComponentType<{ ticket: Ticket }>;
   OpenTimer: ComponentType;
+  EscapeToClose: ComponentType<{ onClose: () => void }>;
   OpenCount: ComponentType<{ tickets: Ticket[] }>;
   ticketReducer: (state: State, action: object) => State;
   TicketWorkflow: ComponentType<{ initial: State }>;
@@ -36,6 +38,26 @@ step(1, async () => {
 });
 
 step(2, async () => {
+  const { DelayedLike } = await ex();
+  vi.useFakeTimers();
+  try {
+    render(<DelayedLike />);
+    const button = screen.getByRole('button', { name: 'Like' });
+    fireEvent.click(button);
+    fireEvent.click(button);
+    fireEvent.click(button);
+    act(() => vi.advanceTimersByTime(1000));
+    const shown = screen.getByText(/^Likes:/).textContent;
+    ensure(
+      shown === 'Likes: 3',
+      `Three quick clicks should show "Likes: 3" after the saves, not "${shown}". Each timeout remembers likes from the render where you clicked.`,
+    );
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
+step(3, async () => {
   const { StatusTabs, TicketBoard } = await ex();
   const onSelect = vi.fn();
   const { unmount } = render(<StatusTabs selected="blocked" onSelect={onSelect} />);
@@ -53,7 +75,7 @@ step(2, async () => {
   expect(screen.getByRole('button', { name: 'closed' })).toHaveAttribute('aria-pressed', 'true');
 });
 
-step(3, async () => {
+step(4, async () => {
   const { NotesPanel } = await ex();
   const [t1, t2] = sampleTickets;
   const { rerender } = render(<NotesPanel ticket={t1} />);
@@ -63,7 +85,7 @@ step(3, async () => {
   expect(screen.getByText(/Note for/)).toHaveTextContent(`Note for ${t2.id}`);
 });
 
-step(4, async () => {
+step(5, async () => {
   const { OpenTimer } = await ex();
   vi.useFakeTimers();
   const cleared = vi.spyOn(globalThis, 'clearInterval');
@@ -84,7 +106,27 @@ step(4, async () => {
   }
 });
 
-step(5, async () => {
+step(6, async () => {
+  const { EscapeToClose } = await ex();
+  const onClose = vi.fn();
+  const { unmount } = render(
+    <StrictMode>
+      <EscapeToClose onClose={onClose} />
+    </StrictMode>,
+  );
+  fireEvent.keyDown(window, { key: 'Enter' });
+  expect(onClose, 'only Escape closes').not.toHaveBeenCalled();
+  fireEvent.keyDown(window, { key: 'Escape' });
+  ensure(
+    onClose.mock.calls.length === 1,
+    `One Escape called onClose ${onClose.mock.calls.length} times (checked in StrictMode, as in development). A listener is left behind each time the effect runs: return a cleanup that removes it.`,
+  );
+  unmount();
+  fireEvent.keyDown(window, { key: 'Escape' });
+  expect(onClose, 'after the component is gone, Escape must not call onClose').toHaveBeenCalledTimes(1);
+});
+
+step(7, async () => {
   const { OpenCount } = await ex();
   const commits: string[] = [];
   const view = (tickets: Ticket[]) => (
@@ -101,7 +143,7 @@ step(5, async () => {
   ensure(commits.length === 1, `New tickets took ${commits.length} renders, and the first one showed the old count. It should take one.`);
 });
 
-step(6, async () => {
+step(8, async () => {
   const { ticketReducer, TicketWorkflow } = await ex();
   const reduce = (state: State, action: object) => callPure(ticketReducer, state, action);
   expect(reduce({ status: 'open' }, { type: 'assign', assignee: 'a1' })).toEqual({ status: 'assigned', assignee: 'a1' });

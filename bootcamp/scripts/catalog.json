@@ -166,32 +166,80 @@
         {
           "n": 1,
           "level": "core",
+          "title": "makeGreeter: a function that returns a function",
+          "hint": "Return an arrow function that takes name. It can read greeting, because it was written inside makeGreeter."
+        },
+        {
+          "n": 2,
+          "level": "core",
+          "title": "byStatus: a filter predicate made to order",
+          "hint": "Same shape as step 1: return (ticket) => ... and compare ticket.status with the status byStatus was called with."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "makeTicker: a variable that survives between calls",
+          "hint": "Put `let n = 0` in makeTicker, outside the function you return. The returned function adds 1 to it and returns it."
+        },
+        {
+          "n": 4,
+          "level": "core",
           "title": "makeCounter: each counter keeps its own count",
           "hint": "Each call to makeCounter creates a new local variable. Slide 'The backpack' shows where it lives."
         },
         {
-          "n": 2,
+          "n": 5,
+          "level": "core",
+          "title": "makeTicketQueue: private state behind three functions",
+          "hint": "Keep one array as a local variable in makeTicketQueue. push adds to the end and returns the new length; shift removes from the front."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "predictClosures: a closure reads the variable, not a copy",
+          "hint": "A closure keeps the variable itself. It sees every change made to that variable, or to the object it points to, until the moment it runs."
+        },
+        {
+          "n": 7,
+          "level": "core",
+          "title": "makeHandlers: fix the var-in-a-loop bug",
+          "hint": "var makes one i for the whole function, so every arrow function sees its last value. One keyword gives each turn of the loop its own i."
+        },
+        {
+          "n": 8,
+          "level": "core",
+          "title": "countCalls: wrap a function and pass its arguments on",
+          "hint": "Keep a count in the backpack. call can take (...args) and pass them on with fn(...args)."
+        },
+        {
+          "n": 9,
           "level": "core",
           "title": "once: run a function only the first time",
           "hint": "Keep two things in the backpack: whether fn already ran, and what it returned."
         },
         {
-          "n": 3,
+          "n": 10,
           "level": "core",
           "title": "memoize: cache results by argument",
           "hint": "A Map in the closure works like a Python dict. Check with .has() before calling fn."
         },
         {
-          "n": 4,
+          "n": 11,
           "level": "core",
           "title": "createIdGenerator: ticket ids like T-1, T-2",
           "hint": "Same pattern as makeCounter, plus a template string: `${prefix}-${n}`."
         },
         {
-          "n": 5,
+          "n": 12,
           "level": "stretch",
           "title": "debounce: wait until calls stop",
           "hint": "Keep the timer id in the backpack. clearTimeout it on every call, then start a new one."
+        },
+        {
+          "n": 13,
+          "level": "stretch",
+          "title": "createStore: subscribe and unsubscribe",
+          "hint": "Keep the value and a Set of listeners in the backpack. subscribe returns () => listeners.delete(listener)."
         }
       ]
     },
@@ -216,35 +264,65 @@
         {
           "n": 3,
           "level": "core",
+          "title": "predictAwait: an async function runs until its first await",
+          "hint": "Calling an async function runs its body right away, like any function. Only the part after await waits, as a microtask."
+        },
+        {
+          "n": 4,
+          "level": "core",
+          "title": "doubleLater: await a promise, then use the value",
+          "hint": "const n = await getNumber(); then return n * 2. Without await, n is a promise."
+        },
+        {
+          "n": 5,
+          "level": "core",
+          "title": "addOneWithThen: the same with .then",
+          "hint": "return getNumber().then((n) => n + 1). Whatever the .then callback returns becomes the value of the new promise."
+        },
+        {
+          "n": 6,
+          "level": "core",
+          "title": "loadOr: try / catch around await",
+          "hint": "Write return await load() inside try, and return fallback in catch. Without await, the rejection escapes the try."
+        },
+        {
+          "n": 7,
+          "level": "core",
           "title": "fetchTitle: await one request",
           "hint": "`const response = await client.get(`/tickets/${id}`);` and the ticket is in `response.data`."
         },
         {
-          "n": 4,
+          "n": 8,
           "level": "core",
           "title": "fetchTicketOrNull: handle 404",
           "hint": "Wrap the await in try / catch. In the catch, return null when `error.response?.status === 404`, otherwise `throw error`."
         },
         {
-          "n": 5,
+          "n": 9,
+          "level": "core",
+          "title": "fetchOneByOne: requests one after another",
+          "hint": "A for...of loop with an await inside waits for each answer before the next turn. Push each response.data into an array."
+        },
+        {
+          "n": 10,
           "level": "core",
           "title": "fetchMany: requests in parallel",
           "hint": "Start every request first (map ids to promises, no await inside), then `await Promise.all(promises)`. Slide \"One after another, or all at once?\""
         },
         {
-          "n": 6,
+          "n": 11,
           "level": "core",
           "title": "fetchSome: partial failures",
           "hint": "`Promise.allSettled` never rejects. Each result has `status: 'fulfilled'` with `value`, or `'rejected'` with `reason`. Use the index to know which id failed."
         },
         {
-          "n": 7,
+          "n": 12,
           "level": "stretch",
           "title": "withTimeout: race a timer",
           "hint": "`Promise.race([promise, a promise that rejects after ms])`."
         },
         {
-          "n": 8,
+          "n": 13,
           "level": "stretch",
           "title": "retry: try again on failure",
           "hint": "A for loop from 1 to times with try / catch inside. Remember the last error and throw it after the loop."
@@ -910,29 +988,41 @@
         {
           "n": 2,
           "level": "core",
+          "title": "DelayedLike: a timeout sees the state of its own render",
+          "hint": "Same fix as step 1: the timeout runs later, but likes is still the value from the click's render. Pass an updater: setLikes((l) => l + 1)."
+        },
+        {
+          "n": 3,
+          "level": "core",
           "title": "TicketBoard: lift state up",
           "hint": "Move useState into TicketBoard. Pass `selected` and `onSelect` to StatusTabs, and `status` to StatusTicketList."
         },
         {
-          "n": 3,
+          "n": 4,
           "level": "core",
           "title": "NotesPanel: a key resets state",
           "hint": "React keeps a component's state while the same component sits in the same place. A different key makes it a new one: <NoteEditor key={...} />."
         },
         {
-          "n": 4,
+          "n": 5,
           "level": "core",
           "title": "OpenTimer: clean up the effect",
           "hint": "Keep the id from setInterval and return () => clearInterval(id). StrictMode runs effects twice in development to show missing cleanups."
         },
         {
-          "n": 5,
+          "n": 6,
+          "level": "core",
+          "title": "EscapeToClose: remove the listener you added",
+          "hint": "Same idea as step 5. Return () => window.removeEventListener('keydown', onKeyDown) from the effect, with the same onKeyDown."
+        },
+        {
+          "n": 7,
           "level": "core",
           "title": "OpenCount: you might not need an effect",
           "hint": "A value computed from props or state is not state. Compute it while rendering: const count = tickets.filter(...).length."
         },
         {
-          "n": 6,
+          "n": 8,
           "level": "stretch",
           "title": "ticketReducer and useReducer",
           "hint": "A switch on action.type that returns a new object per case. Then const [state, dispatch] = useReducer(ticketReducer, initial)."
@@ -954,17 +1044,29 @@
         {
           "n": 2,
           "level": "core",
+          "title": "useCounter: a hook that returns an object",
+          "hint": "One useState inside the hook. Return { count, increment, decrement, reset }, each function calling the setter."
+        },
+        {
+          "n": 3,
+          "level": "core",
+          "title": "useElapsedSeconds: an effect with a cleanup, inside a hook",
+          "hint": "Copy the fixed OpenTimer from 03-react/03 into the hook and return seconds instead of JSX."
+        },
+        {
+          "n": 4,
+          "level": "core",
           "title": "useDebouncedValue: the value, once it stops changing",
           "hint": "useEffect with a setTimeout, and return a cleanup that clears it. Which values belong in the dependency array?"
         },
         {
-          "n": 3,
+          "n": 5,
           "level": "core",
           "title": "SearchBox: report the search only after typing stops",
           "hint": "Keep the text in state, pass it through useDebouncedValue, and call onSearch from an effect on the debounced value."
         },
         {
-          "n": 4,
+          "n": 6,
           "level": "stretch",
           "title": "usePrevious: the value from the last render",
           "hint": "A ref survives renders without causing one. Update it in an effect."
