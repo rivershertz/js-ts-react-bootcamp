@@ -158,7 +158,7 @@ export function predictClosures() {
  * @returns {(() => string)[]}
  */
 export function makeHandlers(labels) {
-  var handlers = [];
+  const handlers = [];
   for (var i = 0; i < labels.length; i++) {
     handlers.push(() => `${i + 1}. ${labels[i]}`);
   }

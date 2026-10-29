@@ -271,7 +271,7 @@ export default function Lesson(props: LessonProps) {
         }
       />
 
-      <Slide title="What goes in the backpack" lead={<>Every exercise in this module keeps something in a backpack. Here is what each one remembers between calls.</>} eyebrow="Patterns you will build" steps={1}>
+      <Slide title="What goes in the backpack" lead={<>Most exercises in this module keep something in a backpack. Here is what some of them remember between calls.</>} eyebrow="Patterns you will build" steps={1}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 24 }}>
           <tbody>
             {[
