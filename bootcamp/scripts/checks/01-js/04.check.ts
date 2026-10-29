@@ -8,8 +8,13 @@ type Ticket = { id: string; title: string };
 type Exercises = {
   wait: (ms: number) => Promise<void>;
   predictOrder: () => string[];
+  predictAwait: () => string[];
+  doubleLater: (getNumber: () => Promise<number>) => Promise<number>;
+  addOneWithThen: (getNumber: () => Promise<number>) => Promise<number>;
+  loadOr: <T>(load: () => Promise<T>, fallback: T) => Promise<T>;
   fetchTitle: (c: AxiosInstance, id: string) => Promise<string>;
   fetchTicketOrNull: (c: AxiosInstance, id: string) => Promise<Ticket | null>;
+  fetchOneByOne: (c: AxiosInstance, ids: string[]) => Promise<Ticket[]>;
   fetchMany: (c: AxiosInstance, ids: string[]) => Promise<Ticket[]>;
   fetchSome: (c: AxiosInstance, ids: string[]) => Promise<{ found: Ticket[]; failed: string[] }>;
   withTimeout: <T>(p: Promise<T>, ms: number) => Promise<T>;
@@ -58,13 +63,45 @@ step(2, async () => {
 });
 
 step(3, async () => {
+  const { predictAwait } = await ex();
+  const answer = predictAwait();
+  expect(answer.slice(0, 2), 'A prints first, and calling load() runs its body straight away, up to the first await').toEqual(['A', 'B']);
+  expect(answer, 'await pauses only load(): the rest of it waits as a microtask while the plain code carries on').toEqual(['A', 'B', 'D', 'C']);
+});
+
+step(4, async () => {
+  const { doubleLater } = await ex();
+  const result = doubleLater(() => Promise.resolve(21));
+  expect(result, 'an async function always returns a promise').toBeInstanceOf(Promise);
+  expect(await result, 'await the number before doubling it: a promise times 2 is NaN').toBe(42);
+  expect(await doubleLater(() => new Promise((r) => setTimeout(() => r(5), 20)))).toBe(10);
+});
+
+step(5, async () => {
+  const { addOneWithThen } = await ex();
+  const source = addOneWithThen.toString();
+  expect(source.startsWith('async') || /\bawait\b/.test(source), 'this step is about .then: no async and no await').toBe(false);
+  const result = addOneWithThen(() => Promise.resolve(41));
+  expect(result, 'return the promise that .then gives you').toBeInstanceOf(Promise);
+  expect(await result).toBe(42);
+});
+
+step(6, async () => {
+  const { loadOr } = await ex();
+  expect(await loadOr(() => Promise.resolve(['t1']), [])).toEqual(['t1']);
+  const failing = loadOr(() => Promise.reject(new Error('Server down')), []);
+  await expect(failing, 'a rejected promise should give the fallback, not an error. Did you await inside try?').resolves.toEqual([]);
+  expect(await loadOr(() => new Promise((_, reject) => setTimeout(() => reject(new Error('late')), 20)), 'fallback')).toBe('fallback');
+});
+
+step(7, async () => {
   const { fetchTitle } = await ex();
   const title = fetchTitle(client, 't3');
   expect(title, 'an async function always returns a promise').toBeInstanceOf(Promise);
   expect(await title).toBe('Search ignores Hebrew characters');
 });
 
-step(4, async () => {
+step(8, async () => {
   const { fetchTicketOrNull } = await ex();
   expect((await fetchTicketOrNull(client, 't2'))?.id).toBe('t2');
   expect(await fetchTicketOrNull(client, 'nope'), '404 should give null').toBeNull();
@@ -78,7 +115,22 @@ step(4, async () => {
   await expect(fetchTicketOrNull(offline, 't1'), 'no server at all is not a 404 either: throw it').rejects.toThrow();
 });
 
-step(5, async () => {
+step(9, async () => {
+  const { fetchOneByOne } = await ex();
+  const server = await startFixtureServer({ delayMs: 50 });
+  try {
+    const c = axios.create({ baseURL: server.baseURL });
+    const result = await fetchOneByOne(c, ['t5', 't1', 't9']);
+    expect(result.map((t) => t.id), 'keep the order of ids').toEqual(['t5', 't1', 't9']);
+    expect(server.stats.requests).toHaveLength(3);
+    expect(server.stats.maxInFlight, `the server had ${server.stats.maxInFlight} requests at the same time: wait for each answer before sending the next`).toBe(1);
+    await expect(fetchOneByOne(c, ['t1', 'nope']), 'if one request fails, fetchOneByOne fails').rejects.toThrow();
+  } finally {
+    await server.close();
+  }
+});
+
+step(10, async () => {
   const { fetchMany } = await ex();
   const before = slow.stats.requests.length;
   const start = Date.now();
@@ -90,7 +142,7 @@ step(5, async () => {
   await expect(fetchMany(client, ['t1', 'nope']), 'if one request fails, fetchMany fails').rejects.toThrow();
 });
 
-step(6, async () => {
+step(11, async () => {
   const { fetchSome } = await ex();
   const start = Date.now();
   const result = await fetchSome(slowClient, ['t2', 'nope', 't4', 'missing']);
@@ -99,14 +151,14 @@ step(6, async () => {
   expect(Date.now() - start, 'the requests should run at the same time').toBeLessThan(500);
 });
 
-step(7, async () => {
+step(12, async () => {
   const { withTimeout } = await ex();
   await expect(withTimeout(new Promise((r) => setTimeout(() => r('fast'), 20)), 200)).resolves.toBe('fast');
   await expect(withTimeout(new Promise((r) => setTimeout(() => r('slow'), 300)), 50)).rejects.toThrow('Timed out');
   await expect(withTimeout(Promise.reject(new Error('own error')), 100)).rejects.toThrow('own error');
 });
 
-step(8, async () => {
+step(13, async () => {
   const { retry } = await ex();
   let calls = 0;
   const flaky = () => (++calls < 3 ? Promise.reject(new Error(`fail ${calls}`)) : Promise.resolve('ok'));

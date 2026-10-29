@@ -11,11 +11,13 @@ For the people supporting juniors through the bootcamp. Juniors never get this f
 
 ## Sending an update to juniors
 
-Juniors work offline from a zip, so a new version reaches them as a new zip, and `scripts/update.mjs` brings it into their folder without touching their answers or progress (START-HERE, "Getting an updated version", has the junior's steps).
+Juniors work offline from a zip, so a new version reaches them as a new zip, and `scripts/update.mjs` brings it into their folder without touching their answers. Their progress is kept too: when a module gained steps, each saved result moves to its step's new number (START-HERE, "Getting an updated version", has the junior's steps).
 
 1. Before merging a change to `main`, run `node tools/make-update-history.mjs` and commit `bootcamp/scripts/update/history.json`. CI fails until you do. The file remembers every earlier version on `main`, so the update can tell a junior's edits apart from what changed upstream, whichever version they started from.
 2. Zip the repo from `main` and send it as before.
 3. Ask juniors to run the update, and to tell you about any `.new` file it reports: that is a file where their edits and the new version touch the same lines.
+
+When you add steps to a module, insert them between the existing ones, and keep the existing steps' order and titles: that keeps juniors' merges clean and their progress on the right steps. [`exercise-audit.md`](exercise-audit.md) explains why, and records which modules got more steps and which to look at next.
 
 ## Your daily routine
 
@@ -41,11 +43,11 @@ Each module README gives a lesson time, a core exercise time and a stretch time.
 | Phase | Core time |
 | --- | --- |
 | Setup | 0.5 h |
-| Phase 1: JavaScript, with its project | 6 h |
+| Phase 1: JavaScript, with its project | 7 h |
 | Phase 2: TypeScript, with its project (about 2 to 2.5 h) | 6.5 h |
-| Phase 3: React modules | 6.5 h |
+| Phase 3: React modules | 7 h |
 | Final project | 4.5 h |
-| **Total** | **about 24 h** |
+| **Total** | **about 25 h** |
 
 These are estimates (about 1.25 minutes per slide, and 4 to 6 minutes per core step), corrected after a dry run, until a real cohort has gone through. After the first cohort, decide which core steps to move to stretch so core fits the calendar: relabelling a step changes its level in `scripts/catalog.json`, the module README's step table and time, the deck's time and the step's comment. Check first that no later core step needs it. The dry run found the final project's TypeScript migration of the antd code the slowest part. Note where juniors are much faster or slower, so the guides can be corrected.
 
@@ -71,9 +73,15 @@ Filled in per module as the material is written.
 | 01-js/01 | `toggleStatus` passes, but `replaceTicket` fails with "changed one of its inputs" | "Which line changes something you were given? What would give you a new array instead?" |
 | 01-js/02 | `newestFirst` uses `.sort()` and fails as a mutation | "Is there a version of sort that returns a new array?" |
 | 01-js/02 | `countByPriority` misses priorities with 0 tickets | "What is your starting value for reduce?" |
+| 01-js/03 | `makeTicker` returns 1 every time: the `let` is inside the returned function | "Which line runs on every call? Where must the count live to survive between calls?" |
+| 01-js/03 | `predictClosures` answered `'open'` for A or `'bug'` for D | "Does the arrow function keep the value it saw when it was created, or the variable itself?" |
+| 01-js/03 | `makeHandlers` rewritten from scratch instead of fixed | "It needs one word changed. How many `i` variables does `var` make for the whole loop, and how many does `let` make?" |
 | 01-js/03 | `once` returns `undefined` on the second call | "Where is the first result stored between calls?" |
 | 01-js/03 | `memoize` calls `fn` again for a cached `undefined` | "How do you tell 'no entry' from 'an entry whose value is undefined'?" |
 | 01-js/04 | `predictOrder` answered as `['A', 'B', 'C', 'D']` | "Replay the event-loop slide. Which queue does a promise callback go to, and which one is emptied first?" |
+| 01-js/04 | `predictAwait` answered `['A', 'D', 'B', 'C']` | "When you call `load()`, which of its lines run straight away, before anything waits?" |
+| 01-js/04 | `loadOr` still throws: `return load()` inside `try` without `await` | "When does the promise reject: inside your `try`, or after the function already returned?" |
+| 01-js/04 | `fetchOneByOne` uses `Promise.all`, or `forEach` with an async callback | "Does `forEach` wait for an async callback? Which loop lets you `await` inside it?" |
 | 01-js/04 | `fetchMany` is sequential (`await` inside a `for` loop): the timing check fails | "When does the second request start? Can you start all of them before awaiting?" |
 | 01-js/04 | `fetchTicketOrNull` swallows every error | "What should happen for a 500? Which property tells you the status?" |
 | 01-js/05 | Wrote `from './dates'` and the step asks for the extension | "Node needs the whole file name. Which file does `./dates` mean?" |
@@ -96,7 +104,10 @@ Filled in per module as the material is written.
 | 03-react/02 | Step 1 "works" in the browser: the tag shows up as soon as they type again | "Does the tag appear because of your click, or because something else re-rendered? What does `Object.is` say about the array?" |
 | 03-react/02 | Step 5 fixed by deleting the early return | "Can you keep the early return and still call every hook on every render?" |
 | 03-react/03 | `TicketBoard` gets its own `useState` but `StatusTabs` keeps one too | "How many places hold the selected status now? Which one does the list read?" |
+| 03-react/03 | `DelayedLike` still shows 1, or the junior removed the `setTimeout` | "Step 1 again: which value of `likes` does each timeout remember? Keep the timeout, change how you set the state." |
+| 03-react/03 | `EscapeToClose` cleanup removes a new arrow function | "To remove a listener you need the very same function. Where is `onKeyDown` defined?" |
 | 03-react/03 | `OpenTimer` counts 2 s per second in the playground | "The playground runs in StrictMode. What does it do to effects, and what stops the second interval?" |
+| 03-react/04 | `useElapsedSeconds` counts 2 s per second | "Same bug as `OpenTimer` in 03-react/03. What did you return from the effect there?" |
 | 03-react/04 | `useDebouncedValue` updates on every key press | "What does your effect's cleanup do when the value changes again?" |
 | 03-react/05 | Step 1 returns `{ data }` from `useQuery`, and step 2 has no `isPending` | "Return the whole result. What else is on it besides `data`?" |
 | 03-react/05 | Step 3 wraps `useQuery` in `if (id)` | "Rules of Hooks: what does `useQuery` take that says whether it may run?" |

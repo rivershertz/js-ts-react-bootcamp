@@ -1,6 +1,6 @@
 # 03-react/04 Custom hooks
 
-**Time:** 10 min lesson, 20 min exercises (core), plus 5 min stretch.
+**Time:** 10 min lesson, 30 min exercises (core), plus 5 min stretch.
 
 ## 1. Watch the lesson
 
@@ -18,12 +18,16 @@ Run `yarn lessons` and pick **03-react/04 Custom hooks**.
 
 Open [`exercises.tsx`](exercises.tsx).
 
-| Step | Level | Task |
-| --- | --- | --- |
-| 1 | core | `useToggle(initial)` |
-| 2 | core | `useDebouncedValue(value, delayMs)` |
-| 3 | core | `SearchBox` that reports the search only after typing stops |
-| 4 | stretch | `usePrevious(value)` |
+The steps climb slowly, one new idea each:
+
+| Step | Level | Task | New idea |
+| --- | --- | --- | --- |
+| 1 | core | `useToggle(initial)` | A hook that returns a tuple, like `useState` |
+| 2 | core | `useCounter(initial)` | A hook that returns an object; each caller has its own state |
+| 3 | core | `useElapsedSeconds()` | An effect with a cleanup, inside a hook |
+| 4 | core | `useDebouncedValue(value, delayMs)` | An effect that restarts its timer when the value changes |
+| 5 | core | `SearchBox` that reports the search only after typing stops | Using your own hook in a component |
+| 6 | stretch | `usePrevious(value)` | |
 
 See your hooks working in the browser (it reloads as you edit):
 

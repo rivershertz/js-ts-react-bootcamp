@@ -9,8 +9,9 @@
 // Files you never touched are replaced by the new version. Files you changed (your exercises,
 // your projects) keep your code: the new version's changes are merged into them when they do not
 // overlap, and otherwise saved next to your file as `<name>.new` for you to compare.
-// Your progress (.progress.json), node_modules and .npmrc are never touched, and every file the
-// update changes is first copied to .update-backup/ in your folder.
+// node_modules and .npmrc are never touched, and every file the update changes is first copied to
+// .update-backup/ in your folder. Your progress (.progress.json) is kept; when a new version adds
+// steps to a module, each result moves to the step's new number.
 //
 // Only Node's own modules are used, so this runs before `yarn install`.
 import { createHash } from 'node:crypto';
@@ -92,6 +93,11 @@ function commonLines(a, b) {
 }
 
 const same = (x, y) => x.length === y.length && x.every((line, i) => line === y[i]);
+const TODO = /TODO: step \d+/;
+/** The update only renumbered the TODO placeholders in these lines, for example when steps were added. */
+const onlyTodoRenumbered = (base, update) =>
+  base.length === update.length &&
+  base.every((line, i) => line.replace(TODO, '') === update[i].replace(TODO, ''));
 
 /**
  * Three-way merge of text files, line by line (the diff3 idea, in plain JavaScript).
@@ -120,10 +126,45 @@ export function merge(yours, original, update) {
     };
     if (same(chunk.mine, chunk.base)) out.push(...chunk.next);
     else if (same(chunk.next, chunk.base) || same(chunk.mine, chunk.next)) out.push(...chunk.mine);
+    // You already replaced the placeholder, so its new step number does not matter: keep yours.
+    else if (onlyTodoRenumbered(chunk.base, chunk.next)) out.push(...chunk.mine);
     else return undefined;
     if (!end) return out.join('\n');
     out.push(base[k]);
     [o, a, b] = [k + 1, inMine.get(k) + 1, inNext.get(k) + 1];
+  }
+}
+
+/**
+ * Step numbers move when a new version adds steps to a module. Carry each saved result over to the
+ * step with the same title. A result whose title is gone is kept by number only when the module still
+ * has the same number of steps (a reworded title); otherwise it is dropped, so no ✓ lands on a new step.
+ */
+export function remapProgress(progress, oldCatalog, newCatalog) {
+  const remapped = {};
+  for (const [id, results] of Object.entries(progress)) {
+    const before = oldCatalog.modules.find((m) => m.id === id);
+    const after = newCatalog.modules.find((m) => m.id === id);
+    if (!before || !after) {
+      remapped[id] = results;
+      continue;
+    }
+    remapped[id] = {};
+    for (const [n, state] of Object.entries(results)) {
+      const title = before.steps.find((s) => s.n === Number(n))?.title;
+      const moved = after.steps.find((s) => s.title === title);
+      if (moved) remapped[id][moved.n] = state;
+      else if (before.steps.length === after.steps.length) remapped[id][n] = state;
+    }
+  }
+  return remapped;
+}
+
+function readJson(file) {
+  try {
+    return JSON.parse(readFileSync(file, 'utf8'));
+  } catch {
+    return undefined;
   }
 }
 
@@ -264,8 +305,22 @@ function main() {
     );
     return;
   }
+  const oldCatalog = readJson(path.join(target, 'scripts', 'catalog.json'));
   const backup = apply(target, actions);
   console.log(styleText('green', `\nDone. Every file that changed was first copied to ${backup}`));
+  const progressFile = path.join(target, '.progress.json');
+  const progress = readJson(progressFile);
+  const newCatalog = readJson(path.join(newRoot, 'scripts', 'catalog.json'));
+  let progressMoved = false;
+  if (progress && oldCatalog && newCatalog) {
+    const remapped = remapProgress(progress, oldCatalog, newCatalog);
+    if (JSON.stringify(remapped) !== JSON.stringify(progress)) {
+      mkdirSync(backup, { recursive: true });
+      copyFileSync(progressFile, path.join(backup, '.progress.json'));
+      writeFileSync(progressFile, JSON.stringify(remapped, null, 2));
+      progressMoved = true;
+    }
+  }
   const sides = actions.filter((a) => a.kind === 'side');
   if (sides.length) {
     console.log(
@@ -280,7 +335,11 @@ function main() {
       styleText('bold', '\nThe packages changed: run  yarn install  in your bootcamp folder.'),
     );
   }
-  console.log('\nYour progress is kept. Run  yarn progress  to see it.\n');
+  if (progressMoved)
+    console.log(
+      '\nSome modules have new steps, so your progress moved to the new step numbers. Run  yarn progress  to see it.\n',
+    );
+  else console.log('\nYour progress is kept. Run  yarn progress  to see it.\n');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
