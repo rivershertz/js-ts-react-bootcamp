@@ -17,7 +17,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/03',
   title: 'Scope and closures',
-  time: '20 min lesson · 25 min exercises',
+  time: '20 min lesson · 50 min exercises',
   subtitle: 'How JavaScript decides where a variable lives, and how a function can carry variables with it.',
 };
 
@@ -234,7 +234,7 @@ export default function Lesson(props: LessonProps) {
         explanation={
           <>
             Each call to <code>outer()</code> runs its body again: a new <code>calls</code> and a new backpack. <code>a</code> and{' '}
-            <code>b</code> never share. You will need this in exercise step 1.
+            <code>b</code> never share. You will need this from exercise step 3 on.
           </>
         }
       />
@@ -258,18 +258,34 @@ export default function Lesson(props: LessonProps) {
         Edit the code and press Run. Parameters go into the backpack too: <code>start</code> is remembered as well.
       </RunSlide>
 
-      <Slide title="What goes in the backpack" lead={<>Every exercise in this module keeps something in a backpack. Here is what each one remembers between calls.</>} eyebrow="Patterns you will build" steps={1}>
+      <PredictSlide
+        code={`const readers = [];\nfor (var i = 0; i < 3; i++) {\n  readers.push(() => i);\n}\nconsole.log(readers[0]());`}
+        answer="3"
+        surprising
+        explanation={
+          <>
+            The backpack holds the variable, not a copy of its value. With <code>var</code> there is one <code>i</code> for the
+            whole loop, and by the time <code>readers[0]</code> runs it is 3. With <code>let</code> every turn of the loop gets its
+            own <code>i</code>, so <code>readers[0]()</code> returns 0. Exercise steps 6 and 7 are about exactly this.
+          </>
+        }
+      />
+
+      <Slide title="What goes in the backpack" lead={<>Most exercises in this module keep something in a backpack. Here is what some of them remember between calls.</>} eyebrow="Patterns you will build" steps={1}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 24 }}>
           <tbody>
             {[
+              ["makeGreeter('Hello')", 'the greeting'],
+              ['makeTicker()', 'the last number it returned'],
+              ['makeTicketQueue()', 'the list of waiting titles, shared by add, next and size'],
               ['once(fn)', 'whether fn already ran, and its result'],
               ['memoize(fn)', 'a Map from each argument to its result'],
               ["createIdGenerator('T')", 'the prefix and the last number used'],
               ['debounce(fn, ms)', 'the id of the timer that is waiting'],
             ].map(([name, keeps]) => (
               <tr key={name} style={{ borderBottom: '1px solid var(--border)' }}>
-                <td style={{ padding: '14px 0', fontFamily: 'var(--font-mono)', fontSize: 22, width: '42%' }}>{name}</td>
-                <td style={{ padding: '14px 0' }}>{keeps}</td>
+                <td style={{ padding: '9px 0', fontFamily: 'var(--font-mono)', fontSize: 22, width: '42%' }}>{name}</td>
+                <td style={{ padding: '9px 0' }}>{keeps}</td>
               </tr>
             ))}
           </tbody>

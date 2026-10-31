@@ -3,11 +3,36 @@
 import { useCallback, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Step } from '../../playground/Step';
-import { SearchBox, useDebouncedValue, useToggle } from './exercises';
+import { SearchBox, useCounter, useDebouncedValue, useElapsedSeconds, useToggle } from './exercises';
 
 function ToggleDemo() {
   const [on, toggle] = useToggle(false);
   return <button onClick={toggle}>The lamp is {on ? 'on' : 'off'}</button>;
+}
+
+function CounterDemo() {
+  const { count, increment, decrement, reset } = useCounter(5);
+  return (
+    <div>
+      <p>Estimate: {count}</p>
+      <button onClick={decrement}>-1</button> <button onClick={increment}>+1</button> <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+
+function SecondsShown() {
+  const seconds = useElapsedSeconds();
+  return <p>Shown for {seconds} s</p>;
+}
+
+function SecondsDemo() {
+  const [shown, setShown] = useState(true);
+  return (
+    <div>
+      <button onClick={() => setShown(!shown)}>{shown ? 'Hide' : 'Show'}</button>
+      {shown && <SecondsShown />}
+    </div>
+  );
 }
 
 function DebounceDemo() {
@@ -38,7 +63,9 @@ createRoot(document.getElementById('root') as HTMLElement).render(
   <main style={{ fontFamily: 'system-ui', maxWidth: 640, margin: '40px auto' }}>
     <h1>Custom hooks playground</h1>
     <Step title="Step 1: useToggle"><ToggleDemo /></Step>
-    <Step title="Step 2: useDebouncedValue"><DebounceDemo /></Step>
-    <Step title="Step 3: SearchBox"><SearchDemo /></Step>
+    <Step title="Step 2: useCounter"><CounterDemo /></Step>
+    <Step title="Step 3: useElapsedSeconds"><SecondsDemo /></Step>
+    <Step title="Step 4: useDebouncedValue"><DebounceDemo /></Step>
+    <Step title="Step 5: SearchBox"><SearchDemo /></Step>
   </main>,
 );

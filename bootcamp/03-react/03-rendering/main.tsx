@@ -4,7 +4,7 @@ import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Step } from '../../playground/Step';
 import { sampleTickets } from '../tickets';
-import { NotesPanel, OpenCount, OpenTimer, TicketBoard, TicketWorkflow, TripleVote } from './exercises';
+import { DelayedLike, EscapeToClose, NotesPanel, OpenCount, OpenTimer, TicketBoard, TicketWorkflow, TripleVote } from './exercises';
 
 function NotesDemo() {
   const [index, setIndex] = useState(0);
@@ -32,6 +32,18 @@ function TimerDemo() {
   );
 }
 
+function EscapeDemo() {
+  const [shown, setShown] = useState(true);
+  const [closes, setCloses] = useState(0);
+  return (
+    <div>
+      <button onClick={() => setShown(!shown)}>{shown ? 'Remove' : 'Show'} the component</button>
+      {shown && <EscapeToClose onClose={() => setCloses((c) => c + 1)} />}
+      <p>onClose was called {closes} times</p>
+    </div>
+  );
+}
+
 function CountDemo() {
   const [count, setCount] = useState(sampleTickets.length);
   return (
@@ -49,19 +61,25 @@ createRoot(document.getElementById('root') as HTMLElement).render(
       <Step title="Step 1: TripleVote">
         <TripleVote />
       </Step>
-      <Step title="Step 2: TicketBoard">
+      <Step title="Step 2: DelayedLike (click three times quickly)">
+        <DelayedLike />
+      </Step>
+      <Step title="Step 3: TicketBoard">
         <TicketBoard tickets={sampleTickets} />
       </Step>
-      <Step title="Step 3: NotesPanel (type a note, then switch ticket)">
+      <Step title="Step 4: NotesPanel (type a note, then switch ticket)">
         <NotesDemo />
       </Step>
-      <Step title="Step 4: OpenTimer (this page runs in StrictMode, like a new Vite app)">
+      <Step title="Step 5: OpenTimer (this page runs in StrictMode, like a new Vite app)">
         <TimerDemo />
       </Step>
-      <Step title="Step 5: OpenCount">
+      <Step title="Step 6: EscapeToClose (press Escape, then remove it and press Escape again)">
+        <EscapeDemo />
+      </Step>
+      <Step title="Step 7: OpenCount">
         <CountDemo />
       </Step>
-      <Step title="Step 6 (stretch): TicketWorkflow">
+      <Step title="Step 8 (stretch): TicketWorkflow">
         <TicketWorkflow initial={{ status: 'open' }} />
       </Step>
     </main>

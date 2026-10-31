@@ -20,6 +20,23 @@ export function TripleVote() {
   );
 }
 
+// The timeout callback is a closure over the render that created it, where likes was 0.
+// An updater gets the latest value when it finally runs.
+export function DelayedLike() {
+  const [likes, setLikes] = useState(0);
+
+  function like() {
+    setTimeout(() => setLikes((l) => l + 1), 1000);
+  }
+
+  return (
+    <div>
+      <p>Likes: {likes}</p>
+      <button onClick={like}>Like</button>
+    </div>
+  );
+}
+
 // The state lives in the closest common parent; children get it through props.
 export function StatusTabs({ selected, onSelect }: { selected: Status; onSelect: (status: Status) => void }) {
   return (
@@ -77,6 +94,18 @@ export function OpenTimer() {
     return () => clearInterval(timer);
   }, []);
   return <p>Open for {seconds} s</p>;
+}
+
+// Remove the same function you added. React runs the cleanup on unmount and before the effect runs again.
+export function EscapeToClose({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+  return <p>Press Escape to close</p>;
 }
 
 // Derived from props during render: no state to keep in sync, no extra render.

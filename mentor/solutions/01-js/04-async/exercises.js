@@ -9,6 +9,29 @@ export function predictOrder() {
   return ['A', 'D', 'C', 'B'];
 }
 
+export function predictAwait() {
+  // An async function runs like normal code until its first await. The rest of it waits as a
+  // microtask, so D (the next line of plain code) prints before C.
+  return ['A', 'B', 'D', 'C'];
+}
+
+export async function doubleLater(getNumber) {
+  const n = await getNumber();
+  return n * 2;
+}
+
+export function addOneWithThen(getNumber) {
+  return getNumber().then((n) => n + 1);
+}
+
+export async function loadOr(load, fallback) {
+  try {
+    return await load();
+  } catch {
+    return fallback;
+  }
+}
+
 export async function fetchTitle(client, id) {
   const response = await client.get(`/tickets/${id}`);
   return response.data.title;
@@ -22,6 +45,15 @@ export async function fetchTicketOrNull(client, id) {
     if (error.response?.status === 404) return null;
     throw error;
   }
+}
+
+export async function fetchOneByOne(client, ids) {
+  const tickets = [];
+  for (const id of ids) {
+    const response = await client.get(`/tickets/${id}`);
+    tickets.push(response.data);
+  }
+  return tickets;
 }
 
 export async function fetchMany(client, ids) {

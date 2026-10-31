@@ -16,7 +16,7 @@ import {
 export const meta: DeckMeta = {
   id: '01-js/04',
   title: 'Async',
-  time: '20 min lesson · 35 min exercises',
+  time: '20 min lesson · 55 min exercises',
   subtitle: 'One thread, many things waiting: the event loop, promises, async / await, and calling the API with axios.',
 };
 
@@ -110,6 +110,18 @@ export default function Lesson(props: LessonProps) {
           <>
             Calling an async function gives you a promise, not its result. You need <code>await firstTitle()</code> inside another
             async function. A missing <code>await</code> is the most common async bug.
+          </>
+        }
+      />
+
+      <PredictSlide
+        code={`async function save() {\n  console.log('saving');\n  await null;\n  console.log('saved');\n}\n\nsave();\nconsole.log('next');`}
+        answer="saving, next, saved"
+        surprising
+        explanation={
+          <>
+            Calling an async function runs its body straight away, like any other function, until the first <code>await</code>. Only
+            the rest of it waits, as a microtask, so the plain code after <code>save()</code> runs first. Exercise step 3 practises this.
           </>
         }
       />

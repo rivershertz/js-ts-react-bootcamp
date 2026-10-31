@@ -136,7 +136,7 @@ export default function Lesson(props: LessonProps) {
               <td>1 · JavaScript</td>
               <td>values, arrays, closures, async, modules</td>
               <td>the ticket logic in JavaScript</td>
-              <td style={{ whiteSpace: 'nowrap' }}>about 6 h</td>
+              <td style={{ whiteSpace: 'nowrap' }}>about 7 h</td>
             </tr>
             <tr>
               <td>2 · TypeScript</td>
@@ -148,7 +148,7 @@ export default function Lesson(props: LessonProps) {
               <td>3 · React and antd</td>
               <td>components, Rules of React, hooks, React Query, antd</td>
               <td>(the final project)</td>
-              <td style={{ whiteSpace: 'nowrap' }}>about 6.5 h</td>
+              <td style={{ whiteSpace: 'nowrap' }}>about 7 h</td>
             </tr>
             <tr>
               <td>Final project</td>

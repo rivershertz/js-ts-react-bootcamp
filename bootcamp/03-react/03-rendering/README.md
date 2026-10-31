@@ -1,6 +1,6 @@
 # 03-react/03 Rendering: snapshots, lifting state, keys, effects
 
-**Time:** 15 min lesson, 30 min exercises (core), plus 10 min stretch.
+**Time:** 15 min lesson, 40 min exercises (core), plus 10 min stretch.
 
 ## 1. Watch the lesson
 
@@ -20,14 +20,18 @@ Run `yarn lessons` and pick **03-react/03 Rendering: snapshots, lifting state, k
 
 Open [`exercises.tsx`](exercises.tsx).
 
+Stale state and effects that are never cleaned up cause most of the bugs you will fix in the team's apps, so two ideas get a second, practice step:
+
 | Step | Level | Task |
 | --- | --- | --- |
 | 1 | core | `TripleVote`: +3 adds only 1 |
-| 2 | core | `TicketBoard`: lift the selected status up |
-| 3 | core | `NotesPanel`: a fresh note for each ticket |
-| 4 | core | `OpenTimer`: clean up the interval |
-| 5 | core | `OpenCount`: remove an effect that is not needed |
-| 6 | stretch | `ticketReducer` and `useReducer` |
+| 2 | core | `DelayedLike`: three quick likes count as one (practice for step 1) |
+| 3 | core | `TicketBoard`: lift the selected status up |
+| 4 | core | `NotesPanel`: a fresh note for each ticket |
+| 5 | core | `OpenTimer`: clean up the interval |
+| 6 | core | `EscapeToClose`: remove a keyboard listener (practice for step 5) |
+| 7 | core | `OpenCount`: remove an effect that is not needed |
+| 8 | stretch | `ticketReducer` and `useReducer` |
 
 See them in the browser (the playground runs in StrictMode, like a new Vite app):
 

@@ -7,6 +7,25 @@ export function useToggle(initial: boolean): [boolean, () => void] {
   return [value, toggle];
 }
 
+export function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
+  return {
+    count,
+    increment: () => setCount((c) => c + 1),
+    decrement: () => setCount((c) => c - 1),
+    reset: () => setCount(initial),
+  };
+}
+
+export function useElapsedSeconds(): number {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(timer);
+  }, []);
+  return seconds;
+}
+
 export function useDebouncedValue<T>(value: T, delayMs = 300): T {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
